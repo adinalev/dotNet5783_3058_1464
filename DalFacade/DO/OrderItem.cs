@@ -12,7 +12,7 @@ namespace DO
         // Order's identifier
         // Product's identifier
         public double PPU;
-        public int quantity;
+        public int Quantity;
         public override string ToString() => $@"
             Product ID={ID}
             Order: {/*order id*/}
@@ -20,5 +20,25 @@ namespace DO
             Price Per Unit: {PPU}
             Quantity: {quantity}
         ";
+
+        public int id   // property
+        {
+            get { return ID; }   // get method
+            set { ID = value; }  // set method
+        }
+
+        // order identifier and product identifier??
+
+        public double ppu   // property
+        {
+            get { return PPU; }   // get method
+            set { PPU = value; }  // set method
+        }
+
+        public int quantity   // property
+        {
+            get { return Quantity; }   // get method
+            set { Quantity = value; }  // set method
+        }
     }
 }

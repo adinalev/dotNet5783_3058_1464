@@ -19,5 +19,33 @@ namespace DO
             Price: {Price}
             Amount in stock: {InStock}
         ";
+
+        public int id // property
+        {
+            get { return ID; }   // get method
+            set { ID = value; }  // set method
+        }
+        public string name   // property
+        {
+            get { return Name; }   // get method
+            set { Name = value; }  // set method
+        }
+        public double price   // property
+        {
+            get { return Price; }   // get method
+            set { Price = value; }  // set method
+        }
+        public enum category   // property
+        {
+            get { return Category; }   // get method
+            set { Category = value; }  // set method
+        }
+        public int inStock   // property
+        {
+            get { return InStock; }   // get method
+            set { InStock = value; }  // set method
+        }
+
+
     }
 }
