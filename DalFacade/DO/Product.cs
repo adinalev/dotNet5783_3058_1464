@@ -11,7 +11,7 @@ namespace DO
         public int ID;
         public string Name;
         public double Price;
-        public enum Category { }; // DO THIS
+        public Enums.Category Category { get; set; } // DO THIS
         public int InStock;
         public override string ToString() => $@"
             Product ID = {ID}: {Name},
@@ -35,11 +35,11 @@ namespace DO
             get { return Price; }   // get method
             set { Price = value; }  // set method
         }
-        public enum category   // property
-        {
-            get { return Category; }   // get method
-            set { Category = value; }  // set method
-        }
+        //public enum category   // property
+        //{
+        //    get { return Category; }   // get method
+        //    set { Category = value; }  // set method
+        //}
         public int inStock   // property
         {
             get { return InStock; }   // get method

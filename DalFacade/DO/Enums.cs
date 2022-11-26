@@ -4,8 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DO
+namespace DO;
+public struct Enums
 {
+    public enum Category { MEDICINE, COSMETICS, HYGIENE, FOOD, OPTICS, BABIES };
+    public enum Action { ADD, GET , GETLIST, UPDATE, DELETE };
+    public enum Type {  PRODUCT, ORDER, ORDERITEM };
+
+}
+
+
+
+/*{
     public struct Enums
     {
         public override string ToString() => $@"
@@ -17,3 +27,4 @@ namespace DO
         }
     }
 }
+*/

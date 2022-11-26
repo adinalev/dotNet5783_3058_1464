@@ -9,14 +9,14 @@ namespace DO
     public struct OrderItem
     {
         public int ID;
-        // Order's identifier
-        // Product's identifier
+        public int OrderID; // Order's identifier
+        public int ProductID; // Product's identifier
         public double PPU;
         public int Quantity;
         public override string ToString() => $@"
-            Product ID={ID}
-            Order: {/*order id*/}
-            Product: {/* product ID*/}
+            ID - {ID}
+            Order: {OrderID}
+            Product: {ProductID}
             Price Per Unit: {PPU}
             Quantity: {quantity}
         ";
