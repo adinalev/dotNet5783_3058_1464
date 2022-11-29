@@ -1,5 +1,4 @@
 ﻿using Dal;
-//using DalApi;
 using DO;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using static DO.Enums;
 
 namespace DalTest;
 
-internal class Program
+internal class Main
 {
     static void Main(string[] args)
     {
