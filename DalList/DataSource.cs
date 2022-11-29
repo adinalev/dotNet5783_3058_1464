@@ -92,7 +92,7 @@ internal static class DataSource
         {
             Order myOrder = new()
             {
-                ID = Config.NextProductNumber,
+                ID = Config.NextOrderNumber, // was originally nextproduct but changed it -- ok???
                 //^ wHY IS IT THE NEXT PRODUCT #???
                 CustomerName = CustomerName[rand.Next(CustomerName.Length)],
                 Email = Email[rand.Next(Email.Length)],

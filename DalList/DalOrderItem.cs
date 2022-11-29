@@ -4,9 +4,40 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dal
+using DO;
+namespace DAL;
+
+public class DalOrderItem
 {
-    internal class DalOrderItem
+    /// <summary>
+    /// public method to add an Order Item
+    /// </summary>
+    public int AddOrderItem(OrderItem oi)
     {
+
+    }
+
+    /// <summary>
+    /// public method to read an Order Item
+    /// </summary>
+    public void GetOrderItem(int _ID)
+    {
+
+    }
+
+    /// <summary>
+    /// public method to read the Order Item list
+    /// </summary>
+    public void GetOrderItemList()
+    {
+
+    }
+
+    /// <summary>
+    /// public method to delete an Order Item
+    /// </summary>
+    public void DeleteOrderItem(int _ID)
+    {
+
     }
 }
