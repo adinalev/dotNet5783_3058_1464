@@ -5,8 +5,7 @@ namespace Dal;
 internal static class DataSource
 {
     readonly static Random rand = new Random(); // readonly static field for generating random numbers
-                                                //internal static DataSource ds_instance { get; } // property to return a copy of the data
-
+                                               
     /* Note to grader: Professor Kelman told us we can skip straight to lists instead of arrays */
 
     /// <summary>
@@ -15,9 +14,6 @@ internal static class DataSource
     internal static List<Product> productList { get; set; } = new List<Product> { }; // creating a list of Products
     internal static List<Order> orderList { get; set; } = new List<Order> { }; // creating a list of Orders
     internal static List<OrderItem> orderItemList { get; set; } = new List<OrderItem> { }; // creating a list of OrderItems
-
-    //static DataSource() => s_instance = new DataSource();
-
 
     /// <summary>
     /// Creating an internal class Config which will help us create and organize 
@@ -60,7 +56,7 @@ internal static class DataSource
     private static void PushProducts()
     {
         // initializing 10 of the Products in our store
-        string[] NameOfProduct = { "Shampoo", "Hairbrush", "Advil", "Motrin", "Huggies Diapers", "Wet Wipes", "Eye Drops", "Cheerios", "Mascara", "DayQuil" }
+        string[] NameOfProduct = { "Shampoo", "Hairbrush", "Advil", "Motrin", "Huggies Diapers", "Wet Wipes", "Eye Drops", "Cheerios", "Mascara", "DayQuil" };
 
 
         for (int i = 0; i < 10; i++)
@@ -71,8 +67,9 @@ internal static class DataSource
                     ID = Config.NextProductNumber,
                     Name = NameOfProduct[rand.Next(NameOfProduct.Length)], // randomly choosing one of the 10 products listed above
                     Price = rand.Next(20, 100),
-                    // FINISH THIS!!!
-                });
+                    Category = (Enums.Category)rand.Next(0, 6),
+                    InStock = (i < 3) ? 0 : rand.Next(15, 30) // hardcoding the first 5% of products to be out of stock, the rest will have stock of between 15 and 30
+                }); 
         }
     }
 
@@ -83,9 +80,9 @@ internal static class DataSource
     private static void PushOrders()
     {
         //MAKE SURE I DID THE CORRECT AMOUNT OF NAMES
-        string[] CustomerName = { "Aiden", "Brenda", "Caroline", "David", "Edgar", "Frank", "Greg", "Harry", "Isaac", "Jack", "Kevin", "Larry", "Martin", "Nate", "Oliver", "Pamela", "Quinn", "Rachel", "Sara", "Theo", "Uzi", "Victor", "Warren", "Xander", "Yoel", "Zack" }
+        string[] CustomerName = { "Aiden", "Brenda", "Caroline", "David", "Edgar", "Frank", "Greg", "Harry", "Isaac", "Jack", "Kevin", "Larry", "Martin", "Nate", "Oliver", "Pamela", "Quinn", "Rachel", "Sara", "Theo", "Uzi", "Victor", "Warren", "Xander", "Yoel", "Zack" };
         string[] Email = { "aaa@mail.com", "bbb@mail.com", "ccc@mail.com", "ddd@mail.com", "eee@mail.com", "fff@mail.com", "ggg@mail.com", "hh@gamil.com",  "ii@gamil.com", "jj@gamil.com", "kk@gamil.com", "lll@mail.com",
-                                 "mmm@mail.com", "ooo@mail.com", "ppp@mail.com", "qqq@mail.com", "rrr@mail.com", "sss@mail.com","ttt@mail.com", "uuu@mail.com", "vvv@mail.com", "www@mail.com", "xxx@mail.com", "yyy@mail.com", "zzz@mail.com" }
+                                 "mmm@mail.com", "ooo@mail.com", "ppp@mail.com", "qqq@mail.com", "rrr@mail.com", "sss@mail.com","ttt@mail.com", "uuu@mail.com", "vvv@mail.com", "www@mail.com", "xxx@mail.com", "yyy@mail.com", "zzz@mail.com" };
         string[] Address = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" };
 
         for (int i = 0; i < 20; i++)
@@ -93,7 +90,7 @@ internal static class DataSource
             Order myOrder = new()
             {
                 ID = Config.NextOrderNumber, // was originally nextproduct but changed it -- ok???
-                //^ wHY IS IT THE NEXT PRODUCT #???
+                //^used to be nextproductnumber
                 CustomerName = CustomerName[rand.Next(CustomerName.Length)],
                 Email = Email[rand.Next(Email.Length)],
                 Address = Address[rand.Next(Address.Length)],
