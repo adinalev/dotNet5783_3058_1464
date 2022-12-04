@@ -20,7 +20,7 @@ internal class Program
         //DataSource dataSource = new DataSource(); // NEED TO DO THIS!!!!!
 
         int num1, num2;
-        string answer1, answer2;
+        string answer1, answer2, categories;
         DalProduct dProduct = new DalProduct();
         DalOrder dOrder = new DalOrder();
         DalOrderItem dOrderItem = new DalOrderItem();
@@ -29,7 +29,7 @@ internal class Program
         {
             Console.WriteLine("For actions on a Product, please press 1.\n"
                 + "For actions on an Order, please press 2. \n"
-                + "For actions on an Order Item, please press 3." +
+                + "For actions on an Order Item, please press 3.\n" +
                 "To exit, please press 0"
                 );
             answer1 = Console.ReadLine();
@@ -40,9 +40,9 @@ internal class Program
             Console.WriteLine("To add, please press 1.\n" +
                 "To view, please press 2. \n" +
                 "To view list, please press 3. \n" +
-                "To update, plesae press 4. \n" +
+                "To update, please press 4. \n" +
                 "To delete, please press 5. \n" +
-                "To exit, please press 0. \n");
+                "To exit, please press 0. ");
 
             num2 = Convert.ToInt32(Console.ReadLine());
             if (num2 == 0) break; // leave the while loop if the user inputs a 0
@@ -55,13 +55,17 @@ internal class Program
                 case (Enums.Type.PRODUCT, Enums.Action.ADD):
                     try
                     {
-                        Console.WriteLine("Enter the product name: \n");
+                        Console.WriteLine("Enter the product name: ");
                         product.Name = Console.ReadLine() ?? ""; // Read in the user's name. If they did not enter a name, input an empty string
-                        Console.WriteLine("Enter the product price: \n");
+                        Console.WriteLine("Enter the product price: ");
                         product.Price = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the product categroy: \n");
-                        product.Category = (Enums.Category)Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the stock number: \n"); // SHOULD WE FIND THIS OUT??
+                        Console.WriteLine("Enter the product category: ");
+                        categories = Console.ReadLine();
+                        if (Int32.TryParse(categories, out int cat))
+                        {
+                            product.Category = (Enums.Category)cat;
+                        }
+                        Console.WriteLine("Enter the stock number: ");
                         product.InStock = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Your new product ID is: " + dProduct.AddProduct(product));
                     }
@@ -74,11 +78,10 @@ internal class Program
                 case (Enums.Type.PRODUCT, Enums.Action.GET):
                     try
                     {
-                        Console.WriteLine("Enter the product ID#: \n");
+                        Console.WriteLine("Enter the product ID#: ");
                         int _ID = Convert.ToInt32(Console.ReadLine());
                         product = dProduct.ReadProduct(_ID);
-                        product.ToString();
-                        //^^ARE WE ALLOWED TO DO THAT???
+                        Console.WriteLine(product);
                     }
                     catch (Exception exc)
                     {
@@ -92,9 +95,7 @@ internal class Program
                         list = dProduct.ReadProductList();
                         foreach (Product prod in list)
                         {
-                            prod.ToString();
-                            //^^ARE WE ALLOWED TO DO THAT???
-                            Console.WriteLine("\n \n"); // separate each of the products by a line
+                            Console.WriteLine(prod); // separate each of the products by a line
                         }
                     }
                     catch (Exception exc)
@@ -106,15 +107,20 @@ internal class Program
                 case (Enums.Type.PRODUCT, Enums.Action.UPDATE):
                     try
                     {
-                        Console.WriteLine("Enter the product name: \n");
+                        Console.WriteLine("Enter the product name: ");
                         product.Name = Console.ReadLine();
-                        Console.WriteLine("Enter the product ID: \n");
+                        Console.WriteLine("Enter the product ID: ");
                         product.ID = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the product price: \n");
+                        Console.WriteLine("Enter the product price: ");
                         product.Price = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the product categroy: \n");
-                        product.Category = (Enums.Category)Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the stock number: \n"); // SHOULD WE FIND THIS OUT??
+                        Console.WriteLine("Enter the product category: ");
+                        categories = Console.ReadLine();
+                        if (Int32.TryParse(categories, out int cat))
+                        {
+                            product.Category = (Enums.Category)cat;
+                        }
+                        //product.Category = (Enums.Category)Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Enter the stock number: "); // SHOULD WE FIND THIS OUT??
                         product.InStock = Convert.ToInt32(Console.ReadLine());
                         dProduct.UpdateProduct(product);
                     }
@@ -126,7 +132,7 @@ internal class Program
                 case (Enums.Type.PRODUCT, Enums.Action.DELETE):
                     try
                     {
-                        Console.WriteLine("Enter the product ID: \n");
+                        Console.WriteLine("Enter the product ID: ");
                         int _ID = Convert.ToInt32(Console.ReadLine());
                         dProduct.DeleteProduct(_ID);
                     }
@@ -140,11 +146,11 @@ internal class Program
                 case (Enums.Type.ORDER, Enums.Action.ADD):
                     try
                     {
-                        Console.WriteLine("Enter the customer name: \n");
+                        Console.WriteLine("Enter the customer name: ");
                         order.CustomerName = Console.ReadLine();
-                        Console.WriteLine("Enter the customer email: \n");
+                        Console.WriteLine("Enter the customer email: ");
                         order.Email = Console.ReadLine();
-                        Console.WriteLine("Enter the customer address: \n");
+                        Console.WriteLine("Enter the customer address: ");
                         order.Address = Console.ReadLine();
                         // DATES!! FIGURE THEM OUT!!
                         Console.WriteLine("Your new order ID is: " + dOrder.AddOrder(order));
@@ -157,11 +163,10 @@ internal class Program
                 case (Enums.Type.ORDER, Enums.Action.GET):
                     try
                     {
-                        Console.WriteLine("Enter the order ID#: \n");
+                        Console.WriteLine("Enter the order ID#: ");
                         int _ID = Convert.ToInt32(Console.ReadLine());
                         order = dOrder.ReadOrder(_ID);
-                        order.ToString(); 
-                        //^^ARE WE ALLOWED TO DO THAT???
+                        Console.WriteLine(order);
                     }
                     catch (Exception exc)
                     {
@@ -175,9 +180,7 @@ internal class Program
                         list = dOrder.ReadOrderList();
                         foreach (Order ord in list)
                         {
-                            ord.ToString();
-                            //^^ARE WE ALLOWED TO DO THAT???
-                            Console.WriteLine("\n \n"); // separate each of the orders by a line
+                            Console.WriteLine(ord); // separate each of the orders by a line
                         }
                     }
                     catch (Exception exc)
@@ -189,13 +192,13 @@ internal class Program
                 case (Enums.Type.ORDER, Enums.Action.UPDATE):
                     try
                     {
-                        Console.WriteLine("Enter the order ID#: \n");
+                        Console.WriteLine("Enter the order ID#: ");
                         order.ID = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the customer name: \n");
+                        Console.WriteLine("Enter the customer name: ");
                         order.CustomerName = Console.ReadLine();
-                        Console.WriteLine("Enter the customer email: \n");
+                        Console.WriteLine("Enter the customer email: ");
                         order.Email = Console.ReadLine();
-                        Console.WriteLine("Enter the customer address: \n");
+                        Console.WriteLine("Enter the customer address: ");
                         order.Address = Console.ReadLine();
                         // DATES!! FIGURE THEM OUT!!
                         dOrder.UpdateOrder(order);
@@ -208,7 +211,7 @@ internal class Program
                 case (Enums.Type.ORDER, Enums.Action.DELETE):
                     try
                     {
-                        Console.WriteLine("Enter the order ID: \n");
+                        Console.WriteLine("Enter the order ID: ");
                         int _ID = Convert.ToInt32(Console.ReadLine());
                         dOrder.DeleteOrder(_ID);
                     }
@@ -222,13 +225,13 @@ internal class Program
                 case (Enums.Type.ORDERITEM, Enums.Action.ADD):
                     try
                     {
-                        Console.WriteLine("Enter the order ID#: \n");
+                        Console.WriteLine("Enter the order ID#: ");
                         item.OrderID = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the product ID#: \n");
+                        Console.WriteLine("Enter the product ID#: ");
                         item.ProductID = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the price per unit: \n");
+                        Console.WriteLine("Enter the price per unit: ");
                         item.Price = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the quantity: \n");
+                        Console.WriteLine("Enter the quantity: ");
                         item.Quantity = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Your new order item ID is: " + dOrderItem.AddOrderItem(item));
                     }
@@ -240,11 +243,10 @@ internal class Program
                 case (Enums.Type.ORDERITEM, Enums.Action.GET):
                     try
                     {
-                        Console.WriteLine("Enter the order item ID#: \n");
+                        Console.WriteLine("Enter the order item ID#: ");
                         int _ID = Convert.ToInt32(Console.ReadLine());
                         item = dOrderItem.ReadOrderItem(_ID);
-                        item.ToString();
-                        //^^ARE WE ALLOWED TO DO THAT???
+                        Console.WriteLine(item);
                     }
                     catch (Exception exc)
                     {
@@ -258,8 +260,7 @@ internal class Program
                         list = dOrderItem.ReadOrderItemList();
                         foreach (OrderItem it in list)
                         {
-                            it.ToString();
-                            //^^ARE WE ALLOWED TO DO THAT???
+                            Console.WriteLine(it);
                             Console.WriteLine("\n \n"); // separate each of the orders by a line
                         }
                     }
@@ -272,15 +273,15 @@ internal class Program
                 case (Enums.Type.ORDERITEM, Enums.Action.UPDATE):
                     try
                     {
-                        Console.WriteLine("Enter the order item ID#: \n");
+                        Console.WriteLine("Enter the order item ID#: ");
                         item.ID = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the order ID#: \n");
+                        Console.WriteLine("Enter the order ID#: ");
                         item.OrderID = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the product ID#: \n");
+                        Console.WriteLine("Enter the product ID#: ");
                         item.ProductID = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the price per unit: \n");
+                        Console.WriteLine("Enter the price per unit: ");
                         item.Price = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the quantity: \n");
+                        Console.WriteLine("Enter the quantity: ");
                         item.Quantity = Convert.ToInt32(Console.ReadLine());
                         dOrderItem.UpdateOrderItem(item);
                     }
@@ -292,7 +293,7 @@ internal class Program
                 case (Enums.Type.ORDERITEM, Enums.Action.DELETE):
                     try
                     {
-                        Console.WriteLine("Enter the order item ID: \n");
+                        Console.WriteLine("Enter the order item ID: ");
                         int _ID = Convert.ToInt32(Console.ReadLine());
                         dOrderItem.DeleteOrderItem(_ID);
                     }

@@ -90,7 +90,6 @@ internal static class DataSource
             Order myOrder = new()
             {
                 ID = Config.NextOrderNumber, // was originally nextproduct but changed it -- ok???
-                //^used to be nextproductnumber
                 CustomerName = CustomerName[rand.Next(CustomerName.Length)],
                 Email = Email[rand.Next(Email.Length)],
                 Address = Address[rand.Next(Address.Length)],
@@ -98,10 +97,26 @@ internal static class DataSource
                 ShippingDate = DateTime.MinValue,
                 DeliveryDate = DateTime.MinValue
             };
-            // DONT UNDERSTAND THIS:
-            myOrder.ShippingDate = myOrder.OrderDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L));
-            myOrder.DeliveryDate = myOrder.ShippingDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L));
+
+            if (i < 4) // hardcoding that 20% of orders don't have a ship date yet - only 80% of orders are meant to have a shipping date at first
+            {
+                orderList.Add(myOrder);
+            }
+
+            myOrder.ShippingDate = myOrder.OrderDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L)); // add a random time interval
+
+            if (i >= 4 && i < 10) // hardcoding 40% of current shipped items to not have a delivery date yet since only 60% are meant to have a deliery date
+            {
+                orderList.Add(myOrder);
+            }
+            myOrder.DeliveryDate = myOrder.ShippingDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L)); // add a random time interval
             orderList.Add(myOrder);
+
+
+            // DONT UNDERSTAND THIS:
+            //  myOrder.ShippingDate = myOrder.OrderDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L));
+            // myOrder.DeliveryDate = myOrder.ShippingDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L));
+            //  orderList.Add(myOrder);
         }
     }
     private static void PushOrderItems()
@@ -123,134 +138,3 @@ internal static class DataSource
     }
 
 }
-    //  Add internal static fields to index the first available element in each entity
-    // array.These should be initialized with zero values.
-    /* internal static int initialProductNumber = 0; // product number begins at 0
-        private static int nextProductNumber = { get => ++previousProductNumber; } */
-
-    //static variable that counts the amount of products. everytime you initialize an object out of htat class, have iD increment by 1 and set to iD.
-    // ID = Config::prodcount++; --> in the default constructor for product 
-
-
-//    public int createProduct(Product prod)
-//    {
-//        int oldID = productList[productList.Count - 1].ID; // getting the ID of the last product in the list
-//        prod.ID = oldID++;
-//        // IS THE ID A RUNNING NUMBER?!?!?!
-//        productList.Add(prod);
-//        return prod.ID;
-//    }
-
-//    public int createOrder(Order ord)
-//    {
-//        int oldID = orderList[orderList.Count - 1].ID; // getting the ID of the last product in the list
-//        ord.ID = oldID++;
-//        // IS THE ID A RUNNING NUMBER?!?!?!
-//        orderList.Add(ord);
-//        return ord.ID;
-//    }
-
-//    public int createOrderItem(OrderItem oi)
-//    {
-//        int oldID = orderItemList[orderItemList.Count - 1].ID; // getting the ID of the last product in the list
-//        oi.ID = oldID++;
-//        // IS THE ID A RUNNING NUMBER?!?!?!
-//        orderItemList.Add(oi);
-//        return oi.ID;
-//    }
-
-//    public Product readProduct(int _ID)
-//    {
-//        Product prod = productList.Find(x => x.ID == _ID);
-//        if (prod == null)
-//            throw new Exception("Product with ID# {0} does not exist", _ID);
-//        return prod;
-//    }
-//    public Order readOrder(int _ID)
-//    {
-//        Order ord = orderList.Find(x => x.ID == _ID);
-//        if (ord == null)
-//            throw new Exception("Order with ID# {0} does not exist", _ID);
-//        return ord;
-//    }
-//    public OrderItem readOrderItem(int _ID)
-//    {
-//        OrderItem oi = orderItemList.Find(x => x.ID == _ID);
-//        if (oi == null)
-//            throw new Exception("Order Item with ID# {0} does not exist", _ID);
-//        return oi;
-//    }
-
-//    public void deleteProduct(int _ID)
-//    {
-//        Product prod = productList.Find(x => x.ID == _ID);
-//        if (prod == null)
-//            throw new Exception("Product with ID# {0} does not exist", _ID);
-//        productList.Remove(prod);
-//    }
-//    public void deleteOrder(int _ID)
-//    {
-//        Order ord = orderList.Find(x => x.ID == _ID);
-//        if (ord == null)
-//            throw new Exception("Order with ID# {0} does not exist", _ID);
-//        orderList.Remove(ord);
-//    }
-//    public void deleteOrderItem(int _ID)
-//    {
-//        OrderItem oi = orderItemList.Find(x => x.ID == _ID);
-//        if (oi == null)
-//            throw new Exception("Order Item with ID# {0} does not exist", _ID);
-//        orderItemList.Remove(oi);
-//    }
-
-//    public void updateProduct(Product prod)
-//    {
-//        int index = productList.FindIndex(x => x.ID == prod.ID);
-//        if (index != -1)
-//            productList[index] = prod;
-//        else
-//            throw new Exception("Product with ID# {0} does not exist", prod.ID);
-
-//    }
-//    public void updateOrder(Order ord)
-//    {
-//        int index = orderList.FindIndex(x => x.ID == ord.ID);
-//        if (index != -1)
-//            orderList[index] = ord;
-//        else
-//            throw new Exception("Order with ID# {0} does not exist", ord.ID);
-//    }
-//    public void updateOrderItem(OrderItem oi)
-//    {
-//        int index = orderItemList.FindIndex(x => x.ID == oi.ID);
-//        if (index != -1)
-//            orderItemList[index] = oi;
-//        else
-//            throw new Exception("Order Item with ID# {0} does not exist", oi.ID);
-//    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
-
-
-
-//}
-
-
