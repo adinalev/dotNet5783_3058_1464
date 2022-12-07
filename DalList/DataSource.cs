@@ -79,7 +79,6 @@ internal static class DataSource
 
     private static void PushOrders()
     {
-        //MAKE SURE I DID THE CORRECT AMOUNT OF NAMES
         string[] CustomerName = { "Aiden", "Brenda", "Caroline", "David", "Edgar", "Frank", "Greg", "Harry", "Isaac", "Jack", "Kevin", "Larry", "Martin", "Nate", "Oliver", "Pamela", "Quinn", "Rachel", "Sara", "Theo", "Uzi", "Victor", "Warren", "Xander", "Yoel", "Zack" };
         string[] Email = { "aaa@mail.com", "bbb@mail.com", "ccc@mail.com", "ddd@mail.com", "eee@mail.com", "fff@mail.com", "ggg@mail.com", "hh@gamil.com",  "ii@gamil.com", "jj@gamil.com", "kk@gamil.com", "lll@mail.com",
                                  "mmm@mail.com", "ooo@mail.com", "ppp@mail.com", "qqq@mail.com", "rrr@mail.com", "sss@mail.com","ttt@mail.com", "uuu@mail.com", "vvv@mail.com", "www@mail.com", "xxx@mail.com", "yyy@mail.com", "zzz@mail.com" };
