@@ -89,7 +89,7 @@ public class DalOrderItem
     }
 
     /// <summary>
-    /// public method to update an Order Item
+    /// public method to update an Order Item using an Order Item ID#
     /// </summary>
     public void UpdateOrderItem(OrderItem item)
     {
@@ -105,6 +105,9 @@ public class DalOrderItem
         DataSource.orderItemList[index] = item;
     }
 
+    /// <summary>
+    /// public method to update an Order Item using the product ID and order ID
+    /// </summary>
     public void UpdateItemWithIDs(OrderItem item)
     {
         //OrderItem myItem = new OrderItem();
