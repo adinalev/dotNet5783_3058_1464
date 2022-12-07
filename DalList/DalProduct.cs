@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 using DO;
 namespace Dal;
 
-public class DalProduct //inherit from product?
+public class DalProduct
 {
-    //DataSource ds = DataSource.ds_instance; // to access the data -- HOW DO WE GET THIS?
-
     /// <summary>
     /// public method to add a Product
     /// </summary>
@@ -19,7 +17,7 @@ public class DalProduct //inherit from product?
         // case 1: Product does not exist yet. Need to intialize and add it.
         if (prod.ID == 0)
         {
-            prod.ID = DataSource.Config.NextProductNumber;
+            prod.ID = DataSource.Config.NextProductNumber; // set the product ID equal to the next auto-incremental ID from the static variable in DataSource
             DataSource.productList.Add(prod);
             return prod.ID;
         }
@@ -43,9 +41,10 @@ public class DalProduct //inherit from product?
     /// </summary>
     public Product ReadProduct(int _ID)
     {
-        Product prod = DataSource.productList.Find(x => x.ID == _ID);
-        if (prod.ID != _ID)
+        Product prod = DataSource.productList.Find(x => x.ID == _ID); // find a product with a matching ID#
+        if (prod.ID == 0)
         {
+            // if there is no product with a matching ID#
             throw new Exception("Product does not exist!\n");
         }
         return prod;
@@ -64,17 +63,18 @@ public class DalProduct //inherit from product?
     /// </summary>
     public void DeleteProduct(int _ID)
     {
-        int ind = 0;
+        int ind = -1;
+        // traverse through the product list and find a product with a matching ID#
         foreach (Product prod in DataSource.productList)
         {
             if (prod.ID == _ID)
             {
-                ind = DataSource.productList.IndexOf(prod);
+                ind = DataSource.productList.IndexOf(prod); // save the index of the product with the matching ID#
                 break;
             }
         }
-        Product DelProd = DataSource.productList[ind];
-        DataSource.productList.Remove(DelProd);
+        Product DelProd = DataSource.productList[ind]; // save the product in the found index
+        DataSource.productList.Remove(DelProd); // remove the product
     }
 
     /// <summary>
@@ -83,12 +83,13 @@ public class DalProduct //inherit from product?
     public void UpdateProduct(Product prod)
     {
         int _ID = prod.ID;
-        Product OldProd = DataSource.productList.Find(x => x.ID == _ID);
-        if (prod.ID != OldProd.ID)
+        Product OldProd = DataSource.productList.Find(x => x.ID == _ID); // find a product with a matching ID
+        if (OldProd.ID == 0) // prod.ID != OldProd.ID
         {
+            // if a product with a matching ID was not found
             throw new Exception("Product does not exist!\n");
         }
-        int index = DataSource.productList.IndexOf(OldProd);
-        DataSource.productList[index] = prod;
+        int index = DataSource.productList.IndexOf(OldProd); // save the index of the product with matching ID
+        DataSource.productList[index] = prod; // add the updated product to the found location of the old product
     }
 }

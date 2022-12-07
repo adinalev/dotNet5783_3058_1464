@@ -64,10 +64,10 @@ internal static class DataSource
             productList.Add(
                 new()
                 {
-                    ID = Config.NextProductNumber,
+                    ID = Config.NextProductNumber, // set the ID to the next auto-incremental ID#
                     Name = NameOfProduct[rand.Next(NameOfProduct.Length)], // randomly choosing one of the 10 products listed above
-                    Price = rand.Next(20, 100),
-                    Category = (Enums.Category)rand.Next(0, 6),
+                    Price = rand.Next(20, 100), // set the price between 20 and 100
+                    Category = (Enums.Category)rand.Next(0, 6), // choose a random category
                     InStock = (i < 3) ? 0 : rand.Next(15, 30) // hardcoding the first 5% of products to be out of stock, the rest will have stock of between 15 and 30
                 }); 
         }
@@ -89,10 +89,10 @@ internal static class DataSource
         {
             Order myOrder = new()
             {
-                ID = Config.NextOrderNumber, // was originally nextproduct but changed it -- ok???
-                CustomerName = CustomerName[rand.Next(CustomerName.Length)],
-                Email = Email[rand.Next(Email.Length)],
-                Address = Address[rand.Next(Address.Length)],
+                ID = Config.NextOrderNumber, // get the next auto-incremental ID#
+                CustomerName = CustomerName[rand.Next(CustomerName.Length)], // randomly choose a name from the list
+                Email = Email[rand.Next(Email.Length)], // randomly choose an email from the list
+                Address = Address[rand.Next(Address.Length)], // randomly choose an address from the list
                 OrderDate = DateTime.Now - new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L)),
                 ShippingDate = DateTime.MinValue,
                 DeliveryDate = DateTime.MinValue
@@ -103,38 +103,33 @@ internal static class DataSource
                 orderList.Add(myOrder);
             }
 
-            myOrder.ShippingDate = myOrder.OrderDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L)); // add a random time interval
-
             if (i >= 4 && i < 10) // hardcoding 40% of current shipped items to not have a delivery date yet since only 60% are meant to have a deliery date
             {
+                myOrder.ShippingDate = myOrder.OrderDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L)); // add a random time interval
                 orderList.Add(myOrder);
             }
-            myOrder.DeliveryDate = myOrder.ShippingDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L)); // add a random time interval
-            orderList.Add(myOrder);
-
-
-            // DONT UNDERSTAND THIS:
-            //  myOrder.ShippingDate = myOrder.OrderDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L));
-            // myOrder.DeliveryDate = myOrder.ShippingDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L));
-            //  orderList.Add(myOrder);
+            else if (i >= 10)
+            {
+                myOrder.ShippingDate = myOrder.OrderDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L)); // add a random time interval
+                myOrder.DeliveryDate = myOrder.ShippingDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L)); // add a random time interval
+                orderList.Add(myOrder);
+            }
         }
     }
     private static void PushOrderItems()
     {
         for (int i = 0; i < 40; i++)
         {
-            Product prod = productList[rand.Next(productList.Count)];
+            Product prod = productList[rand.Next(productList.Count)]; // choose a random product
             orderItemList.Add(
                 new OrderItem
                 {
-                    ID = Config.NextOrderItemNumber,
+                    ID = Config.NextOrderItemNumber, // set the ID equal to the next auto-incremental order item ID#
                     ProductID = prod.ID,
                     OrderID = rand.Next(Config.s_startOrderNumber, Config.s_startOrderNumber + orderList.Count),
                     Price = prod.Price,
                     Quantity = rand.Next(5)
-                    // what's up with the 5??
                 });
         }
     }
-
 }

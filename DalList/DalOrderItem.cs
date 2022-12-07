@@ -28,6 +28,16 @@ public class DalOrderItem
         {
             throw new Exception("Order item exists already!\n");
         }
+        int counter = 0;
+        foreach (OrderItem item2 in DataSource.orderItemList)
+        {
+            if (item2.OrderID == item.OrderID)
+                counter++;
+        }
+        if (counter > 4)
+        {
+            throw new Exception("Cannot have more than 4 types of products per order! \n");
+        }
         else
         // Order item is initialized but it's not in the list yet
         {
@@ -41,9 +51,10 @@ public class DalOrderItem
     /// </summary>
     public OrderItem ReadOrderItem(int _ID)
     {
-        OrderItem item = DataSource.orderItemList.Find(x => x.ID == _ID);
-        if (item.ID != _ID)
+        OrderItem item = DataSource.orderItemList.Find(x => x.ID == _ID); // find an order item with a matching ID#
+        if (item.ID == 0)
         {
+            // if there is no matching ID#
             throw new Exception("Order item does not exist!\n");
         }
         return item;
@@ -63,16 +74,18 @@ public class DalOrderItem
     public void DeleteOrderItem(int _ID)
     {
         int ind = 0;
+        // traverse through the order item list and find an order item with a matching ID#
         foreach (OrderItem item in DataSource.orderItemList)
         {
             if (item.ID == _ID)
             {
+                // saved the ID# of the matching order item
                 ind = DataSource.orderItemList.IndexOf(item);
                 break;
             }
         }
-        OrderItem DelItem = DataSource.orderItemList[ind];
-        DataSource.orderItemList.Remove(DelItem);
+        OrderItem DelItem = DataSource.orderItemList[ind]; // saved the item that you located above       
+        DataSource.orderItemList.Remove(DelItem); // delete that item from the order item list
     }
 
     /// <summary>
@@ -81,26 +94,55 @@ public class DalOrderItem
     public void UpdateOrderItem(OrderItem item)
     {
         int _ID = item.ID;
-        OrderItem OldItem = DataSource.orderItemList.Find(x => x.ID == _ID);
-        if (item.ID != OldItem.ID)
+        OrderItem OldItem = DataSource.orderItemList.Find(x => x.ID == _ID); // find an order item with a matching ID#
+        if (OldItem.ID == 0)
         {
             throw new Exception("Order item does not exist!\n");
         }
+        item.ProductID = OldItem.ProductID;
+        item.OrderID = OldItem.OrderID;
         int index = DataSource.orderItemList.IndexOf(OldItem);
         DataSource.orderItemList[index] = item;
+    }
+
+    public void UpdateItemWithIDs(OrderItem item)
+    {
+        //OrderItem myItem = new OrderItem();
+        int index = 0;
+        foreach (OrderItem it in DataSource.orderItemList)
+        {
+            if (it.ProductID == item.ProductID)
+            {
+                if (it.OrderID == item.OrderID)
+                {
+                    item.ID = it.ID;
+                    index = DataSource.orderItemList.IndexOf(it);
+                }
+            }
+        }
+        DataSource.orderItemList[index] = item;       
     }
 
     /// <summary>
     /// public method to GET/SET an Order Item given the product ID and order ID.
     /// </summary>
-    public OrderItem GetFromID(int prodID, int ordID)
+    public OrderItem ReadOrderItem(int prodID, int ordID)
     {
-        //OrderItem item = DataSource.orderItemList.Find(x => (x.ProductID == prodID) && (x => x.OrderID == ordID));
         OrderItem myItem = new OrderItem();
+        myItem.ID = -1;
+        // traverse through the the order item list and find an order item with a matching product ID# and order ID#
         foreach(OrderItem item in DataSource.orderItemList)
         {
-            if(item.ProductID == prodID && item.OrderID == ordID)
-                myItem = item;
+            if (item.ProductID == item.ProductID)
+            {
+                if (item.OrderID == item.OrderID)
+                    myItem = item;
+            }
+        }
+        // if a matching ID was not found
+        if (myItem.ID == -1)
+        {
+            throw new Exception("Order item does not exist!\n");
         }
         return myItem;
     }
@@ -108,16 +150,14 @@ public class DalOrderItem
     /// <summary>
     /// public method to get the list of items in an order, given the order ID
     /// </summary>
-    public List<OrderItem> GetListFromID(int ordID)
+    public List<OrderItem> ReadOrderItemList(int ordID)
     {
         List<OrderItem> myList = new List<OrderItem>();
         foreach (OrderItem item in DataSource.orderItemList)
         {
             if (item.OrderID == ordID)
-                myList.Add(item); // SHOULD WE USE APPEND HERE???
+                myList.Add(item); 
         }
         return myList;
     }
-
-   // public 
 }
