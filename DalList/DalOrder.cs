@@ -4,16 +4,22 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using DalApi;
 using DO;
 namespace Dal;
-public class DalOrder
+internal class DalOrder : IOrder
 {
     readonly static Random rand = new Random(); // readonly static field for generating random numbers
+
+    DalOrder(Order ord)
+    {
+
+    }
 
     /// <summary>
     /// public method to add an Order
     /// </summary>
-    public int AddOrder(Order ord)
+    public int Add(DO.Order ord)
     {
         //case 1: Order does not exist yet, needs to be initialized
         ord.OrderDate = DateTime.Now - new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L));
@@ -44,9 +50,9 @@ public class DalOrder
     ///// <summary>
     ///// public method to read an Order
     ///// </summary>
-    public Order ReadOrder(int _ID)
+    public DO.Order GetByID(int _ID)
     {
-        Order ord = DataSource.orderList.Find(x => x.ID == _ID); // find an order with a matching ID
+        DO.Order ord = DataSource.orderList.Find(x => x.ID == _ID); // find an order with a matching ID
         if (ord.ID != _ID)
         {
             throw new Exception("Order does not exist!\n");
@@ -57,7 +63,7 @@ public class DalOrder
     /// <summary>
     /// public method to read the Order list
     /// </summary>
-    public List<Order> ReadOrderList()
+    public IEnumerable<Order> GetAll()
     {
         return DataSource.orderList.ToList();
     }
@@ -65,11 +71,11 @@ public class DalOrder
     /// <summary>
     /// public method to delete an Order
     /// </summary>
-    public void DeleteOrder(int _ID)
+    public void Delete(int _ID)
     {
         int ind = 0;
         // traverse through the order list to find an order with a matching ID#
-        foreach (Order ord in DataSource.orderList)
+        foreach (DO.Order ord in DataSource.orderList)
         {
             if (ord.ID == _ID) 
             {
@@ -79,7 +85,7 @@ public class DalOrder
             }
         }
         // retrieve the order sitting in the found index
-        Order DelOrd = DataSource.orderList[ind];
+        DO.Order DelOrd = DataSource.orderList[ind];
         // delete that order
         DataSource.orderList.Remove(DelOrd);
     }
@@ -87,10 +93,10 @@ public class DalOrder
     /// <summary>
     /// public method to update an Order
     /// </summary>
-    public void UpdateOrder(Order ord)
+    public void Update(DO.Order ord)
     {
         int _ID = ord.ID;
-        Order OldOrd = DataSource.orderList.Find(x => x.ID == _ID); // find an order with a matching ID#
+        DO.Order OldOrd = DataSource.orderList.Find(x => x.ID == _ID); // find an order with a matching ID#
         if (ord.ID != OldOrd.ID)
         {
             // if no order is found with a matching ID#, there is no order to update

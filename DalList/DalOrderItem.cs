@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using DalApi;
 using DO;
 namespace Dal;
 
-public class DalOrderItem
+internal class DalOrderItem : IOrderItem
 {
     /// <summary>
     /// public method to add an Order Item
     /// </summary>
-    public int AddOrderItem(OrderItem item)
+    public int Add(DO.OrderItem item)
     {
         //case 1: Order item does not exist yet, needs to be initialized
         if (item.ID == 0)
@@ -29,7 +30,7 @@ public class DalOrderItem
             throw new Exception("Order item exists already!\n");
         }
         int counter = 0;
-        foreach (OrderItem item2 in DataSource.orderItemList)
+        foreach (DO.OrderItem item2 in DataSource.orderItemList)
         {
             if (item2.OrderID == item.OrderID)
                 counter++;
@@ -49,9 +50,9 @@ public class DalOrderItem
     /// <summary>
     /// public method to read an Order Item
     /// </summary>
-    public OrderItem ReadOrderItem(int _ID)
+    public DO.OrderItem GetByID(int _ID)
     {
-        OrderItem item = DataSource.orderItemList.Find(x => x.ID == _ID); // find an order item with a matching ID#
+        DO.OrderItem item = DataSource.orderItemList.Find(x => x.ID == _ID); // find an order item with a matching ID#
         if (item.ID == 0)
         {
             // if there is no matching ID#
@@ -63,7 +64,7 @@ public class DalOrderItem
     /// <summary>
     /// public method to read the Order Item list
     /// </summary>
-    public List<OrderItem> ReadOrderItemList()
+    public IEnumerable<OrderItem> GetAll()
     {
         return DataSource.orderItemList.ToList();
     }
@@ -71,11 +72,11 @@ public class DalOrderItem
     /// <summary>
     /// public method to delete an Order Item
     /// </summary>
-    public void DeleteOrderItem(int _ID)
+    public void Delete(int _ID)
     {
         int ind = 0;
         // traverse through the order item list and find an order item with a matching ID#
-        foreach (OrderItem item in DataSource.orderItemList)
+        foreach (DO.OrderItem item in DataSource.orderItemList)
         {
             if (item.ID == _ID)
             {
@@ -84,17 +85,17 @@ public class DalOrderItem
                 break;
             }
         }
-        OrderItem DelItem = DataSource.orderItemList[ind]; // saved the item that you located above       
+        DO.OrderItem DelItem = DataSource.orderItemList[ind]; // saved the item that you located above       
         DataSource.orderItemList.Remove(DelItem); // delete that item from the order item list
     }
 
     /// <summary>
     /// public method to update an Order Item using an Order Item ID#
     /// </summary>
-    public void UpdateOrderItem(OrderItem item)
+    public void Update(DO.OrderItem item)
     {
         int _ID = item.ID;
-        OrderItem OldItem = DataSource.orderItemList.Find(x => x.ID == _ID); // find an order item with a matching ID#
+        DO.OrderItem OldItem = DataSource.orderItemList.Find(x => x.ID == _ID); // find an order item with a matching ID#
         if (OldItem.ID == 0)
         {
             throw new Exception("Order item does not exist!\n");
@@ -108,33 +109,33 @@ public class DalOrderItem
     /// <summary>
     /// public method to update an Order Item using the product ID and order ID
     /// </summary>
-    public void UpdateItemWithIDs(OrderItem item)
-    {
-        //OrderItem myItem = new OrderItem();
-        int index = 0;
-        foreach (OrderItem it in DataSource.orderItemList)
-        {
-            if (it.ProductID == item.ProductID)
-            {
-                if (it.OrderID == item.OrderID)
-                {
-                    item.ID = it.ID;
-                    index = DataSource.orderItemList.IndexOf(it);
-                }
-            }
-        }
-        DataSource.orderItemList[index] = item;       
-    }
+    //public void Update(DO.OrderItem item) // WHAT DO I DO ABOUT THIS UPDATE FUCNTION?! USED TO BE CALLED DIFF NAMES BC CANNOT OVERLOAD
+    //{
+    //    //OrderItem myItem = new OrderItem();
+    //    int index = 0;
+    //    foreach (DO.OrderItem it in DataSource.orderItemList)
+    //    {
+    //        if (it.ProductID == item.ProductID)
+    //        {
+    //            if (it.OrderID == item.OrderID)
+    //            {
+    //                item.ID = it.ID;
+    //                index = DataSource.orderItemList.IndexOf(it);
+    //            }
+    //        }
+    //    }
+    //    DataSource.orderItemList[index] = item;       
+    //}
 
     /// <summary>
     /// public method to GET/SET an Order Item given the product ID and order ID.
     /// </summary>
-    public OrderItem ReadOrderItem(int prodID, int ordID)
+    public DO.OrderItem GetByID(int prodID, int ordID)
     {
-        OrderItem myItem = new OrderItem();
+        DO.OrderItem myItem = new OrderItem();
         myItem.ID = -1;
         // traverse through the the order item list and find an order item with a matching product ID# and order ID#
-        foreach(OrderItem item in DataSource.orderItemList)
+        foreach(DO.OrderItem item in DataSource.orderItemList)
         {
             if (item.ProductID == item.ProductID)
             {
@@ -153,6 +154,9 @@ public class DalOrderItem
     /// <summary>
     /// public method to get the list of items in an order, given the order ID
     /// </summary>
+
+
+    // HOW DO I CHANGE THIS TO GET ALL BECAUSE NEED TO HAVE AN INPUT
     public List<OrderItem> ReadOrderItemList(int ordID)
     {
         List<OrderItem> myList = new List<OrderItem>();

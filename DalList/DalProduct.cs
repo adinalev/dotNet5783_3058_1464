@@ -4,15 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using DalApi;
 using DO;
 namespace Dal;
-
-public class DalProduct
+internal class DalProduct : IProduct
 {
     /// <summary>
     /// public method to add a Product
     /// </summary>
-    public int AddProduct(Product prod)
+    public int Add(DO.Product prod)
     {
         // case 1: Product does not exist yet. Need to intialize and add it.
         if (prod.ID == 0)
@@ -39,9 +39,9 @@ public class DalProduct
     /// <summary>
     /// public method to read a Product
     /// </summary>
-    public Product ReadProduct(int _ID)
+    public DO.Product GetByID(int _ID) // USED TO BE READPRODUCT
     {
-        Product prod = DataSource.productList.Find(x => x.ID == _ID); // find a product with a matching ID#
+        DO.Product prod = DataSource.productList.Find(x => x.ID == _ID); // find a product with a matching ID#
         if (prod.ID == 0)
         {
             // if there is no product with a matching ID#
@@ -53,7 +53,7 @@ public class DalProduct
     /// <summary>
     /// public method to read the Product list
     /// </summary>
-    public List<Product> ReadProductList()
+    public IEnumerable<Product> GetAll() // USED TO BE CALLED READPRODUCTLIST
     {
         return DataSource.productList.ToList();
     }
@@ -61,11 +61,11 @@ public class DalProduct
     /// <summary>
     /// public method to delete a Product
     /// </summary>
-    public void DeleteProduct(int _ID)
+    public void Delete(int _ID) // USED TO BE CALLED DELETE PRODUCT
     {
         int ind = -1;
         // traverse through the product list and find a product with a matching ID#
-        foreach (Product prod in DataSource.productList)
+        foreach (DO.Product prod in DataSource.productList)
         {
             if (prod.ID == _ID)
             {
@@ -73,17 +73,17 @@ public class DalProduct
                 break;
             }
         }
-        Product DelProd = DataSource.productList[ind]; // save the product in the found index
+        DO.Product DelProd = DataSource.productList[ind]; // save the product in the found index
         DataSource.productList.Remove(DelProd); // remove the product
     }
 
     /// <summary>
     /// public method to update a Product
     /// </summary>
-    public void UpdateProduct(Product prod)
+    public void Update(DO.Product prod) // USED TO BE CALLED UPDATEPRODUCT
     {
         int _ID = prod.ID;
-        Product OldProd = DataSource.productList.Find(x => x.ID == _ID); // find a product with a matching ID
+        DO.Product OldProd = DataSource.productList.Find(x => x.ID == _ID); // find a product with a matching ID
         if (OldProd.ID == 0) // prod.ID != OldProd.ID
         {
             // if a product with a matching ID was not found
