@@ -12,7 +12,7 @@ namespace Dal;
 /// </summary>
 sealed public class DalList : IDal
 {
-    public IProduct Product => new DalProduct();
-    public IOrder Order => new DalOrder();
-    public IOrderItem OrderItem => new DalOrderItem();
+    public IProduct dalProduct => new DalProduct();
+    public IOrder dalOrder => new DalOrder();
+    public IOrderItem dalOrderItem => new DalOrderItem();
 }

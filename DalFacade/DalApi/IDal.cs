@@ -9,7 +9,7 @@ using DO;
 
 public interface IDal
 {
-    IProduct Product { get; }
-    IOrder Order { get; }
-    IOrderItem OrderItem { get; }
+    IProduct dalProduct { get; }
+    IOrder dalOrder { get; }
+    IOrderItem dalOrderItem { get; }
 }

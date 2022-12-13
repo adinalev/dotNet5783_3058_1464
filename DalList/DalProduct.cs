@@ -12,12 +12,13 @@ internal class DalProduct : IProduct
     /// <summary>
     /// public method to add a Product
     /// </summary>
-    public int Add(DO.Product prod)
+    public int Add(Product prod)
     {
         // case 1: Product does not exist yet. Need to intialize and add it.
         if (prod.ID == 0)
         {
-            prod.ID = DataSource.Config.NextProductNumber; // set the product ID equal to the next auto-incremental ID from the static variable in DataSource
+            // prod.ID = DataSource.Config.NextProductNumber; // set the product ID equal to the next auto-incremental ID from the static variable in DataSource
+            prod.ID = ++productCounter;
             DataSource.productList.Add(prod);
             return prod.ID;
         }
@@ -26,7 +27,7 @@ internal class DalProduct : IProduct
         int index = DataSource.productList.IndexOf(prod);
         if (index != -1)
         {
-            throw new Exception("Product exists already!\n");
+            throw new AlreadyExistsException(prod);
         }
         else
         // Product is initialized but it's not in the list yet
@@ -45,7 +46,7 @@ internal class DalProduct : IProduct
         if (prod.ID == 0)
         {
             // if there is no product with a matching ID#
-            throw new Exception("Product does not exist!\n");
+            throw new DoesNotExistException(prod);
         }
         return prod;
     }
@@ -87,7 +88,7 @@ internal class DalProduct : IProduct
         if (OldProd.ID == 0) // prod.ID != OldProd.ID
         {
             // if a product with a matching ID was not found
-            throw new Exception("Product does not exist!\n");
+            throw new DoesNotExistException(prod);
         }
         int index = DataSource.productList.IndexOf(OldProd); // save the index of the product with matching ID
         DataSource.productList[index] = prod; // add the updated product to the found location of the old product

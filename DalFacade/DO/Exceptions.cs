@@ -6,29 +6,20 @@ using System.Threading.Tasks;
 
 namespace DO;
 
-[Serializable]
-public class DuplicateID : Exception
+[Serializable] // NEED THIS??
+public class DoesNotExistException : Exception
 {
-    public DuplicateID() { } // default ctor
-    public DuplicateID(string message) : base(message) { } // ctor
-    public DuplicateID(string message, Exception inner) : base(message, inner) { }
-
+    public DoesNotExistException(Object obj) : base($"The {obj.GetType().Name} does not exist.") { }
 }
 
 [Serializable]
-public class DoesNotExist : Exception
+public class AlreadyExistsException : Exception
 {
-    public DoesNotExist() { } // default ctor
-    public DoesNotExist(string message) : base(message) { } // ctor
-    public DoesNotExist(string message, Exception inner) : base(message, inner) { }
-
+    public AlreadyExistsException(Object obj) : base($"The {obj.GetType().Name} already exists. ") { }
 }
 
 [Serializable]
-public class IDMissing : Exception
+public class TooManyProductsException : Exception
 {
-    public IDMissing() { } // default ctor
-    public IDMissing(string message) : base(message) { } // ctor
-    public IDMissing(string message, Exception inner) : base(message, inner) { }
-
+    public TooManyProductsException() : base("Cannot have more than 4 types of products per order! ") { }
 }

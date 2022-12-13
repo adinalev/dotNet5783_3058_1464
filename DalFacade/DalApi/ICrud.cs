@@ -5,9 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DalApi;
-public interface ICrud<T> // SHOULD WE ADD WHERE T : STRUCT
+public interface ICrud<T> where T : struct // do we need this??
 {
-    // ARE WE SUPPOSED TO BE <T>
     int Add(T entity);
     void Delete(int ID);
     void Update(T entity);

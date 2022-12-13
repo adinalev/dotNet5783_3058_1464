@@ -10,20 +10,22 @@ namespace DO
 {
     public struct Order
     {
-        static int counter = 0;
-        public Order()
-        {
-            ID = ++counter;
-            CustomerName = "";
-            Email = "";
-            Address = "";
-            OrderDate = DateTime.MinValue;
-            ShippingDate = DateTime.MinValue;
-            DeliveryDate = DateTime.MinValue;
-        }
-        // create another constructor that takes in all the variables besides for ID and then sets the ID according to the next value of counter
+        static int orderCounter = 0;
 
-        public int ID { get; set; } 
+        //public Order()
+        //{
+        //    CustomerName = "";
+        //    Email = "";
+        //    Address = "";
+        //    OrderDate = DateTime.MinValue;
+        //    ShippingDate = DateTime.MinValue;
+        //    DeliveryDate = DateTime.MinValue;
+        //}
+
+        /// <summary>
+        /// unique ID for order that's auto-incremental
+        /// </summary>
+        public int ID { get; init; } = ++orderCounter;
         public string CustomerName { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }

@@ -10,7 +10,12 @@ namespace DO
 {
     public struct OrderItem
     {
-        public int ID { get; set; } 
+        static int itemCounter = 0;
+
+        /// <summary>
+        /// unique ID for order item that's auto-incremental
+        /// </summary>
+        public int ID { get; init; } = ++itemCounter;
         public int OrderID { get; set; } // Order's identifier
         public int ProductID { get; set; } // Product's identifier
         public double Price { get; set; }

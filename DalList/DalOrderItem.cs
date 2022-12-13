@@ -27,7 +27,7 @@ internal class DalOrderItem : IOrderItem
         int index = DataSource.orderItemList.IndexOf(item);
         if (index != -1)
         {
-            throw new Exception("Order item exists already!\n");
+            throw new AlreadyExistsException(item);
         }
         int counter = 0;
         foreach (DO.OrderItem item2 in DataSource.orderItemList)
@@ -37,7 +37,7 @@ internal class DalOrderItem : IOrderItem
         }
         if (counter > 4)
         {
-            throw new Exception("Cannot have more than 4 types of products per order! \n");
+            throw new TooManyProductsException();
         }
         else
         // Order item is initialized but it's not in the list yet
@@ -56,7 +56,7 @@ internal class DalOrderItem : IOrderItem
         if (item.ID == 0)
         {
             // if there is no matching ID#
-            throw new Exception("Order item does not exist!\n");
+            throw new DoesNotExistException(item);
         }
         return item;
     }
@@ -98,7 +98,7 @@ internal class DalOrderItem : IOrderItem
         DO.OrderItem OldItem = DataSource.orderItemList.Find(x => x.ID == _ID); // find an order item with a matching ID#
         if (OldItem.ID == 0)
         {
-            throw new Exception("Order item does not exist!\n");
+            throw new DoesNotExistException(item);
         }
         item.ProductID = OldItem.ProductID;
         item.OrderID = OldItem.OrderID;
@@ -109,28 +109,28 @@ internal class DalOrderItem : IOrderItem
     /// <summary>
     /// public method to update an Order Item using the product ID and order ID
     /// </summary>
-    //public void Update(DO.OrderItem item) // WHAT DO I DO ABOUT THIS UPDATE FUCNTION?! USED TO BE CALLED DIFF NAMES BC CANNOT OVERLOAD
-    //{
-    //    //OrderItem myItem = new OrderItem();
-    //    int index = 0;
-    //    foreach (DO.OrderItem it in DataSource.orderItemList)
-    //    {
-    //        if (it.ProductID == item.ProductID)
-    //        {
-    //            if (it.OrderID == item.OrderID)
-    //            {
-    //                item.ID = it.ID;
-    //                index = DataSource.orderItemList.IndexOf(it);
-    //            }
-    //        }
-    //    }
-    //    DataSource.orderItemList[index] = item;       
-    //}
+    public void UpdateByIDs(DO.OrderItem item) // WHAT DO I DO ABOUT THIS UPDATE FUCNTION?! USED TO BE CALLED DIFF NAMES BC CANNOT OVERLOAD
+    {
+        //OrderItem myItem = new OrderItem();
+        int index = 0;
+        foreach (DO.OrderItem it in DataSource.orderItemList)
+        {
+            if (it.ProductID == item.ProductID)
+            {
+                if (it.OrderID == item.OrderID)
+                {
+                    item.ID = it.ID;
+                    index = DataSource.orderItemList.IndexOf(it);
+                }
+            }
+        }
+        DataSource.orderItemList[index] = item;
+    }
 
     /// <summary>
     /// public method to GET/SET an Order Item given the product ID and order ID.
     /// </summary>
-    public DO.OrderItem GetByID(int prodID, int ordID)
+    public OrderItem GetByIDs(int prodID, int ordID)
     {
         DO.OrderItem myItem = new OrderItem();
         myItem.ID = -1;
@@ -146,7 +146,7 @@ internal class DalOrderItem : IOrderItem
         // if a matching ID was not found
         if (myItem.ID == -1)
         {
-            throw new Exception("Order item does not exist!\n");
+            throw new DoesNotExistException(myItem);
         }
         return myItem;
     }
@@ -157,7 +157,7 @@ internal class DalOrderItem : IOrderItem
 
 
     // HOW DO I CHANGE THIS TO GET ALL BECAUSE NEED TO HAVE AN INPUT
-    public List<OrderItem> ReadOrderItemList(int ordID)
+    public IEnumerable<OrderItem> GetAllByID(int ordID)
     {
         List<OrderItem> myList = new List<OrderItem>();
         foreach (OrderItem item in DataSource.orderItemList)

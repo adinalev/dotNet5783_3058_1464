@@ -11,11 +11,6 @@ internal class DalOrder : IOrder
 {
     readonly static Random rand = new Random(); // readonly static field for generating random numbers
 
-    DalOrder(Order ord)
-    {
-
-    }
-
     /// <summary>
     /// public method to add an Order
     /// </summary>
@@ -37,7 +32,7 @@ internal class DalOrder : IOrder
         if (index != -1) // the index will be -1 if there is no order with the same ID#
         {
             // entering this loop means the order already exists since the ID# exists already
-            throw new Exception("Order exists already!\n");
+            throw new AlreadyExistsException(ord);
         }
         else
         // Order is initialized but it's not in the list yet
@@ -55,7 +50,7 @@ internal class DalOrder : IOrder
         DO.Order ord = DataSource.orderList.Find(x => x.ID == _ID); // find an order with a matching ID
         if (ord.ID != _ID)
         {
-            throw new Exception("Order does not exist!\n");
+            throw new DoesNotExistException(ord);
         }
         return ord;
     }
@@ -100,7 +95,7 @@ internal class DalOrder : IOrder
         if (ord.ID != OldOrd.ID)
         {
             // if no order is found with a matching ID#, there is no order to update
-            throw new Exception("Order does not exist!\n");
+            throw new DoesNotExistException(ord);
         }
         // ensure that the dates stay the same
         ord.OrderDate = OldOrd.OrderDate;

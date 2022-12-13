@@ -9,5 +9,7 @@ namespace DalApi;
 
 public interface IOrderItem : ICrud<OrderItem>
 {
-
+    public OrderItem GetByIDs(int _productID, int _orderID);
+    public void UpdateByIDs(OrderItem item);
+    public IEnumerable<OrderItem> GetAllByID(int ID); // DO WE NEED THIS?!?!?!?
 }

@@ -19,23 +19,23 @@ internal static class DataSource
     /// Creating an internal class Config which will help us create and organize 
     /// our Products, Orders, and OrderItems
     /// </summary>
-    internal static class Config
-    {
-        // variables for Product:
-        internal const int s_startProductNumber = 100000; // Product ID needs to be 6 digits long, so the first possible ID is 100000
-        private static int s_nextProductNumber = s_startProductNumber;
-        internal static int NextProductNumber { get => ++s_nextProductNumber; } // static variable which increases by 1 each time a get function is called on it
+    //internal static class Config
+    //{
+    //    // variables for Product:
+    //    internal const int s_startProductNumber = 100000; // Product ID needs to be 6 digits long, so the first possible ID is 100000
+    //    private static int s_nextProductNumber = s_startProductNumber;
+    //    internal static int NextProductNumber { get => ++s_nextProductNumber; } // static variable which increases by 1 each time a get function is called on it
 
-        // variables for Order:
-        internal const int s_startOrderNumber = 1000; // order numbers are each 4 digits long
-        private static int s_nextOrderNumber = s_startOrderNumber;
-        internal static int NextOrderNumber { get => ++s_nextOrderNumber; } // static variable which increases by 1 each time a get function is called on it
+    //    // variables for Order:
+    //    internal const int s_startOrderNumber = 1000; // order numbers are each 4 digits long
+    //    private static int s_nextOrderNumber = s_startOrderNumber;
+    //    internal static int NextOrderNumber { get => ++s_nextOrderNumber; } // static variable which increases by 1 each time a get function is called on it
 
-        // variables for OrderItem
-        internal const int s_startOrderItemNumber = 0;
-        private static int s_nextOrderItemNumber = s_startOrderItemNumber;
-        internal static int NextOrderItemNumber { get => ++s_nextOrderItemNumber; } // static variable which increases by 1 each time a get function is called on it
-    }
+    //    // variables for OrderItem
+    //    internal const int s_startOrderItemNumber = 0;
+    //    private static int s_nextOrderItemNumber = s_startOrderItemNumber;
+    //    internal static int NextOrderItemNumber { get => ++s_nextOrderItemNumber; } // static variable which increases by 1 each time a get function is called on it
+    //}
 
     /// <summary>
     /// Creating the class methods
