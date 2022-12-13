@@ -15,7 +15,6 @@
 	  <ProjectReference Include="..\DalList\DalList.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="BlApi\" />
 	  <Folder Include="BlImplementation\" />
 	</ItemGroup>
 </Project>

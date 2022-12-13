@@ -18,7 +18,7 @@ internal class DalOrderItem : IOrderItem
         //case 1: Order item does not exist yet, needs to be initialized
         if (item.ID == 0)
         {
-            item.ID = DataSource.Config.NextOrderItemNumber;
+            item.ID = OrderItem.itemCounter++;
             DataSource.orderItemList.Add(item);
             return item.ID;
         }

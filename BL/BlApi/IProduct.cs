@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO;
-public class BoOrder
+using BO;
+namespace BlApi;
+public interface IProduct
 {
-    // add properties!!!   
+
 }

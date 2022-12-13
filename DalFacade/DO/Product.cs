@@ -10,7 +10,15 @@ namespace DO
 {
     public struct Product
     {
-        static int productCounter = 100000;
+        public static int productCounter = 100000;
+
+        public Product()
+        {
+            Name = "";
+            Price = 0;
+            InStock = 0;
+            Category = Enums.Category.MEDICINE;
+        }
 
         /// <summary>
         /// unique ID for a product (autoincremental)

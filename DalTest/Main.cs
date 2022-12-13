@@ -19,9 +19,6 @@ internal class Program
 
         int num1, num2;
         string answer1, categories;
-        //IDal dProduct = new DalProduct(); // creating an instance of DalProduct in order to call its methods
-        // dOrder = new DalOrder(); // creating an instance of DalOrder in order to call its methods
-        //DalOrderItem dOrderItem = new DalOrderItem(); // creating an instance of DalOrderItem in order to call its methods
 
         while (true)
         {

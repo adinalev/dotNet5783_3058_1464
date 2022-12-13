@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace BO;
-public class BoProduct
+public class Enums
 {
-    // add properties!!!   
+    // what enums do we put here??
 }

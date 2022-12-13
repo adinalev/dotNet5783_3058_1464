@@ -10,17 +10,17 @@ namespace DO
 {
     public struct Order
     {
-        static int orderCounter = 0;
+        public static int orderCounter = 1000;
 
-        //public Order()
-        //{
-        //    CustomerName = "";
-        //    Email = "";
-        //    Address = "";
-        //    OrderDate = DateTime.MinValue;
-        //    ShippingDate = DateTime.MinValue;
-        //    DeliveryDate = DateTime.MinValue;
-        //}
+        public Order()
+        {
+            CustomerName = "";
+            Email = "";
+            Address = "";
+            OrderDate = DateTime.MinValue;
+            ShippingDate = DateTime.MinValue;
+            DeliveryDate = DateTime.MinValue;
+        }
 
         /// <summary>
         /// unique ID for order that's auto-incremental

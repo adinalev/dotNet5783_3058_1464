@@ -22,7 +22,7 @@ internal class DalOrder : IOrder
         ord.DeliveryDate = ord.ShippingDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L)); // add a random time interval to the shipping date to get the delivery date
         if (ord.ID == 0)
         {
-            ord.ID = DataSource.Config.NextOrderNumber; // set the ID# equal to the next auto-incremental number from the static variable in DataSource
+            ord.ID = Order.orderCounter++;
             DataSource.orderList.Add(ord);
             return ord.ID;
         }

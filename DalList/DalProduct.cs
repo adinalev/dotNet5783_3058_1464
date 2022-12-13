@@ -12,13 +12,13 @@ internal class DalProduct : IProduct
     /// <summary>
     /// public method to add a Product
     /// </summary>
-    public int Add(Product prod)
+    public int Add(DO.Product prod)
     {
         // case 1: Product does not exist yet. Need to intialize and add it.
         if (prod.ID == 0)
         {
             // prod.ID = DataSource.Config.NextProductNumber; // set the product ID equal to the next auto-incremental ID from the static variable in DataSource
-            prod.ID = ++productCounter;
+            prod.ID = Product.productCounter++;
             DataSource.productList.Add(prod);
             return prod.ID;
         }

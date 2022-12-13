@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BO;
-public class BoOrdeItem
+using BO;
+namespace BlApi;
+public interface IOrder
 {
-    // add properties!!!   
+
 }
