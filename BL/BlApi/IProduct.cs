@@ -8,5 +8,12 @@ using BO;
 namespace BlApi;
 public interface IProduct
 {
+    public DO.Product AddProduct(Product product); // IS IT SUPPOSED TO RETURN AN INT?!?!??!!!?
+    public void DeleteProduct(int _id);
+    public DO.Product UpdateProduct(Product product);
+    public DO.Product GetProduct(int _id);
+    public IEnumerable<DO.Product> GetProductList();
+
+
 
 }
