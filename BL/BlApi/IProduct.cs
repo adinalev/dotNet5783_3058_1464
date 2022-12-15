@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using BO;
 namespace BlApi;
+/// <summary>
+/// Interface for the BoEntity "Product"
+/// </summary>
 public interface IProduct
 {
     public DO.Product AddProduct(Product product); // IS IT SUPPOSED TO RETURN AN INT?!?!??!!!?

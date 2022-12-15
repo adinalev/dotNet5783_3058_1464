@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 namespace BlApi;
+/// <summary>
+/// Interface for the BoEntity "OrderItem"
+/// </summary>
 public interface IOrderItem
 {
     public DO.OrderItem AddOrderItem(OrderItem item); // IS IT SUPPOSED TO RETURN AN INT?!?!??!!!?

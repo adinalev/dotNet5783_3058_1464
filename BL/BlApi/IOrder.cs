@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using BO;
 namespace BlApi;
+/// <summary>
+/// Interface for the BoEntity "Order"
+/// </summary>
 public interface IOrder
 {
     public DO.Order AddOrder(Order order); // IS IT SUPPOSED TO RETURN AN INT?!?!??!!!?
