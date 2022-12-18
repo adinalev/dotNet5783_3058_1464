@@ -3,7 +3,11 @@ using DalApi;
 using Dal;
 namespace BlImplementation;
 
-internal class Order : BlApi.IOrder //Class Order, inherits from IOrder interface under BlAPi
+/// <summary>
+/// Implementation of class Order that inherits
+/// from Iorder interface under BlAPi. 
+/// </summary>
+internal class Order : BlApi.IOrder 
 {
     private IDal Dal = new DalList(); //private field Dal
 
@@ -94,7 +98,7 @@ internal class Order : BlApi.IOrder //Class Order, inherits from IOrder interfac
         return order;
     }
 
-    public IEnumerable<DO.Order> GetOrderList()
+    public IEnumerable<DO.Order> GetOrderList() //method to get the list of orders
     {
         return Dal.dalOrder.GetAll();
     }
