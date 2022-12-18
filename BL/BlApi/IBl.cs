@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BO;
 namespace BlApi;
 /// <summary>
 /// Main Interface of Business Layer.
@@ -12,5 +8,6 @@ public interface IBl
 {
     public IProduct Product { get; }
     public IOrder Order { get; }
-    public IOrderItem OrderItem { get; }
+    //public IOrderItem OrderItem { get; }
+    public ICart Cart { get; }
 }

@@ -10,7 +10,7 @@ internal class Product : BlApi.IProduct
     // if we're returning a BO.Product then how do we convert the BO to the DO?
     public DO.Product AddProduct(BO.Product product)
     {
-        if (product.Name == "" || product.Price <= 0 || product.InStock <= 0 || product.Category < BO.Enums.Category.MEDICINE || product.Category > BO.Enums.Category.BABIES)
+        if (product.Name == "" || product.Price <= 0 || product.InStock <= 0 || product.Category < BO.Enums.ProductCategory.MEDICINE || product.Category > BO.Enums.ProductCategory.BABIES)
         {
             throw new BO.InvalidInputException();
         }
@@ -52,7 +52,7 @@ internal class Product : BlApi.IProduct
         {
             throw new BO.DoesNotExistException(newProduct);
         }
-        if (product.Name == "" || product.Price <= 0 || product.InStock <= 0 || product.Category < BO.Enums.Category.MEDICINE || product.Category > BO.Enums.Category.BABIES)
+        if (product.Name == "" || product.Price <= 0 || product.InStock <= 0 || product.Category < BO.Enums.ProductCategory.MEDICINE || product.Category > BO.Enums.ProductCategory.BABIES)
         {
             throw new BO.InvalidInputException();
         }

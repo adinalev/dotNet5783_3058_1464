@@ -8,9 +8,9 @@ namespace BO;
 public class OrderTracking
 {
     public int ID { get; set; }
-    // status of type orderstatus!!!
+    public Enums.OrderStatus Status { get; set; }
     public override string ToString() => $@"
             ID = {ID}
-            Status: {} // add the status here!!!
+            Status: {Status} 
         ";
 }
