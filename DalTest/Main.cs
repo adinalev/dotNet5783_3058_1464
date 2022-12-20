@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
 using static DO.Enums;
+using static Test.Program;
 using DO;
 using DalApi;
-namespace Dal;
+using Dal;
+namespace Test;
 
 internal class Program
 {

@@ -64,7 +64,7 @@ internal static class DataSource
             productList.Add(
                 new()
                 {
-                    ID = Config.NextProductNumber, // set the ID to the next auto-incremental ID#
+                    //ID = Config.NextProductNumber, // set the ID to the next auto-incremental ID#
                     Name = NameOfProduct[rand.Next(NameOfProduct.Length)], // randomly choosing one of the 10 products listed above
                     Price = rand.Next(20, 100), // set the price between 20 and 100
                     Category = (Enums.Category)rand.Next(0, 6), // choose a random category
@@ -88,7 +88,7 @@ internal static class DataSource
         {
             Order myOrder = new()
             {
-                ID = Config.NextOrderNumber, // get the next auto-incremental ID#
+                //ID = Config.NextOrderNumber, // get the next auto-incremental ID#
                 CustomerName = CustomerName[rand.Next(CustomerName.Length)], // randomly choose a name from the list
                 Email = Email[rand.Next(Email.Length)], // randomly choose an email from the list
                 Address = Address[rand.Next(Address.Length)], // randomly choose an address from the list
@@ -123,9 +123,9 @@ internal static class DataSource
             orderItemList.Add(
                 new OrderItem
                 {
-                    ID = Config.NextOrderItemNumber, // set the ID equal to the next auto-incremental order item ID#
+                    //ID = Config.NextOrderItemNumber, // set the ID equal to the next auto-incremental order item ID#
                     ProductID = prod.ID,
-                    OrderID = rand.Next(Config.s_startOrderNumber, Config.s_startOrderNumber + orderList.Count),
+                    OrderID = rand.Next(100000, 10000 + orderList.Count), // CHANGED THIS AND PROBABLY NOT CORRECT!!!!
                     Price = prod.Price,
                     Quantity = rand.Next(5)
                 });

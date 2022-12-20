@@ -25,7 +25,7 @@ namespace DO
         /// <summary>
         /// unique ID for order that's auto-incremental
         /// </summary>
-        public int ID { get; init; } = ++orderCounter;
+        public int ID { get; set; } = ++orderCounter;
         public string CustomerName { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }

@@ -1,326 +1,300 @@
-﻿using BlApi;
+﻿using DO;
+using System;
+using BO;
+using BlApi;
+using BlImplementation;
+//using BL;
 namespace BlTest;
-internal class Program
+
+// LOOK AT PART ABOUT ADDING BLTEST -- WHEN ADDING A PROJECT REFERENCE I 
+// ADDED BL AS ONE OF THEM EVEN THOUGH IT DIDNT SAY TO BUT OTHERWISE IT WASN'T WORKING
+
+// EVERY SINGLE EXCEPTION NEEDS TO BE CHANGED AND FIXED!!!!
+
+class Program
 {
-    // FIGURE THIS OUT!!!
-    static IBl bl { get; set; } = new BL();
+    static IBl bl = new Bl();
     static void Main(string[] args)
     {
-        Product product = new Product();
-        Order order = new Order();
-        OrderItem item = new OrderItem();
+        Cart? cart = new() { Items = new List<BO.OrderItem?>() };
+        BO.Product? product = new BO.Product();
+        BO.Order? order = new BO.Order();
+        int num1, option, ID;
+        string categories;
 
-        int num1, num2;
-        string answer1, categories;
-
-        while (true)
+        while(true)
         {
-            Console.WriteLine("For actions on a Product, please press 1.\n"
-                + "For actions on an Order, please press 2. \n"
-                + "For actions on an Order Item, please press 3.\n" +
-                "To exit, please press 0"
-                );
-            answer1 = Console.ReadLine();
-            num1 = Convert.ToInt32(answer1);
-            if (num1 == 0) break; // leave the while loop if the user inputs a 0
-            Enums.Type type = (Enums.Type)num1; // convert the number into an Enum of type Type
-
-            Console.WriteLine("To add, please press 1.\n" +
-                "To view, please press 2. \n" +
-                "To view list, please press 3. \n" +
-                "To update, please press 4. \n" +
-                "To delete, please press 5. \n" +
-                "To exit, please press 0. ");
-
-            num2 = Convert.ToInt32(Console.ReadLine());
-            if (num2 == 0) break; // leave the while loop if the user inputs a 0
-            Enums.Action action = (Enums.Action)num2; // convert the number into an Enum of type Action
-
-            switch (type, action)
+            Console.WriteLine("Welcome! \n" +
+                "Please choose one of the following options: \n" +
+                "For actions on a product, press 1. \n" +
+                "For actions on a cart, press 2. \n" +
+                "For actions on an order, press 3. \n" +
+                "To exit, press 0. ");
+            num1 = Convert.ToInt32(Console.ReadLine()); // turn the input into a number
+            if (num1 == 0)
             {
-                // all the actions that can be done on a product:
-
-                case (Enums.Type.PRODUCT, Enums.Action.ADD):
-                    try
-                    {
-                        Console.WriteLine("Enter the product name: ");
-                        product.Name = Console.ReadLine() ?? ""; // Read in the user's name. If they did not enter a name, input an empty string
-                        Console.WriteLine("Enter the product price: ");
-                        product.Price = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the product category: ");
-                        categories = Console.ReadLine().ToUpper();
-                        if (Enum.TryParse(categories, out Enums.Category cat)) // Convert the inputted string into an Enum number of type Category
-                        {
-                            product.Category = cat;
-                        }
-                        Console.WriteLine("Enter the stock number: ");
-                        product.InStock = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Your new product ID is: " + dalList.dalProduct.Add(product)); // Add the product to the list and get the new ID
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-                    }
-                    break;
-
-                case (Enums.Type.PRODUCT, Enums.Action.GET):
-                    try
-                    {
-                        Console.WriteLine("Enter the product ID#: ");
-                        int _ID = Convert.ToInt32(Console.ReadLine());
-                        product = dalList.dalProduct.GetByID(_ID); // Calling the GET method in DalProduct to retrieve the product
-                        Console.WriteLine(product);
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-                    }
-                    break;
-                case (Enums.Type.PRODUCT, Enums.Action.GETLIST):
-                    try
-                    {
-                        IEnumerable<Product> list = new List<Product>();
-                        list = dalList.dalProduct.GetAll(); // Retrieve the product list by calling the GETLIST method in DalProduct
-                        foreach (Product prod in list) // Traverse through the list to print each product
-                        {
-                            Console.WriteLine(prod);
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-
-                    }
-                    break;
-                case (Enums.Type.PRODUCT, Enums.Action.UPDATE):
-                    try
-                    {
-                        Console.WriteLine("Enter the product ID: ");
-                        product.ID = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the product name: ");
-                        product.Name = Console.ReadLine();
-                        Console.WriteLine("Enter the product price: ");
-                        product.Price = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the product category: ");
-                        categories = Console.ReadLine().ToUpper();
-                        if (Enum.TryParse(categories, out Enums.Category cat)) // Convert the inputted string into an Enum number of type Category
-                        {
-                            product.Category = cat;
-                        }
-                        Console.WriteLine("Enter the stock number: ");
-                        product.InStock = Convert.ToInt32(Console.ReadLine());
-                        dalList.dalProduct.Update(product); // Send the new product to the Update function in DalProduct
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-                    }
-                    break;
-                case (Enums.Type.PRODUCT, Enums.Action.DELETE):
-                    try
-                    {
-                        Console.WriteLine("Enter the product ID: ");
-                        int _ID = Convert.ToInt32(Console.ReadLine());
-                        dalList.dalProduct.Delete(_ID); // Delete the product with the given ID#
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-                    }
-                    break;
-
-                // all the actions that can be taken on an order:
-
-                case (Enums.Type.ORDER, Enums.Action.ADD):
-                    try
-                    {
-                        order.ID = 0; // ADDED THIS!!!
-                        Console.WriteLine("Enter the customer name: ");
-                        order.CustomerName = Console.ReadLine();
-                        Console.WriteLine("Enter the customer email: ");
-                        order.Email = Console.ReadLine();
-                        Console.WriteLine("Enter the customer address: ");
-                        order.Address = Console.ReadLine();
-                        Console.WriteLine("Your new order ID is: " + dalList.dalOrder.Add(order)); // Adding a new order to the list and get the new order ID#
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-                    }
-                    break;
-                case (Enums.Type.ORDER, Enums.Action.GET):
-                    try
-                    {
-                        Console.WriteLine("Enter the order ID#: ");
-                        int _ID = Convert.ToInt32(Console.ReadLine());
-                        order = dalList.dalOrder.GetByID(_ID); // Retrieve the desired order using the GET method in DalOrder
-                        Console.WriteLine(order);
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-                    }
-                    break;
-                case (Enums.Type.ORDER, Enums.Action.GETLIST):
-                    try
-                    {
-                        IEnumerable<Order> list = new List<Order>();
-                        list = dalList.dalOrder.GetAll();
-                        foreach (Order ord in list) // traverse through the order list and print each of them to the screen
-                        {
-                            Console.WriteLine(ord);
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-
-                    }
-                    break;
-                case (Enums.Type.ORDER, Enums.Action.UPDATE):
-                    try
-                    {
-                        Console.WriteLine("Enter the order ID#: ");
-                        order.ID = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the customer name: ");
-                        order.CustomerName = Console.ReadLine();
-                        Console.WriteLine("Enter the customer email: ");
-                        order.Email = Console.ReadLine();
-                        Console.WriteLine("Enter the customer address: ");
-                        order.Address = Console.ReadLine();
-                        dalList.dalOrder.Update(order); // Send the new order to the update method in DalOrder
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-                    }
-                    break;
-                case (Enums.Type.ORDER, Enums.Action.DELETE):
-                    try
-                    {
-                        Console.WriteLine("Enter the order ID: ");
-                        int _ID = Convert.ToInt32(Console.ReadLine());
-                        dalList.dalOrder.Delete(_ID); // delete the order
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-                    }
-                    break;
-
-                // all the actions that can be taken on an order item:
-
-                case (Enums.Type.ORDERITEM, Enums.Action.ADD):
-                    try
-                    {
-                        Console.WriteLine("Enter the order ID#: ");
-                        item.OrderID = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the product ID#: ");
-                        item.ProductID = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the price per unit: ");
-                        item.Price = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Enter the quantity: ");
-                        item.Quantity = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Your new order item ID is: " + dalList.dalOrderItem.Add(item)); // Add a new order item and receive the new Order Item ID#
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-                    }
-                    break;
-                case (Enums.Type.ORDERITEM, Enums.Action.GET):
-                    try
-                    {
-                        Console.WriteLine("Press 1 if you know the order item ID#. \n"
-                            + "Press 2 if you know the order ID# and product ID#. "); // Give the user two options of how to retrieve the order item
-                        int option = Convert.ToInt32(Console.ReadLine());
-                        if (option == 1) // if they know the order item ID#
-                        {
-                            Console.WriteLine("Enter the order item ID# ");
-                            int _ID = Convert.ToInt32(Console.ReadLine());
-                            item = dalList.dalOrderItem.GetByID(_ID); // use the GET method in order item that takes in the order item ID# 
-                            Console.WriteLine(item);
-                        }
-                        if (option == 2) // if the know the product ID# and order ID#
-                        {
-                            Console.WriteLine("Enter the Order ID#: ");
-                            int ordID = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Enter the Product ID#: ");
-                            int prodID = Convert.ToInt32(Console.ReadLine());
-                            item = dalList.dalOrderItem.GetByIDs(prodID, ordID); // use the GET method in order item that takesn in the product ID# and order ID#
-                            Console.WriteLine(item);
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-                    }
-                    break;
-                case (Enums.Type.ORDERITEM, Enums.Action.GETLIST):
-
-                    // DO THEY ALSO WANT US TO HAVE THE FUNCTION OF GETLIST WITH AN ID?!?!?!?!!?
-
-                    try
-                    {
-                        IEnumerable<OrderItem> list = new List<OrderItem>();
-                        list = dalList.dalOrderItem.GetAll();
-                        foreach (OrderItem it in list) // traverse through the order item list and print each one to the screen
-                        {
-                            Console.WriteLine(it);
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-
-                    }
-                    break;
-                case (Enums.Type.ORDERITEM, Enums.Action.UPDATE):
-                    try
-                    {
-                        Console.WriteLine("Press 1 if you know the order item ID#. \n"
-                            + "Press 2 if you know the order ID# and product ID#. ");
-                        int option = Convert.ToInt32(Console.ReadLine());
-                        if (option == 1)
-                        {
-                            Console.WriteLine("Enter the order item ID#: ");
-                            item.ID = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Enter the price per unit: ");
-                            item.Price = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Enter the quantity: ");
-                            item.Quantity = Convert.ToInt32(Console.ReadLine());
-                            dalList.dalOrderItem.Update(item); // Send the updated order item to the update method in DalOrderItem
-                        }
-                        if (option == 2)
-                        {
-                            Console.WriteLine("Enter the order ID#: ");
-                            item.OrderID = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Enter the product ID#: ");
-                            item.ProductID = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Enter the price per unit: ");
-                            item.Price = Convert.ToInt32(Console.ReadLine());
-                            Console.WriteLine("Enter the quantity: ");
-                            item.Quantity = Convert.ToInt32(Console.ReadLine());
-                            dalList.dalOrderItem.UpdateByIDs(item); // Send the updated order item to the update method in DalOrderItem
-                        }
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-                    }
-                    break;
-                case (Enums.Type.ORDERITEM, Enums.Action.DELETE):
-                    try
-                    {
-                        Console.WriteLine("Enter the order item ID: ");
-                        int _ID = Convert.ToInt32(Console.ReadLine());
-                        dalList.dalOrderItem.Delete(_ID); // delete the order item
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine("Error: {0}", exc);
-                    }
-                    break;
+                Console.WriteLine("Goodbye! \n"); // leave the while loop if the user iputs a 0
+                break;
             }
+            BO.Enums.Type type = (BO.Enums.Type)num1; // turn the number into the corresponding enum category
+            
+            switch (type)
+            {
+                case BO.Enums.Type.PRODUCT:
+                    // do I add in for the manager???
+                    Console.WriteLine(                   
+                        "To add a product, press 1. \n" +
+                        "To view a product, press 2. \n" +
+                        "To view the product list, press 3. \n" +
+                        "To update product, press 4. \n" +
+                        "To delete a product, press 5. \n" +
+                        "To return to main menu, press 6. \n");
+                    option = Convert.ToInt32(Console.ReadLine());
+                    switch(option)
+                    {
+                        case 1: // add a product
+                            try
+                            {
+                                Console.WriteLine("Enter the product name: ");
+                                product.Name = Console.ReadLine() ?? ""; // Read in the user's name. If they did not enter a name, input an empty string
+                                Console.WriteLine("Enter the product price: ");
+                                product.Price = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine("Enter the product category: ");
+                                categories = Console.ReadLine().ToUpper();
+                                if (Enum.TryParse(categories, out BO.Enums.ProductCategory cat)) // Convert the inputted string into an Enum number of type Category
+                                {
+                                    product.Category = cat;
+                                }
+                                Console.WriteLine("Enter the stock number: ");
+                                product.InStock = Convert.ToInt32(Console.ReadLine());
+                                bl.Product.AddProduct(product);
+                            }
+                            catch (InvalidInputException exc) 
+                            {
+                                Console.WriteLine(exc.Message);
+                            }                           
+                            break;
+                        case 2: // view a product
+                            try
+                            {
+                                Console.WriteLine("Enter the product ID#: ");
+                                ID = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine(bl.Product.GetProduct(ID));
+
+                            }
+                            catch (BO.DoesNotExistException exc)
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 3: // view the product list
+                            IEnumerable<ProductForList> productList = bl.Product.GetProductsForList();
+                            foreach (ProductForList prod in productList)
+                            {
+                                Console.WriteLine(prod);
+                            }
+                            break;
+                        case 4: // update the product
+                            try
+                            {
+                                Console.WriteLine("Enter the product ID: ");
+                                product.ID = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine("Enter the product name: ");
+                                product.Name = Console.ReadLine();
+                                Console.WriteLine("Enter the product price: ");
+                                product.Price = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine("Enter the product category: ");
+                                categories = Console.ReadLine().ToUpper();
+                                if (Enum.TryParse(categories, out BO.Enums.ProductCategory cat)) // Convert the inputted string into an Enum number of type Category
+                                {
+                                    product.Category = cat;
+                                }
+                                Console.WriteLine("Enter the stock number: ");
+                                product.InStock = Convert.ToInt32(Console.ReadLine());
+                                bl.Product.UpdateProduct(product); // Send the new product to the Update function in DalProduct
+                            }
+                            catch (InvalidInputException exc) // FIX THIS EXCEPTION!!!
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 5: // delete the product
+                            try
+                            {
+                                Console.WriteLine("Enter the product ID#: ");
+                                ID = Convert.ToInt32(Console.ReadLine());
+                                bl.Product.DeleteProduct(ID);
+                            }
+                            catch (BO.DoesNotExistException exc) 
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;                       
+                        case 6: // return to the main list
+                            Console.WriteLine("Returning to the main menu... \n");
+                            break;
+                    }
+                    break;
+                case BO.Enums.Type.CART:
+                    Console.WriteLine("To add to cart, press 1. \n" +
+                        "To view a cart, press 2. \n" +
+                        "To update a cart, press 3. \n" +
+                        "To delete a cart, press 4. \n" +
+                        "To place an order, press 5. \n" +
+                        "To return to the main menu, press 6. \n");
+                    // PROBLEM: CANT IDENTIFY A SPECIFIC CART AND THERE'S NO LIST OF CARTS TO VIEW THEM THROUGH
+                    option = Convert.ToInt32(Console.ReadLine());
+                    switch (option)
+                    {
+                        case 1:
+                            try
+                            {
+                                Console.WriteLine("Enter the product ID#: ");
+                                ID = Convert.ToInt32(Console.ReadLine());
+                                //Console.WriteLine("Enter the customer name: ");
+                                //cart.CustomerName = Console.ReadLine();
+                                Console.WriteLine("Enter the customer email: ");
+                                cart.CustomerEmail = Console.ReadLine();
+                                // TRYING TO ADD TO A SPECIFIC CART BUT THAT DOESNT EXIST!!!!
+                                bl.Cart.AddToCart(cart, ID);
+                            }
+                            catch (Exception exc) // FIX THE EXCEPTION!!!!
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 2:
+                            try
+                            {
+
+                            }
+                            catch (Exception exc) // FIX THE EXCEPTION!!!!
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 3:
+                            try
+                            {
+
+                            }
+                            catch (Exception exc) // FIX THE EXCEPTION!!!!
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 4:
+                            try
+                            {
+
+                            }
+                            catch (Exception exc) // FIX THE EXCEPTION!!!!
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 5:
+                            try
+                            {
+
+                            }
+                            catch (Exception exc) // FIX THE EXCEPTION!!!!
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 6:
+                            Console.WriteLine("Returning to the main menu... \n");
+                            break;
+                    }
+                    break;
+                case BO.Enums.Type.ORDER:
+                    Console.WriteLine("To add an order, press 1. \n" +
+                        "To view an order, press 2. \n" +
+                        "To view an order list press 3. \n" +
+                        "To update an order, press 4. \n" +
+                        "To delete an order, press 5. \n" +
+                        "To track an order, press 6.  \n" +
+                        "To return to the main menu, press 7. \n"
+                        );
+                    option = Convert.ToInt32(Console.ReadLine());
+                    switch (option)
+                    {
+                        case 1:
+                            try
+                            {
+
+                            }
+                            catch (Exception exc) // FIX THE EXCEPTION!!!!
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 2:
+                            try
+                            {
+                                Console.WriteLine("Enter the order ID#: ");
+                                ID = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine(bl.Order.GetBoOrder(ID));
+                            }
+                            catch (Exception exc) // FIX THE EXCEPTION!!!!
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 3:
+                            try
+                            {
+                                IEnumerable<OrderForList> orderList = bl.Order.GetAllOrderForList();
+                                foreach (OrderForList ord in orderList)
+                                {
+                                    Console.WriteLine(ord);
+                                }
+                                break;
+                            }
+                            catch (Exception exc) // FIX THE EXCEPTION!!!!
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 4:
+                            try
+                            {
+
+                            }
+                            catch (Exception exc) // FIX THE EXCEPTION!!!!
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 5:
+                            try
+                            {
+
+                            }
+                            catch (Exception exc) // FIX THE EXCEPTION!!!!
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 6:
+                            try
+                            {
+
+                            }
+                            catch (Exception exc) // FIX THE EXCEPTION!!!!
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                    }
+                    break;
+
+
+
+            }
+            
+
         }
+    }
 }

@@ -23,7 +23,7 @@ namespace DO
         /// <summary>
         /// unique ID for order item that's auto-incremental
         /// </summary>
-        public int ID { get; init; } = ++itemCounter;
+        public int ID { get; set; } = ++itemCounter;
         public int OrderID { get; set; } // Order's identifier
         public int ProductID { get; set; } // Product's identifier
         public double Price { get; set; }

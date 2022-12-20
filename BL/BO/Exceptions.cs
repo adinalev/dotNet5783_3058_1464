@@ -1,6 +1,7 @@
 ﻿
 
 // NEED TO WORK ON THESE!!!!
+//ADD OUT OF STCOK EXCEPTIONS!!
 
 
 namespace BO;
@@ -26,4 +27,9 @@ public class TooManyProductsException : Exception
 public class InvalidInputException : Exception
 {
     public InvalidInputException() : base("Invalid input detected. ") { }
+}
+
+public class OutOfStockException : Exception
+{
+    public OutOfStockException() : base("This product is currently out of stock.") { }
 }

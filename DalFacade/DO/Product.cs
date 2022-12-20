@@ -23,7 +23,7 @@ namespace DO
         /// <summary>
         /// unique ID for a product (autoincremental)
         /// </summary>
-        public int ID { get; init; } = ++productCounter; // MAY NEED TO ADD AN EMPTY CTOR FOR EVERYTHING ELSE!!
+        public int ID { get; set; } = ++productCounter; // MAY NEED TO ADD AN EMPTY CTOR FOR EVERYTHING ELSE!!
         public string Name { get; set; }
         public double Price { get; set; }
         public Enums.Category Category { get; set; }

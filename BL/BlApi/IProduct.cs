@@ -14,7 +14,7 @@ public interface IProduct
 
     // the managerial methods
     public IEnumerable<ProductForList?> GetProductsForList();//returns a list of products for the manager
-    public Product ManagerProduct(int ID);//return a BO product of DO product with id
+    public Product GetProduct(int ID);//return a BO product of DO product with id
     public void AddProduct(Product product);//gets a BO product, check if right and add a DO product 
     public void DeleteProduct(int id);//check in every order that DO product is deleted 
     public void UpdateProduct(Product product);//get BO product, check if right and updates DO product
