@@ -58,7 +58,7 @@ class Program
                                 Console.WriteLine("Enter the product name: ");
                                 product.Name = Console.ReadLine() ?? ""; // Read in the user's name. If they did not enter a name, input an empty string
                                 Console.WriteLine("Enter the product price: ");
-                                product.Price = Convert.ToInt32(Console.ReadLine());
+                                product.Price = Convert.ToDouble(Console.ReadLine());
                                 Console.WriteLine("Enter the product category: ");
                                 categories = Console.ReadLine().ToUpper();
                                 if (Enum.TryParse(categories, out BO.Enums.ProductCategory cat)) // Convert the inputted string into an Enum number of type Category
