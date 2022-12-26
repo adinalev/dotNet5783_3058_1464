@@ -31,13 +31,13 @@ internal class Cart : ICart
         cart.Items.Add(item);//add the orderitem to cart
         cart.TotalPrice += item.Price;//update price of the cart
         return cart;
-
     }
 
-    //public Cart ViewCart(Cart myCart)
-    //{
+    public Cart ViewCart(Cart myCart)
+    {
 
-    //}
+
+    }
 
     //public Cart GetCart(string email)
     //{
@@ -75,14 +75,14 @@ internal class Cart : ICart
     }
   
     //SEE IF ALL THE IT'S AND ITEM'S MATCH UP!!!!!
-    public void MakeOrder(BO.Cart myCart, string CustomerName, string CustomerEmail, string CustomerAddress)
+    public void MakeOrder(BO.Cart cart)
     {
-        if (CustomerName == "" || CustomerEmail == "" || CustomerAddress == "")//check input
+        if (cart.CustomerName == "" || cart.CustomerEmail == "" || cart.CustomerAddress == "")//check input
         {
             throw new BO.InvalidInputException();
         }
         DO.OrderItem item = new();//create order item
-        foreach (BO.OrderItem? it in myCart.Items)//go over orderItems in the cart
+        foreach (BO.OrderItem? it in cart.Items)//go over orderItems in the cart
         {
             try
             {
@@ -102,10 +102,24 @@ internal class Cart : ICart
             catch
             {
                 throw new BO.DoesNotExistException(item); // is it supposed to be item as an input? 
-
             }
         }
 
+    }
+
+    /// <summary>
+    /// public method to delete a cart (set all the values to null)
+    /// </summary>
+    public void DeleteCart(BO.Cart myCart)
+    {
+        myCart.CustomerName = "";
+        myCart.CustomerEmail = "";
+        myCart.CustomerAddress = "";
+        foreach(BO.OrderItem item in myCart.Items)
+        {
+            myCart.Items.Remove(item);
+        }
+        myCart.TotalPrice = 0;
     }
 }
 

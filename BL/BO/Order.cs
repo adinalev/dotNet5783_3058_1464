@@ -8,7 +8,7 @@ namespace BO;
 public class Order
 {
     // ARE THESE THE CORRECT PROPERTIES??
-    public int ID { get; init; }
+    public int ID { get; set; } // CHNAGED FROM INIT TO SET
     public string CustomerName { get; set; }
     public string Email { get; set; }
     public string Address { get; set; }
