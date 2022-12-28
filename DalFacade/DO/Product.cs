@@ -20,10 +20,19 @@ namespace DO
             Category = Enums.Category.MEDICINE;
         }
 
+        public Product(int _ID) 
+        {
+            ID = _ID;
+            Name = "";
+            Price = 0;
+            InStock = 0;
+            Category = Enums.Category.MEDICINE;
+        }
+
         /// <summary>
         /// unique ID for a product (autoincremental)
         /// </summary>
-        public int ID { get; set; } = ++productCounter; // MAY NEED TO ADD AN EMPTY CTOR FOR EVERYTHING ELSE!!
+        public int ID { get; init; } = productCounter++; // MAY NEED TO ADD AN EMPTY CTOR FOR EVERYTHING ELSE!!
         public string Name { get; set; }
         public double Price { get; set; }
         public Enums.Category Category { get; set; }

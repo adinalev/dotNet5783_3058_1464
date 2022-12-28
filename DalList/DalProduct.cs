@@ -18,9 +18,14 @@ internal class DalProduct : IProduct
         if (prod.ID == 0)
         {
             // prod.ID = DataSource.Config.NextProductNumber; // set the product ID equal to the next auto-incremental ID from the static variable in DataSource
-            prod.ID = Product.productCounter++;
-            DataSource.productList.Add(prod);
-            return prod.ID;
+           // prod.ID = Product.productCounter++;
+            Product product = new Product(); // this will use the init to get the next ID#
+            product.Name = prod.Name;
+            product.Price = prod.Price;   
+            product.InStock = prod.InStock;
+            product.Category = prod.Category;
+            DataSource.productList.Add(product);
+            return product.ID; // CHANGED FROM PROD.ID TO PRODUCT.ID!!!!
         }
 
         // case 2: Product already exists, throw an exception
@@ -56,7 +61,11 @@ internal class DalProduct : IProduct
     /// </summary>
     public IEnumerable<Product> GetAll() // USED TO BE CALLED READPRODUCTLIST
     {
-        return DataSource.productList.ToList();
+       // IEnumerable<Product> list = DataSource.productList;
+        //return list;
+
+        return DataSource.productList.ToList(); //-- this was the entire function!!!
+
     }
 
     /// <summary>

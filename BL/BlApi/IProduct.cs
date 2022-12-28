@@ -1,30 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BO;
+﻿using BO;
 namespace BlApi;
 /// <summary>
 /// Interface for the BoEntity "Product"
 /// </summary>
 public interface IProduct
 {
-    // REDO ALL THE COMMENTING
+    /// <summary>
+    /// public method to return a list of products to display
+    /// </summary>
+    public IEnumerable<ProductForList?> GetProductsForList();
 
-    // the managerial methods
-    public IEnumerable<ProductForList?> GetProductsForList();//returns a list of products for the manager
-    public Product GetProduct(int ID);//return a BO product of DO product with id
-    public void AddProduct(Product product);//gets a BO product, check if right and add a DO product 
-    public void DeleteProduct(int id);//check in every order that DO product is deleted 
-    public void UpdateProduct(Product product);//get BO product, check if right and updates DO product
+    /// <summary>
+    /// public method to get a product using the ID
+    /// </summary>
+    public Product GetProduct(int ID);
 
-    //customer user functions
-    public IEnumerable<ProductItem?> GetCatalog();//get product list of DO and and return productItem list of BO
+    /// <summary>
+    /// public method for a manager to add a product to the list
+    /// </summary>
+    public int AddProduct(Product product);
 
-    //public DO.Product AddProduct(Product product); // IS IT SUPPOSED TO RETURN AN INT?!?!??!!!?
-    //public void DeleteProduct(int _id);
-    //public DO.Product UpdateProduct(Product product);
-    //public DO.Product GetProduct(int _id);
-    //public IEnumerable<DO.Product> GetProductList();
+    /// <summary>
+    /// public method for a manager to delete a product from the catalog
+    /// </summary>
+    public void DeleteProduct(int id);
+
+    /// <summary>
+    /// public method for a manager to update a product information
+    /// </summary>
+    public void UpdateProduct(Product product);
+
+    //public IEnumerable<ProductItem?> GetCatalog();
+
+    /// <summary>
+    /// public method to return the amount of product in stock
+    /// </summary>
+    public int GetStockNumber(int ID);
 }

@@ -22,11 +22,18 @@ internal class DalOrder : IOrder
         ord.DeliveryDate = ord.ShippingDate + new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L)); // add a random time interval to the shipping date to get the delivery date
         if (ord.ID == 0)
         {
-            ord.ID = Order.orderCounter++;
-            DataSource.orderList.Add(ord);
-            return ord.ID;
+            Order order = new Order();
+            order.CustomerName = ord.CustomerName;
+            order.Email = ord.Email;
+            order.Address = ord.Address;
+            order.OrderDate = ord.OrderDate;
+            order.ShippingDate = ord.ShippingDate;
+            order.DeliveryDate = ord.DeliveryDate;
+            //ord.ID = Order.orderCounter++;
+            DataSource.orderList.Add(order);
+            return order.ID;     // CHANGED THIS FROM ORD.ID TO ORDER.ID!!!     
         }
-
+    
         // case 2: Order already exists, throw an exception
         int index = DataSource.orderList.FindIndex(x => x.ID == ord.ID); // find the order with a matching ID as the inputted order
         if (index != -1) // the index will be -1 if there is no order with the same ID#

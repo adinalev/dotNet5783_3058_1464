@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BO;
+﻿namespace BO;
 public class Product
 {
-    // add properties!!!   
-    public int ID { get; set; }  // MAY NEED TO ADD AN EMPTY CTOR FOR EVERYTHING ELSE!!
+    public int ID { get; set; }  
     public string Name { get; set; }
     public double Price { get; set; }
     public Enums.ProductCategory Category { get; set; }

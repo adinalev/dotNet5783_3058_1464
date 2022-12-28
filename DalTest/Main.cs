@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using static DO.Enums;
-using static Test.Program;
-using DO;
+﻿using DO;
 using DalApi;
 using Dal;
 namespace Test;
@@ -14,12 +8,12 @@ internal class Program
     public static IDal dalList { get; set; } = new DalList();
     static void Main(string[] args)
     { 
-
+       // DataSource ds = new DataSource();
         Product product = new Product();
         Order order = new Order(); 
         OrderItem item = new OrderItem();
 
-        int num1, num2;
+        int num1, num2, ID;
         string answer1, categories;
 
         while (true)
@@ -52,19 +46,20 @@ internal class Program
                 case (Enums.Type.PRODUCT, Enums.Action.ADD):
                     try
                     {
+                        Product prod = new Product();
                         Console.WriteLine("Enter the product name: ");
-                        product.Name = Console.ReadLine() ?? ""; // Read in the user's name. If they did not enter a name, input an empty string
+                        prod.Name = Console.ReadLine() ?? ""; // Read in the user's name. If they did not enter a name, input an empty string
                         Console.WriteLine("Enter the product price: ");
-                        product.Price = Convert.ToInt32(Console.ReadLine());
+                        prod.Price = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Enter the product category: ");
                         categories = Console.ReadLine().ToUpper();
                         if (Enum.TryParse(categories, out Enums.Category cat)) // Convert the inputted string into an Enum number of type Category
                         {
-                            product.Category = cat;
+                            prod.Category = cat;
                         }
                         Console.WriteLine("Enter the stock number: ");
-                        product.InStock = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Your new product ID is: " + dalList.dalProduct.Add(product)); // Add the product to the list and get the new ID
+                        prod.InStock = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Your new product ID is: " + dalList.dalProduct.Add(prod)); // Add the product to the list and get the new ID
                     }
                     catch (Exception exc)
                     {
@@ -105,20 +100,21 @@ internal class Program
                     try
                     {
                         Console.WriteLine("Enter the product ID: ");
-                        product.ID = Convert.ToInt32(Console.ReadLine());
+                        ID = Convert.ToInt32(Console.ReadLine());
+                        Product prod = new Product(ID);
                         Console.WriteLine("Enter the product name: ");
-                        product.Name = Console.ReadLine();                     
+                        prod.Name = Console.ReadLine();                     
                         Console.WriteLine("Enter the product price: ");
-                        product.Price = Convert.ToInt32(Console.ReadLine());
+                        prod.Price = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Enter the product category: ");
                         categories = Console.ReadLine().ToUpper();
                         if (Enum.TryParse(categories, out Enums.Category cat)) // Convert the inputted string into an Enum number of type Category
                         {
-                            product.Category = cat;
+                            prod.Category = cat;
                         }
                         Console.WriteLine("Enter the stock number: ");
-                        product.InStock = Convert.ToInt32(Console.ReadLine());
-                        dalList.dalProduct.Update(product); // Send the new product to the Update function in DalProduct
+                        prod.InStock = Convert.ToInt32(Console.ReadLine());
+                        dalList.dalProduct.Update(prod); // Send the new product to the Update function in DalProduct
                     }
                     catch (Exception exc)
                     {
@@ -143,14 +139,15 @@ internal class Program
                 case (Enums.Type.ORDER, Enums.Action.ADD):
                     try
                     {
-                        order.ID = 0; // ADDED THIS!!!
+                        Order ord = new Order();
+                        //order.ID = 0; // ADDED THIS!!!
                         Console.WriteLine("Enter the customer name: ");
-                        order.CustomerName = Console.ReadLine();
+                        ord.CustomerName = Console.ReadLine();
                         Console.WriteLine("Enter the customer email: ");
-                        order.Email = Console.ReadLine();
+                        ord.Email = Console.ReadLine();
                         Console.WriteLine("Enter the customer address: ");
-                        order.Address = Console.ReadLine();
-                        Console.WriteLine("Your new order ID is: " + dalList.dalOrder.Add(order)); // Adding a new order to the list and get the new order ID#
+                        ord.Address = Console.ReadLine();
+                        Console.WriteLine("Your new order ID is: " + dalList.dalOrder.Add(ord)); // Adding a new order to the list and get the new order ID#
                     }
                     catch(Exception exc)
                     {
@@ -190,14 +187,15 @@ internal class Program
                     try
                     {
                         Console.WriteLine("Enter the order ID#: ");
-                        order.ID = Convert.ToInt32(Console.ReadLine());
+                        ID = Convert.ToInt32(Console.ReadLine());
+                        Order ord = new Order(ID);
                         Console.WriteLine("Enter the customer name: ");
-                        order.CustomerName = Console.ReadLine();
+                        ord.CustomerName = Console.ReadLine();
                         Console.WriteLine("Enter the customer email: ");
-                        order.Email = Console.ReadLine();
+                        ord.Email = Console.ReadLine();
                         Console.WriteLine("Enter the customer address: ");
-                        order.Address = Console.ReadLine();
-                        dalList.dalOrder.Update(order); // Send the new order to the update method in DalOrder
+                        ord.Address = Console.ReadLine();
+                        dalList.dalOrder.Update(ord); // Send the new order to the update method in DalOrder
                     }
                     catch(Exception exc)
                     {
@@ -222,15 +220,16 @@ internal class Program
                 case (Enums.Type.ORDERITEM, Enums.Action.ADD):
                     try
                     {
+                        OrderItem myItem = new OrderItem();
                         Console.WriteLine("Enter the order ID#: ");
-                        item.OrderID = Convert.ToInt32(Console.ReadLine());
+                        myItem.OrderID = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Enter the product ID#: ");
-                        item.ProductID = Convert.ToInt32(Console.ReadLine());
+                        myItem.ProductID = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Enter the price per unit: ");
-                        item.Price = Convert.ToInt32(Console.ReadLine());
+                        myItem.Price = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Enter the quantity: ");
-                        item.Quantity = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Your new order item ID is: " + dalList.dalOrderItem.Add(item)); // Add a new order item and receive the new Order Item ID#
+                        myItem.Quantity = Convert.ToInt32(Console.ReadLine());
+                        Console.WriteLine("Your new order item ID is: " + dalList.dalOrderItem.Add(myItem)); // Add a new order item and receive the new Order Item ID#
                     }
                     catch (Exception exc)
                     {
@@ -293,12 +292,13 @@ internal class Program
                         if (option == 1)
                         {
                             Console.WriteLine("Enter the order item ID#: ");
-                            item.ID = Convert.ToInt32(Console.ReadLine());
+                            ID = Convert.ToInt32(Console.ReadLine());
+                            OrderItem myItem = new OrderItem(ID);
                             Console.WriteLine("Enter the price per unit: ");
-                            item.Price = Convert.ToInt32(Console.ReadLine());
+                            myItem.Price = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Enter the quantity: ");
-                            item.Quantity = Convert.ToInt32(Console.ReadLine());
-                            dalList.dalOrderItem.Update(item); // Send the updated order item to the update method in DalOrderItem
+                            myItem.Quantity = Convert.ToInt32(Console.ReadLine());
+                            dalList.dalOrderItem.Update(myItem); // Send the updated order item to the update method in DalOrderItem
                         }
                         if (option == 2)
                         {

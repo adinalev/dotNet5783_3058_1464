@@ -22,10 +22,21 @@ namespace DO
             DeliveryDate = DateTime.MinValue;
         }
 
+        public Order(int _ID)
+        {
+            ID = _ID;
+            CustomerName = "";
+            Email = "";
+            Address = "";
+            OrderDate = DateTime.MinValue;
+            ShippingDate = DateTime.MinValue;
+            DeliveryDate = DateTime.MinValue;
+        }
+
         /// <summary>
         /// unique ID for order that's auto-incremental
         /// </summary>
-        public int ID { get; set; } = ++orderCounter;
+        public int ID { get; init; } = orderCounter++;
         public string CustomerName { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }

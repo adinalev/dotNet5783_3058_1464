@@ -18,7 +18,12 @@ internal class DalOrderItem : IOrderItem
         //case 1: Order item does not exist yet, needs to be initialized
         if (item.ID == 0)
         {
-            item.ID = OrderItem.itemCounter++;
+            OrderItem myItem = new OrderItem();
+            //item.ID = OrderItem.itemCounter++;
+            myItem.ProductID = item.ProductID;
+            myItem.OrderID = item.OrderID;
+            myItem.Price = item.Price;
+            myItem.Quantity = item.Quantity;
             DataSource.orderItemList.Add(item);
             return item.ID;
         }
@@ -113,18 +118,24 @@ internal class DalOrderItem : IOrderItem
     {
         //OrderItem myItem = new OrderItem();
         int index = 0;
+        int ID = 0;
         foreach (DO.OrderItem it in DataSource.orderItemList)
         {
             if (it.ProductID == item.ProductID)
             {
                 if (it.OrderID == item.OrderID)
                 {
-                    item.ID = it.ID;
+                    ID = it.ID;
                     index = DataSource.orderItemList.IndexOf(it);
                 }
             }
         }
-        DataSource.orderItemList[index] = item;
+        OrderItem myItem = new OrderItem(ID);
+        myItem.ProductID = item.ProductID;
+        myItem.OrderID = item.OrderID;
+        myItem.Price = item.Price;
+        myItem.Quantity = item.Quantity;
+        DataSource.orderItemList[index] = myItem;
     }
 
     /// <summary>
@@ -132,14 +143,16 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     public OrderItem GetByIDs(int prodID, int ordID)
     {
-        DO.OrderItem myItem = new OrderItem();
-        myItem.ID = -1;
+        DO.OrderItem myItem = new OrderItem(-1);
+        myItem.ProductID = prodID;
+        myItem.OrderID = ordID;
+        //myItem.ID = -1;
         // traverse through the the order item list and find an order item with a matching product ID# and order ID#
         foreach(DO.OrderItem item in DataSource.orderItemList)
         {
-            if (item.ProductID == item.ProductID)
+            if (item.ProductID == myItem.ProductID)
             {
-                if (item.OrderID == item.OrderID)
+                if (item.OrderID == myItem.OrderID)
                     myItem = item;
             }
         }
