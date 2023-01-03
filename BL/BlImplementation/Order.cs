@@ -67,7 +67,7 @@ internal class Order : BlApi.IOrder
             throw new BO.DoesNotExistException(order);
         }
         double priceTemp = 0;
-        foreach (DO.OrderItem ord in dal.dalOrderItem.GetAll())
+        foreach (DO.OrderItem? ord in dal.dalOrderItem.GetAll())
         {
             if (ord.OrderID == _ID)
             {
@@ -169,4 +169,26 @@ internal class Order : BlApi.IOrder
         orderBO.Status = GetStatus(order);
         return orderBO;
     }
+
+    public BO.OrderTracking TrackOrder(int orderID)
+    {
+        BO.OrderTracking orderTracking = new BO.OrderTracking();
+        DO.Order order = new DO.Order(-1);
+        IEnumerable<DO.Order?> orders = dal.dalOrder.GetAll(); // get all the orders from DO 
+        foreach (DO.Order ord in orders)
+        {
+            if (ord.ID == orderID)
+                order = ord;
+        }
+        if (order.ID == -1)
+        {
+            throw new BO.DoesNotExistException(order);
+        }
+        orderTracking.ID = orderID;
+        orderTracking.Status = GetStatus(order);
+        return orderTracking;
+    }
+
+
+
 }

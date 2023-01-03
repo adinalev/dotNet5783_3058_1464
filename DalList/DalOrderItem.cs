@@ -69,7 +69,7 @@ internal class DalOrderItem : IOrderItem
     /// <summary>
     /// public method to read the Order Item list
     /// </summary>
-    public IEnumerable<OrderItem> GetAll()
+    public IEnumerable<OrderItem?> GetAll()
     {
         return DataSource.orderItemList.ToList();
     }
@@ -90,7 +90,7 @@ internal class DalOrderItem : IOrderItem
                 break;
             }
         }
-        DO.OrderItem DelItem = DataSource.orderItemList[ind]; // saved the item that you located above       
+        DO.OrderItem? DelItem = DataSource.orderItemList[ind]; // saved the item that you located above       
         DataSource.orderItemList.Remove(DelItem); // delete that item from the order item list
     }
 
@@ -170,9 +170,9 @@ internal class DalOrderItem : IOrderItem
 
 
     // HOW DO I CHANGE THIS TO GET ALL BECAUSE NEED TO HAVE AN INPUT
-    public IEnumerable<OrderItem> GetAllByID(int ordID)
+    public IEnumerable<OrderItem?> GetAllByID(int ordID)
     {
-        List<OrderItem> myList = new List<OrderItem>();
+        List<OrderItem?> myList = new List<OrderItem?>();
         foreach (OrderItem item in DataSource.orderItemList)
         {
             if (item.OrderID == ordID)

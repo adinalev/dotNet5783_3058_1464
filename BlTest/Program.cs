@@ -3,6 +3,8 @@ using BlApi;
 using BlImplementation;
 namespace BlTest;
 
+// ADDED METHOD TO TRACK AN ORDER!!
+
 class Program
 {
     static IBl bl = new Bl();
@@ -263,9 +265,10 @@ class Program
                     Console.WriteLine(
                         "To view an order, press 1. \n" +
                         "To view all orders, press 2. \n" +
-                        "For the manager: To update a shipping date, press 3. \n" +
-                        "For the manager: To update a delivery date, press 4.\n" +
-                        "To return to the main menu, press 5.");
+                        "To track an order, press 3. \n" +
+                        "For the manager: To update a shipping date, press 4. \n" +
+                        "For the manager: To update a delivery date, press 5.\n" +
+                        "To return to the main menu, press 6.");
                     option = Convert.ToInt32(Console.ReadLine());
                     switch (option)
                     {
@@ -301,7 +304,19 @@ class Program
                                 Console.WriteLine(ord);
                             }
                             break;
-                        case 3: // to update a shipping date
+                        case 3: // to track an order
+                            try
+                            {
+                                Console.WriteLine("Enter the order ID#: ");
+                                ID = Convert.ToInt32(Console.ReadLine());
+                                Console.WriteLine(bl.Order.TrackOrder(ID));
+                            }
+                            catch (BO.DoesNotExistException exc)
+                            {
+                                Console.WriteLine(exc.Message);
+                            }
+                            break;
+                        case 4: // to update a shipping date
                             try
                             {
                                 Console.WriteLine("Enter the order ID#: ");
@@ -327,7 +342,7 @@ class Program
                                 Console.WriteLine(exc.Message);
                             }
                             break;
-                        case 4: // to update a delivery date
+                        case 5: // to update a delivery date
                             try
                             {
                                 Console.WriteLine("Enter the order ID#: ");
@@ -353,7 +368,7 @@ class Program
                                 Console.WriteLine(exc.Message);
                             }
                             break;
-                        case 5: // to return to the main menu
+                        case 6: // to return to the main menu
                             Console.WriteLine("Returning to the main menu... \n");
                             break;
                     }

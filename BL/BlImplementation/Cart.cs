@@ -48,11 +48,11 @@ internal class Cart : ICart
     /// <summary>
     /// method to return the names of all the items that are currently in the cart
     /// </summary>
-    public List<string> GetItemNames(BO.Cart cart)
+    public List<string?> GetItemNames(BO.Cart cart)
     {
         int productID;
         DO.Product product = new DO.Product(-1); // create a new DO product
-        List<string> list = new List<string>(); // create a list to hold a string of names
+        List<string?> list = new List<string?>(); // create a list to hold a string of names
         // loop to get all the names of the products in the cart and to add them to the list of strings
         foreach(BO.OrderItem item in cart.Items)
         {

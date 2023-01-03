@@ -65,7 +65,7 @@ internal class DalOrder : IOrder
     /// <summary>
     /// public method to read the Order list
     /// </summary>
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Order?> GetAll()
     {
         return DataSource.orderList.ToList();
     }
@@ -87,7 +87,7 @@ internal class DalOrder : IOrder
             }
         }
         // retrieve the order sitting in the found index
-        DO.Order DelOrd = DataSource.orderList[ind];
+        DO.Order? DelOrd = DataSource.orderList[ind];
         // delete that order
         DataSource.orderList.Remove(DelOrd);
     }

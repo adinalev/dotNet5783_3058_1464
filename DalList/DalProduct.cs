@@ -59,7 +59,7 @@ internal class DalProduct : IProduct
     /// <summary>
     /// public method to read the Product list
     /// </summary>
-    public IEnumerable<Product> GetAll() // USED TO BE CALLED READPRODUCTLIST
+    public IEnumerable<Product?> GetAll() // USED TO BE CALLED READPRODUCTLIST
     {
        // IEnumerable<Product> list = DataSource.productList;
         //return list;
@@ -83,7 +83,7 @@ internal class DalProduct : IProduct
                 break;
             }
         }
-        DO.Product DelProd = DataSource.productList[ind]; // save the product in the found index
+        DO.Product DelProd = (Product)DataSource.productList[ind]; // save the product in the found index // ADDED A CAST!!!!
         DataSource.productList.Remove(DelProd); // remove the product
     }
 

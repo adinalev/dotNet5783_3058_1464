@@ -15,7 +15,7 @@ public interface ICart
     /// <summary>
     /// public method to get a list of the names of the items in the cart
     /// </summary>
-    public List<string> GetItemNames(BO.Cart cart);
+    public List<string?> GetItemNames(BO.Cart cart);
 
     /// <summary>
     /// public method too update the amount of a pre-existing item in the cart

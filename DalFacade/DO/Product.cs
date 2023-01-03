@@ -33,9 +33,9 @@ namespace DO
         /// unique ID for a product (autoincremental)
         /// </summary>
         public int ID { get; init; } = productCounter++; // MAY NEED TO ADD AN EMPTY CTOR FOR EVERYTHING ELSE!!
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public double Price { get; set; }
-        public Enums.Category Category { get; set; }
+        public Enums.Category? Category { get; set; } // also supposed to be nullable?
         public int InStock { get; set; }
         public override string ToString() => $@"
             Product ID = {ID}: {Name},

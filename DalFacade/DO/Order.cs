@@ -37,12 +37,12 @@ namespace DO
         /// unique ID for order that's auto-incremental
         /// </summary>
         public int ID { get; init; } = orderCounter++;
-        public string CustomerName { get; set; }
-        public string Email { get; set; }
-        public string Address { get; set; }
-        public DateTime OrderDate { get; set; }
-        public DateTime ShippingDate { get; set; }
-        public DateTime DeliveryDate { get; set; }
+        public string? CustomerName { get; set; }
+        public string? Email { get; set; }
+        public string? Address { get; set; }
+        public DateTime? OrderDate { get; set; }
+        public DateTime? ShippingDate { get; set; }
+        public DateTime? DeliveryDate { get; set; }
         public override string ToString() => $@"
             Order ID={ID}: {CustomerName},
             Email: {Email}

@@ -11,5 +11,5 @@ public interface ICrud<T> where T : struct // do we need this??
     void Delete(int ID);
     void Update(T entity);
     T GetByID(int ID);
-    IEnumerable<T> GetAll(); // method that returns a list of objects for an entity
+    IEnumerable<T?> GetAll(); // method that returns a list of objects for an entity
 }

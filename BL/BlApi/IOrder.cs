@@ -30,4 +30,9 @@ public interface IOrder
     /// </summary>
     public BO.Enums.OrderStatus GetStatus(DO.Order order);
 
+    /// <summary>
+    /// public method to track an order
+    /// </summary>
+    public OrderTracking TrackOrder(int orderID);
+
 }

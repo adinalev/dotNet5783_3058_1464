@@ -33,8 +33,8 @@ namespace DO
         /// unique ID for order item that's auto-incremental
         /// </summary>
         public int ID { get; init; } = ++itemCounter;
-        public int OrderID { get; set; } // Order's identifier
-        public int ProductID { get; set; } // Product's identifier
+        public int OrderID { get; set; } // Order's identifier // SUPPOSED TO BE NULLABLE?
+        public int ProductID { get; set; } // Product's identifier // SUPPOSED TO BE NULLABLE?
         public double Price { get; set; }
         public int Quantity { get; set; }
         public override string ToString() => $@"

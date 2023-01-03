@@ -83,7 +83,7 @@ internal class Program
                 case (Enums.Type.PRODUCT, Enums.Action.GETLIST):
                     try
                     {
-                        IEnumerable<Product> list = new List<Product>();
+                        IEnumerable<Product?> list = new List<Product?>();
                         list = dalList.dalProduct.GetAll(); // Retrieve the product list by calling the GETLIST method in DalProduct
                         foreach (Product prod in list) // Traverse through the list to print each product
                         {
@@ -170,7 +170,7 @@ internal class Program
                 case (Enums.Type.ORDER, Enums.Action.GETLIST):
                     try
                     {
-                        IEnumerable<Order> list = new List<Order>();
+                        IEnumerable<Order?> list = new List<Order?>();
                         list = dalList.dalOrder.GetAll();
                         foreach (Order ord in list) // traverse through the order list and print each of them to the screen
                         {
@@ -270,7 +270,7 @@ internal class Program
 
                     try
                     {
-                        IEnumerable<OrderItem> list = new List<OrderItem>();
+                        IEnumerable<OrderItem?> list = new List<OrderItem?>();
                         list = dalList.dalOrderItem.GetAll();
                         foreach (OrderItem it in list) // traverse through the order item list and print each one to the screen
                         {
