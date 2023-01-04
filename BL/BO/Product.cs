@@ -1,7 +1,7 @@
 ﻿namespace BO;
 public class Product
 {
-    public int ID { get; set; }  // NULLABLE?
+    public int ID { get; set; }  
     public string? Name { get; set; }
     public double Price { get; set; }
     public Enums.ProductCategory? Category { get; set; }

@@ -17,7 +17,7 @@ internal class Product : BlApi.IProduct
                    ID = item.ID,
                    Name = item.Name,
                    Price = (double)item.Price,
-                   Category = (BO.Enums.ProductCategory)item.Category
+                   Category = (BO.Enums.ProductCategory)item.Category!
                };
     }
 
@@ -27,21 +27,21 @@ internal class Product : BlApi.IProduct
     public BO.Product GetProduct(int _ID)
     {
         BO.Product prod = new BO.Product(); // create a BO product
-        DO.Product product = new DO.Product(); // create a DO product
+        DO.Product? product = new DO.Product(); // create a DO product
         try
         {
-            product = dal.dalProduct.GetByID(_ID); // retrieve the corresponding DO product
+            product = dal!.dalProduct.GetByID(_ID); // retrieve the corresponding DO product
         }
         catch
         {
-            throw new BO.DoesNotExistException(prod);
+            throw new BO.DoesNotExistException();
         }
         // set the BO product to the same values as the DO product
         prod.ID = _ID;
-        prod.Name = product.Name;
-        prod.Price = product.Price;
-        prod.Category = (BO.Enums.ProductCategory)product.Category;
-        prod.InStock = product.InStock;
+        prod.Name = product?.Name;
+        prod.Price = (int)product?.Price!;
+        prod.Category = (BO.Enums.ProductCategory)product?.Category!;
+        prod.InStock = (int)product?.InStock!;
         return prod; // return the BO product
     }
 
@@ -59,7 +59,7 @@ internal class Product : BlApi.IProduct
         newProduct.Name = product.Name;
         newProduct.Price = product.Price;
         newProduct.InStock = product.InStock;
-        newProduct.Category = (DO.Enums.Category)product.Category;
+        newProduct.Category = (DO.Enums.Category)product.Category!;
         return dal.dalProduct.Add(newProduct); // add to product list
     } 
 
@@ -68,6 +68,12 @@ internal class Product : BlApi.IProduct
     /// </summary>
     public void DeleteProduct(int _ID)
     {
+        DO.Product? product = new DO.Product(-1); // create a DO product
+        product = dal!.dalProduct.GetByID(_ID); // retrieve the corresponding DO product
+        if (product?.ID == -1)
+        {
+            throw new BO.DoesNotExistException();
+        }
         dal.dalProduct.Delete(_ID); // delete product
     }
 
@@ -86,7 +92,7 @@ internal class Product : BlApi.IProduct
         newProduct.Name = product.Name;
         newProduct.Price = product.Price;
         newProduct.InStock = product.InStock;
-        newProduct.Category = (DO.Enums.Category)product.Category;
+        newProduct.Category = (DO.Enums.Category)product.Category!;
         dal.dalProduct.Update(newProduct); // send this new DO product to the product update function
     }
     //public IEnumerable<BO.ProductItem> GetCatalog()
@@ -115,15 +121,15 @@ internal class Product : BlApi.IProduct
     /// </summary>
     public int GetStockNumber(int ID)
     {
-        DO.Product product = new DO.Product(-1);
+        DO.Product? product = new DO.Product(-1);
         try
         {
-            product = dal.dalProduct.GetByID(ID); // retrieve the corresponding DO product
+            product = dal!.dalProduct.GetByID(ID); // retrieve the corresponding DO product
         }
         catch
         {
-            throw new BO.DoesNotExistException(product); 
+            throw new BO.DoesNotExistException(); 
         }
-        return product.InStock; // return the stock number
+        return (int)product?.InStock!; // return the stock number
     }
 }

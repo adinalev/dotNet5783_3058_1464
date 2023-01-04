@@ -32,7 +32,7 @@ internal class DalOrderItem : IOrderItem
         int index = DataSource.orderItemList.IndexOf(item);
         if (index != -1)
         {
-            throw new AlreadyExistsException(item);
+            throw new AlreadyExistsException();
         }
         int counter = 0;
         foreach (DO.OrderItem item2 in DataSource.orderItemList)
@@ -55,13 +55,13 @@ internal class DalOrderItem : IOrderItem
     /// <summary>
     /// public method to read an Order Item
     /// </summary>
-    public DO.OrderItem GetByID(int _ID)
+    public DO.OrderItem? GetByID(int _ID)
     {
-        DO.OrderItem item = DataSource.orderItemList.Find(x => x.ID == _ID); // find an order item with a matching ID#
-        if (item.ID == 0)
+        DO.OrderItem? item = DataSource.orderItemList.Find(x => x?.ID == _ID); // find an order item with a matching ID#
+        if (item == null)
         {
             // if there is no matching ID#
-            throw new DoesNotExistException(item);
+            throw new DoesNotExistException();
         }
         return item;
     }
@@ -69,15 +69,34 @@ internal class DalOrderItem : IOrderItem
     /// <summary>
     /// public method to read the Order Item list
     /// </summary>
-    public IEnumerable<OrderItem?> GetAll()
+    public IEnumerable<OrderItem?> GetAll(Func<OrderItem?, bool>? filter)
     {
-        return DataSource.orderItemList.ToList();
+        if (filter == null)//select whole list
+        {
+            return from item in DataSource.orderItemList
+                   where item!=null
+                   select item;
+        }
+        return from myItem in DataSource.orderItemList//select with filter
+               where myItem != null && filter(myItem)
+               select myItem;
+       // return DataSource.orderItemList.ToList();
     }
 
-    /// <summary>
-    /// public method to delete an Order Item
-    /// </summary>
-    public void Delete(int _ID)
+//    if (filter == null)//select whole list
+//        {
+//            return from v in _ds.orderItemList
+//                   where v?.IsDeleted == false
+//                   select v;
+//}
+//        return from v in _ds.orderItemList//select with filter
+//               where v?.IsDeleted == false && filter(v)
+//               select v;
+
+/// <summary>
+/// public method to delete an Order Item
+/// </summary>
+public void Delete(int _ID)
     {
         int ind = 0;
         // traverse through the order item list and find an order item with a matching ID#
@@ -90,6 +109,10 @@ internal class DalOrderItem : IOrderItem
                 break;
             }
         }
+        if (ind == 0)
+        {
+            throw new DoesNotExistException();
+        }
         DO.OrderItem? DelItem = DataSource.orderItemList[ind]; // saved the item that you located above       
         DataSource.orderItemList.Remove(DelItem); // delete that item from the order item list
     }
@@ -100,13 +123,13 @@ internal class DalOrderItem : IOrderItem
     public void Update(DO.OrderItem item)
     {
         int _ID = item.ID;
-        DO.OrderItem OldItem = DataSource.orderItemList.Find(x => x.ID == _ID); // find an order item with a matching ID#
-        if (OldItem.ID == 0)
+        DO.OrderItem? OldItem = DataSource.orderItemList.Find(x => x?.ID == _ID); // find an order item with a matching ID#
+        if (OldItem == null)
         {
-            throw new DoesNotExistException(item);
+            throw new DoesNotExistException();
         }
-        item.ProductID = OldItem.ProductID;
-        item.OrderID = OldItem.OrderID;
+        item.ProductID = (int)OldItem?.ProductID!;
+        item.OrderID = (int)OldItem?.OrderID!;
         int index = DataSource.orderItemList.IndexOf(OldItem);
         DataSource.orderItemList[index] = item;
     }
@@ -159,7 +182,7 @@ internal class DalOrderItem : IOrderItem
         // if a matching ID was not found
         if (myItem.ID == -1)
         {
-            throw new DoesNotExistException(myItem);
+            throw new DoesNotExistException();
         }
         return myItem;
     }
@@ -179,5 +202,21 @@ internal class DalOrderItem : IOrderItem
                 myList.Add(item); 
         }
         return myList;
+    }
+
+    public OrderItem GetByFilter(Func<OrderItem?, bool>? filter)
+    {
+        if (filter == null)
+        {
+            throw new ArgumentNullException(nameof(filter));//filter is null
+        }
+        foreach (OrderItem? item in DataSource.orderItemList)
+        {
+            if (item != null && filter(item))
+            {
+                return (OrderItem)item;
+            }
+        }
+        throw new DoesNotExistException();
     }
 }
