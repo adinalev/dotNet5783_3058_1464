@@ -8,7 +8,7 @@ public interface IProduct
     /// <summary>
     /// public method to return a list of products to display
     /// </summary>
-    public IEnumerable<ProductForList?> GetProductsForList();
+    public IEnumerable<ProductForList?>? GetProductsForList();
 
     /// <summary>
     /// public method to get a product using the ID

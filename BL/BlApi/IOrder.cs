@@ -8,7 +8,7 @@ public interface IOrder
     /// <summary>
     /// public method to get all the orders in list form
     /// </summary>
-    public List<OrderForList> GetAllOrderForList();
+    public List<OrderForList?>? GetAllOrderForList();
 
     /// <summary>
     /// public method to get a BO order using the inputted ID
