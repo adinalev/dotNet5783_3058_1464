@@ -35,11 +35,11 @@ internal class DalOrder : IOrder
         }
     
         // case 2: Order already exists, throw an exception
-        int index = DataSource.orderList.FindIndex(x => x.ID == ord.ID); // find the order with a matching ID as the inputted order
+        int index = DataSource.orderList.FindIndex(x => x?.ID == ord.ID); // find the order with a matching ID as the inputted order
         if (index != -1) // the index will be -1 if there is no order with the same ID#
         {
             // entering this loop means the order already exists since the ID# exists already
-            throw new AlreadyExistsException(ord);
+            throw new AlreadyExistsException();
         }
         else
         // Order is initialized but it's not in the list yet
@@ -52,12 +52,12 @@ internal class DalOrder : IOrder
     ///// <summary>
     ///// public method to read an Order
     ///// </summary>
-    public DO.Order GetByID(int _ID)
+    public DO.Order? GetByID(int _ID)
     {
-        DO.Order ord = DataSource.orderList.Find(x => x.ID == _ID); // find an order with a matching ID
-        if (ord.ID != _ID)
+        DO.Order? ord = DataSource.orderList.Find(x => x?.ID == _ID); // find an order with a matching ID
+        if (ord == null)
         {
-            throw new DoesNotExistException(ord);
+            throw new DoesNotExistException();
         }
         return ord;
     }
@@ -65,9 +65,19 @@ internal class DalOrder : IOrder
     /// <summary>
     /// public method to read the Order list
     /// </summary>
-    public IEnumerable<Order?> GetAll()
+    public IEnumerable<Order?> GetAll(Func<Order?, bool>? filter)
     {
-        return DataSource.orderList.ToList();
+        if (filter == null)//select whole list
+        {
+            return from order in DataSource.orderList
+                   where order != null
+                   select order;
+        }
+        return from myOrder in DataSource.orderList//select with filter
+               where myOrder != null && filter(myOrder)
+               select myOrder;
+
+        //return DataSource.orderList.ToList();
     }
 
     /// <summary>
@@ -75,7 +85,7 @@ internal class DalOrder : IOrder
     /// </summary>
     public void Delete(int _ID)
     {
-        int ind = 0;
+        int ind = -1;
         // traverse through the order list to find an order with a matching ID#
         foreach (DO.Order ord in DataSource.orderList)
         {
@@ -85,6 +95,10 @@ internal class DalOrder : IOrder
                 ind = DataSource.orderList.IndexOf(ord);
                 break;
             }
+        }
+        if(ind == -1)
+        {
+            throw new DoesNotExistException();
         }
         // retrieve the order sitting in the found index
         DO.Order? DelOrd = DataSource.orderList[ind];
@@ -98,19 +112,35 @@ internal class DalOrder : IOrder
     public void Update(DO.Order ord)
     {
         int _ID = ord.ID;
-        DO.Order OldOrd = DataSource.orderList.Find(x => x.ID == _ID); // find an order with a matching ID#
-        if (ord.ID != OldOrd.ID)
+        DO.Order? OldOrd = DataSource.orderList.Find(x => x?.ID == _ID); // find an order with a matching ID#
+        if (OldOrd == null)
         {
             // if no order is found with a matching ID#, there is no order to update
-            throw new DoesNotExistException(ord);
+            throw new DoesNotExistException();
         }
         // ensure that the dates stay the same
-        ord.OrderDate = OldOrd.OrderDate;
-        ord.ShippingDate = OldOrd.ShippingDate;
-        ord.DeliveryDate = OldOrd.DeliveryDate;
+        ord.OrderDate = OldOrd?.OrderDate;
+        ord.ShippingDate = OldOrd?.ShippingDate;
+        ord.DeliveryDate = OldOrd?.DeliveryDate;
         // locate the index of the old order that you would like to update 
         int index = DataSource.orderList.IndexOf(OldOrd);
         // input the updated order into the index of the old order
         DataSource.orderList[index] = ord;
+    }
+
+    public Order GetByFilter(Func<Order?, bool>? filter)
+    {
+        if (filter == null)
+        {
+            throw new ArgumentNullException(nameof(filter));//filter is null
+}
+        foreach (Order? order in DataSource.orderList)
+        {
+            if (order!=null && filter(order))
+            {
+                return (Order) order;
+            }
+        }
+        throw new DoesNotExistException();  // CORRECT EXCEPTION?
     }
 }

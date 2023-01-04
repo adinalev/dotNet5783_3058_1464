@@ -9,13 +9,13 @@ namespace DO;
 [Serializable] // NEED THIS??
 public class DoesNotExistException : Exception
 {
-    public DoesNotExistException(Object obj) : base($"The {obj.GetType().Name} does not exist.") { }
+    public DoesNotExistException() : base($"The item does not exist.") { }
 }
 
 [Serializable]
 public class AlreadyExistsException : Exception
 {
-    public AlreadyExistsException(Object obj) : base($"The {obj.GetType().Name} already exists. ") { }
+    public AlreadyExistsException() : base($"The item already exists. ") { }
 }
 
 [Serializable]

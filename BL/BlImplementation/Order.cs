@@ -9,10 +9,10 @@ internal class Order : BlApi.IOrder
     /// <summary>
     /// public method to return the order list
     /// </summary>
-    public List<BO.OrderForList> GetAllOrderForList()
+    public List<BO.OrderForList?> GetAllOrderForList()
     {
-        IEnumerable<DO.Order> orders = dal.dalOrder.GetAll(); // get all the orders from DO 
-        IEnumerable<DO.OrderItem> orderItems = dal.dalOrderItem.GetAll(); // get all the order items from DO
+        IEnumerable<DO.Order?> orders = dal.dalOrder.GetAll(); // get all the orders from DO 
+        IEnumerable<DO.OrderItem?> orderItems = dal.dalOrderItem.GetAll(); // get all the order items from DO
         List<BO.OrderForList> list = new List<BO.OrderForList>(); // create a list of BO orders
         foreach (DO.Order order in orders)
         {
@@ -37,21 +37,21 @@ internal class Order : BlApi.IOrder
             }); 
 
         }
-        return list; // return the list of new BO orders
+        return list!; // return the list of new BO orders
     }
 
     /// <summary>
     /// method to return the status of an order
     /// </summary>
-    public BO.Enums.OrderStatus GetStatus(DO.Order order)
+    public BO.Enums.OrderStatus GetStatus(DO.Order? order)
     {
-        if (order.OrderDate == null) // if the order wasn't placed yet
+        if (order?.OrderDate == null) // if the order wasn't placed yet
             return BO.Enums.OrderStatus.New;
-        if (order.OrderDate < DateTime.Now && (order.ShippingDate > DateTime.Now || order.ShippingDate == DateTime.MinValue)) // if the order has been placed but not shipped yet
+        if (order?.OrderDate < DateTime.Now && (order?.ShippingDate > DateTime.Now || order?.ShippingDate == null)) // if the order has been placed but not shipped yet
             return BO.Enums.OrderStatus.BeingProcessed;
-        if ((order.ShippingDate < DateTime.Now && order.ShippingDate != DateTime.MinValue) && (order.DeliveryDate > DateTime.Now || order.DeliveryDate == DateTime.MinValue))  // if the order has been shipped but not been delivered yet
+        if ((order?.ShippingDate < DateTime.Now && order?.ShippingDate != null) && (order?.DeliveryDate > DateTime.Now || order?.DeliveryDate == null))  // if the order has been shipped but not been delivered yet
             return BO.Enums.OrderStatus.Shipped;
-        if (order.DeliveryDate < DateTime.Now && order.DeliveryDate != DateTime.MinValue) // if the order has been delivered
+        if (order?.DeliveryDate < DateTime.Now && order?.DeliveryDate != null) // if the order has been delivered
             return BO.Enums.OrderStatus.Delivered;
         else return BO.Enums.OrderStatus.Unknown; //if the order matches none of the criteria above
     }
@@ -59,38 +59,38 @@ internal class Order : BlApi.IOrder
     /// <summary>
     /// public method to return an order
     /// </summary>
-    public BO.Order GetBoOrder(int _ID)
+    public BO.Order? GetBoOrder(int _ID)
     {
-        DO.Order order = dal.dalOrder.GetByID(_ID); // retrieve the corresponding DO order
+        DO.Order? order = dal!.dalOrder.GetByID(_ID); // retrieve the corresponding DO order // NULLABLE?
         if (_ID < 0) 
         {
-            throw new BO.DoesNotExistException(order);
+            throw new BO.DoesNotExistException();
         }
         double priceTemp = 0;
         foreach (DO.OrderItem? ord in dal.dalOrderItem.GetAll())
         {
-            if (ord.OrderID == _ID)
+            if (ord?.OrderID == _ID)
             {
-                priceTemp += ord.Price; // add up all of prices in the order
+                priceTemp += (int)ord?.Price!; // add up all of prices in the order
             }
         }
-        if (order.ID == _ID) // if exists 
+        if (order?.ID == _ID) // if exists 
         {
             return new BO.Order // create a new BO order with appropriate critera
             {
                 ID = _ID,
-                Address = order.Address,
-                Email = order.Email,
-                CustomerName = order.CustomerName,
-                OrderDate = order.OrderDate,
-                PaymentDate = order.OrderDate, /* Payment date should be the same as the order date */
-                ShippingDate = order.ShippingDate,
-                DeliveryDate = order.DeliveryDate,
+                Address = order?.Address,
+                Email = order?.Email,
+                CustomerName = order?.CustomerName,
+                OrderDate = order?.OrderDate,
+                PaymentDate = order?.OrderDate, /* Payment date should be the same as the order date */
+                ShippingDate = order?.ShippingDate,
+                DeliveryDate = order?.DeliveryDate,
                 Status = GetStatus(order),
                 TotalPrice = priceTemp,
             };
         }
-        throw new BO.DoesNotExistException(order);
+        throw new BO.DoesNotExistException();
     }
 
     /// <summary>
@@ -98,8 +98,8 @@ internal class Order : BlApi.IOrder
     /// </summary>
     public BO.Order UpdateDeliveryDate(int orderID, DateTime date)
     {
-        DO.Order order = dal.dalOrder.GetByID(orderID); // retrieve the corresponding DO order
-        BO.Order orderBO = GetBoOrder(orderID); // retrieve the status of an order
+        DO.Order? order = dal!.dalOrder.GetByID(orderID); // retrieve the corresponding DO order
+        BO.Order? orderBO = GetBoOrder(orderID); // retrieve the status of an order
         if (GetStatus(order) == BO.Enums.OrderStatus.New) // if the order has not been placed yet
         {
             throw new BO.OrderNotPlacedYetException();
@@ -108,27 +108,27 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.AlreadyDeliveredException();
         }
-        if (order.ShippingDate == DateTime.MinValue) // if there is no shipping date available for the order yet
+        if (order?.ShippingDate == null) // if there is no shipping date available for the order yet
         {
             throw new BO.NoShipDateException();
         }
-        if (date < order.ShippingDate) // if the delivery date is set for before the shipping date
+        if (date < order?.ShippingDate) // if the delivery date is set for before the shipping date
         {
             throw new BO.DeliveryDateOutOfRangeException();
         }
         DO.Order ord = new() // create a new DO order with the same criteria but with the new delivery date
         {
             ID = orderID,
-            Address = order.Address,
-            Email = order.Email,
-            CustomerName = order.CustomerName,
-            OrderDate = order.OrderDate,
-            ShippingDate = order.ShippingDate,
+            Address = order?.Address,
+            Email = order?.Email,
+            CustomerName = order?.CustomerName,
+            OrderDate = order?.OrderDate,
+            ShippingDate = order?.ShippingDate,
             DeliveryDate = date // This is the only change in the order
         };
         dal.dalOrder.Update(ord); // update the order in DO
 
-        orderBO.DeliveryDate = date;
+        orderBO!.DeliveryDate = date;
         orderBO.Status = GetStatus(order);
         return orderBO;
     } 
@@ -138,8 +138,8 @@ internal class Order : BlApi.IOrder
     /// </summary>
     public BO.Order UpdateShippingDate(int orderID, DateTime date)
     {
-        DO.Order order = dal.dalOrder.GetByID(orderID); // retrieve the corresponding DO order
-        BO.Order orderBO = GetBoOrder(orderID); // retrieve the corresponding BO order
+        DO.Order? order = dal!.dalOrder.GetByID(orderID); // retrieve the corresponding DO order
+        BO.Order? orderBO = GetBoOrder(orderID); // retrieve the corresponding BO order
         if(GetStatus(order) == BO.Enums.OrderStatus.New) // if the order has not been placed yet
         {
             throw new BO.OrderNotPlacedYetException();
@@ -148,7 +148,7 @@ internal class Order : BlApi.IOrder
         {
             throw new BO.AlreadyShippedException();
         }
-        if (date > orderBO.DeliveryDate && orderBO.DeliveryDate != DateTime.MinValue) // if the shipping date is set to later than the delivery date
+        if (date > orderBO!.DeliveryDate && orderBO.DeliveryDate != null) // if the shipping date is set to later than the delivery date
         {
             throw new BO.ShipDateOutOfRangeException();
         }
@@ -156,12 +156,12 @@ internal class Order : BlApi.IOrder
         DO.Order ord = new() // create a new DO order with the same critera but the shipping date is set to the new date
         {
             ID = orderID,
-            Address = order.Address,
-            Email = order.Email,
-            CustomerName = order.CustomerName,
-            OrderDate = order.OrderDate,
+            Address = order?.Address,
+            Email = order?.Email,
+            CustomerName = order?.CustomerName,
+            OrderDate = order?.OrderDate,
             ShippingDate = date, // this is the only change
-            DeliveryDate = order.DeliveryDate, 
+            DeliveryDate = order?.DeliveryDate, 
         };
         dal.dalOrder.Update(ord); // update the order in DO
                                     
@@ -174,7 +174,7 @@ internal class Order : BlApi.IOrder
     {
         BO.OrderTracking orderTracking = new BO.OrderTracking();
         DO.Order order = new DO.Order(-1);
-        IEnumerable<DO.Order?> orders = dal.dalOrder.GetAll(); // get all the orders from DO 
+        IEnumerable<DO.Order?> orders = dal!.dalOrder.GetAll(); // get all the orders from DO 
         foreach (DO.Order ord in orders)
         {
             if (ord.ID == orderID)
@@ -182,13 +182,10 @@ internal class Order : BlApi.IOrder
         }
         if (order.ID == -1)
         {
-            throw new BO.DoesNotExistException(order);
+            throw new BO.DoesNotExistException();
         }
         orderTracking.ID = orderID;
         orderTracking.Status = GetStatus(order);
         return orderTracking;
     }
-
-
-
 }

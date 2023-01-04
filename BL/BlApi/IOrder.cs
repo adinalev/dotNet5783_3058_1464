@@ -13,7 +13,7 @@ public interface IOrder
     /// <summary>
     /// public method to get a BO order using the inputted ID
     /// </summary>
-    public Order GetBoOrder(int ID);
+    public Order? GetBoOrder(int ID);
 
     /// <summary>
     /// public method for the manager to update the shipping date of an order
@@ -28,7 +28,7 @@ public interface IOrder
     /// <summary>
     /// public method to update and return the status of anorder
     /// </summary>
-    public BO.Enums.OrderStatus GetStatus(DO.Order order);
+    public BO.Enums.OrderStatus GetStatus(DO.Order? order);
 
     /// <summary>
     /// public method to track an order

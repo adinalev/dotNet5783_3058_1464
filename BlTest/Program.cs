@@ -49,8 +49,8 @@ class Program
                     switch(option)
                     {
                         case 1: // view the product list
-                            IEnumerable<ProductForList> productList = bl.Product.GetProductsForList(); // retrive the product list
-                            foreach (ProductForList prod in productList) // traverse through the product list and display each one
+                            IEnumerable<ProductForList?> productList = bl.Product.GetProductsForList(); // retrive the product list
+                            foreach (ProductForList? prod in productList) // traverse through the product list and display each one
                             {
                                 Console.WriteLine(prod);
                             }
@@ -174,7 +174,7 @@ class Program
                             /* Note to grader: The fields for name, email, and address stay empty until the user places an order, 
                              because generally when shopping online you only input those values when checking out your cart. */
                             Console.WriteLine(cart);
-                            List<string> list = bl.Cart.GetItemNames(cart); // get the names of the items in the cart
+                            List<string?> list = bl.Cart.GetItemNames(cart); // get the names of the items in the cart
                             Console.Write("\t \t");
                             foreach (string name in list) // travers through the list of names and print them to the screen
                             {
@@ -231,9 +231,9 @@ class Program
                                 Console.WriteLine("Your order has been placed! Your order ID is: " + ID);
                                 // display the cart
                                 Console.WriteLine(cart);
-                                List<string> myList = bl.Cart.GetItemNames(cart);
+                                List<string?> myList = bl.Cart.GetItemNames(cart);
                                 Console.Write("\t \t");
-                                foreach (string myItem in myList)
+                                foreach (string? myItem in myList)
                                 {
                                     Console.Write(myItem);
                                     if (myItem == myList.Last())
@@ -298,8 +298,8 @@ class Program
                             }
                             break;
                         case 2: // to view the order list
-                            List<OrderForList> orderList = bl.Order.GetAllOrderForList();
-                            foreach (OrderForList ord in orderList)
+                            List<OrderForList?> orderList = bl.Order.GetAllOrderForList();
+                            foreach (OrderForList? ord in orderList)
                             {
                                 Console.WriteLine(ord);
                             }

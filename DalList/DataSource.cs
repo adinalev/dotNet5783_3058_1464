@@ -71,8 +71,8 @@ internal static class DataSource
                 Email = Email[rand.Next(Email.Length)],
                 Address = Address[rand.Next(Address.Length)],
                 OrderDate = DateTime.Now - new TimeSpan(rand.NextInt64(10L * 1000L * 3600L * 24L * 100L)),
-                ShippingDate = DateTime.MinValue,
-                DeliveryDate = DateTime.MinValue
+                ShippingDate = null,
+                DeliveryDate = null
             };
 
             if (i < 4) // hardcoding that 20% of orders don't have a ship date yet - only 80% of orders are meant to have a shipping date at first

@@ -9,9 +9,9 @@ internal class Program
     static void Main(string[] args)
     { 
        // DataSource ds = new DataSource();
-        Product product = new Product();
-        Order order = new Order(); 
-        OrderItem item = new OrderItem();
+        Product? product = new Product?();
+        Order? order = new Order?(); 
+        OrderItem? item = new OrderItem?();
 
         int num1, num2, ID;
         string answer1, categories;
@@ -61,7 +61,7 @@ internal class Program
                         prod.InStock = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Your new product ID is: " + dalList.dalProduct.Add(prod)); // Add the product to the list and get the new ID
                     }
-                    catch (Exception exc)
+                    catch (AlreadyExistsException exc)
                     {
                         Console.WriteLine("Error: {0}", exc);
                     }
@@ -75,7 +75,7 @@ internal class Program
                         product = dalList.dalProduct.GetByID(_ID); // Calling the GET method in DalProduct to retrieve the product
                         Console.WriteLine(product);
                     }
-                    catch (Exception exc)
+                    catch (DoesNotExistException exc)
                     {
                         Console.WriteLine("Error: {0}", exc);
                     }
@@ -116,7 +116,7 @@ internal class Program
                         prod.InStock = Convert.ToInt32(Console.ReadLine());
                         dalList.dalProduct.Update(prod); // Send the new product to the Update function in DalProduct
                     }
-                    catch (Exception exc)
+                    catch (DoesNotExistException exc)
                     {
                         Console.WriteLine("Error: {0}", exc);
                     }
@@ -128,7 +128,7 @@ internal class Program
                         int _ID = Convert.ToInt32(Console.ReadLine());
                         dalList.dalProduct.Delete(_ID); // Delete the product with the given ID#
                     }
-                    catch (Exception exc)
+                    catch (DoesNotExistException exc)
                     {
                         Console.WriteLine("Error: {0}", exc);
                     }
@@ -149,7 +149,7 @@ internal class Program
                         ord.Address = Console.ReadLine();
                         Console.WriteLine("Your new order ID is: " + dalList.dalOrder.Add(ord)); // Adding a new order to the list and get the new order ID#
                     }
-                    catch(Exception exc)
+                    catch(AlreadyExistsException exc)
                     {
                         Console.WriteLine("Error: {0}", exc);
                     }
@@ -162,7 +162,7 @@ internal class Program
                         order = dalList.dalOrder.GetByID(_ID); // Retrieve the desired order using the GET method in DalOrder
                         Console.WriteLine(order);
                     }
-                    catch (Exception exc)
+                    catch (DoesNotExistException exc)
                     {
                         Console.WriteLine("Error: {0}", exc);
                     }
@@ -197,7 +197,7 @@ internal class Program
                         ord.Address = Console.ReadLine();
                         dalList.dalOrder.Update(ord); // Send the new order to the update method in DalOrder
                     }
-                    catch(Exception exc)
+                    catch(DoesNotExistException exc)
                     {
                         Console.WriteLine("Error: {0}", exc);
                     }
@@ -209,7 +209,7 @@ internal class Program
                         int _ID = Convert.ToInt32(Console.ReadLine());
                         dalList.dalOrder.Delete(_ID); // delete the order
                     }
-                    catch (Exception exc)
+                    catch (DoesNotExistException exc)
                     {
                         Console.WriteLine("Error: {0}", exc);
                     }
@@ -231,7 +231,7 @@ internal class Program
                         myItem.Quantity = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Your new order item ID is: " + dalList.dalOrderItem.Add(myItem)); // Add a new order item and receive the new Order Item ID#
                     }
-                    catch (Exception exc)
+                    catch (AlreadyExistsException exc)
                     {
                         Console.WriteLine("Error: {0}", exc);
                     }
@@ -259,7 +259,7 @@ internal class Program
                             Console.WriteLine(item);
                         }
                     }
-                    catch (Exception exc)
+                    catch (DoesNotExistException exc)
                     {
                         Console.WriteLine("Error: {0}", exc);
                     }
@@ -302,18 +302,19 @@ internal class Program
                         }
                         if (option == 2)
                         {
+                            DO.OrderItem orderItem = new DO.OrderItem(-1);
                             Console.WriteLine("Enter the order ID#: ");
-                            item.OrderID = Convert.ToInt32(Console.ReadLine());
+                            orderItem.OrderID = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Enter the product ID#: ");
-                            item.ProductID = Convert.ToInt32(Console.ReadLine());
+                            orderItem.ProductID = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Enter the price per unit: ");
-                            item.Price = Convert.ToInt32(Console.ReadLine());
+                            orderItem.Price = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Enter the quantity: ");
-                            item.Quantity = Convert.ToInt32(Console.ReadLine());
-                            dalList.dalOrderItem.UpdateByIDs(item); // Send the updated order item to the update method in DalOrderItem
+                            orderItem.Quantity = Convert.ToInt32(Console.ReadLine());
+                            dalList.dalOrderItem.UpdateByIDs(orderItem); // Send the updated order item to the update method in DalOrderItem
                         }
                     }
-                    catch (Exception exc)
+                    catch (DoesNotExistException exc)
                     {
                         Console.WriteLine("Error: {0}", exc);
                     }
@@ -325,7 +326,7 @@ internal class Program
                         int _ID = Convert.ToInt32(Console.ReadLine());
                         dalList.dalOrderItem.Delete(_ID); // delete the order item
                     }
-                    catch (Exception exc)
+                    catch (DoesNotExistException exc)
                     {
                         Console.WriteLine("Error: {0}", exc);
                     }
