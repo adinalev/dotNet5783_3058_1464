@@ -59,7 +59,7 @@ internal class Product : BlApi.IProduct
         newProduct.Name = product.Name;
         newProduct.Price = product.Price;
         newProduct.InStock = product.InStock;
-        newProduct.Category = (DO.Enums.Category)product.Category!;
+        newProduct.Category = (DO.Enums.Category)product.Category;
         return dal.dalProduct.Add(newProduct); // add to product list
     } 
 

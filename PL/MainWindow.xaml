@@ -17,18 +17,10 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name ="AttributeSelector"  Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             <Label Content="Label" HorizontalAlignment="Left" Margin="118,0,0,0" VerticalAlignment="Center"/>
-            <Button>Button?</Button>
-            <!--where does the button go?-->
+            <Button Click="ShowProductsButton_Click">View Products</Button>
         </Grid>
-        <ListView x:Name="SomethingListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
-            <!-- fix this, instructions says StudentsListView-->
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1"/>
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AddButton_Click"/>
     </Grid>
 </Window>
