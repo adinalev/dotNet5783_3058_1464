@@ -3,13 +3,13 @@
 [Serializable] 
 public class DoesNotExistException : Exception
 {
-    public DoesNotExistException() : base($"The item does not exist.") { }
+    public DoesNotExistException() : base("The item does not exist.") { }
 }
 
 [Serializable]
 public class AlreadyExistsException : Exception
 {
-    public AlreadyExistsException() : base($"The item already exists. ") { }
+    public AlreadyExistsException() : base("The item already exists. ") { }
 }
 
 [Serializable]

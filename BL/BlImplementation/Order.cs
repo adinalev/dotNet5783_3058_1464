@@ -61,8 +61,22 @@ internal class Order : BlApi.IOrder
     /// </summary>
     public BO.Order? GetBoOrder(int _ID)
     {
-        DO.Order? order = dal!.dalOrder.GetByID(_ID); // retrieve the corresponding DO order // NULLABLE?
-        if (_ID < 0) 
+        //DO.Product? product = new DO.Product(-1); // create a DO product
+        //try
+        //{
+        //    product = dal!.dalProduct.GetByID(_ID); // retrieve the corresponding DO product
+        //}
+        //catch
+        //{
+        //    throw new BO.DoesNotExistException();
+        //}
+
+        DO.Order? order = new DO.Order(-1);
+        try
+        {
+            order = dal!.dalOrder.GetByID(_ID); // retrieve the corresponding DO order // NULLABLE?
+        }
+        catch
         {
             throw new BO.DoesNotExistException();
         }

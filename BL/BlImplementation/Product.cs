@@ -69,8 +69,11 @@ internal class Product : BlApi.IProduct
     public void DeleteProduct(int _ID)
     {
         DO.Product? product = new DO.Product(-1); // create a DO product
-        product = dal!.dalProduct.GetByID(_ID); // retrieve the corresponding DO product
-        if (product?.ID == -1)
+        try
+        {
+            product = dal!.dalProduct.GetByID(_ID); // retrieve the corresponding DO product
+        }
+        catch
         {
             throw new BO.DoesNotExistException();
         }
