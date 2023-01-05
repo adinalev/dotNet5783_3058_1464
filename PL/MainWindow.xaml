@@ -19,6 +19,16 @@
             </Grid.ColumnDefinitions >
             <ComboBox Name ="AttributeSelector"  Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             <Label Content="Label" HorizontalAlignment="Left" Margin="118,0,0,0" VerticalAlignment="Center"/>
+            <Button>Button?</Button>
+            <!--where does the button go?-->
         </Grid>
+        <ListView x:Name="SomethingListView" Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}">
+            <!-- fix this, instructions says StudentsListView-->
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
