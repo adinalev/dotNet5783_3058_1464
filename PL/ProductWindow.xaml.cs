@@ -50,7 +50,6 @@ namespace PL
             CategoryBox.SelectedItem = prod.Category;
             uname.Text = prod.Name;
             ID.Text = prod.ID.ToString();
-            //prod.ID.ToString();
         }
         private void tid_previewtextinput(object sender, TextCompositionEventArgs e)
         {
@@ -73,22 +72,28 @@ namespace PL
 
         private void uinstock_previewtextinput(object sender, TextCompositionEventArgs e)
         {
-            uinstock.Text = product.InStock.ToString();
             e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);//only gets numbers for instock
         }
 
         private void uprice_previewtextinput(object sender, TextCompositionEventArgs e)
         {
-            uprice.Text = product.Price.ToString();
             e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);//only gets numbers for price
         }
         private void uname_previewtextinput(object sender, TextCompositionEventArgs e)
         {
-            uname.Text = product.Name;
-            e.Handled = new Regex("[^a-z]+[A-Z]+").IsMatch(e.Text);//only get letters 
+            //e.Handled = new Regex("[^0-9.-]+").IsMatch(e.Text);
+            try
+            {
+                e.Handled = new Regex("[^a-z]+[^A-Z]+").IsMatch(e.Text);//only get letters  // HAD A PLUS AFTER THE []
+            }
+            catch (BO.InvalidInputException exc)
+            {
+                new ErrorWindow("Product List View Window\n", exc.Message).ShowDialog();
+            }
         }
+        
 
-        private void tname_TextChanged(object sender, TextChangedEventArgs e)
+    private void tname_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (tname != null && tname.Text != "")
             {
@@ -104,7 +109,6 @@ namespace PL
                 {
                     product.Price = val;
                 }
-                //else error
             }
         }
 
@@ -116,7 +120,6 @@ namespace PL
                 {
                     product.InStock = val;
                 }
-                //else error
             }
         }
 
@@ -144,7 +147,14 @@ namespace PL
 
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
-            bl.Product.AddProduct(product);
+            try
+            {
+                bl.Product.AddProduct(product);
+            }
+            catch(BO.InvalidInputException exc)
+            {
+                new ErrorWindow("Add Product Window\n", exc.Message).ShowDialog();
+            }
             Close();
         }
 

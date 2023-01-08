@@ -54,6 +54,12 @@ internal class Product : BlApi.IProduct
         {
             throw new BO.InvalidInputException();
         }
+        bool check = product.Name.All(Char.IsLetter);
+        if (!check)
+        {
+
+            throw new BO.InvalidInputException();
+        }
         DO.Product newProduct = new DO.Product(); //create new DO product
         // set the DO product attributes equal to the values of the BO product attributes
         newProduct.Name = product.Name;
