@@ -6,7 +6,14 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="640" Width="800">
-    <Grid Name = "MainGrid">
+    <Window.Resources>
+        <Style x:Name="TextStyle" TargetType="TextBlock" >
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Italic"/>
+            <Setter Property="FontSize" Value="27"/>
+        </Style>
+    </Window.Resources>
+    <Grid Name = "MainGrid" Background="LightGray">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
@@ -17,10 +24,13 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <Label Content="Label" HorizontalAlignment="Left" Margin="118,0,0,0" VerticalAlignment="Center"/>
-            <Button Click="ShowProductsButton_Click">View Products</Button>
+            <!--<Label Content="Pharmacy" HorizontalAlignment="Left" Margin="118,0,0,0" VerticalAlignment="Center"/>-->
+            <Button Click="ShowProductsButton_Click" Grid.ColumnSpan="2" Margin="248,262,276,-263" FontSize="27" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">View Products
+                <Button.Effect>
+                    <DropShadowEffect/>
+                </Button.Effect>
+            </Button>
         </Grid>
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1"/>
-        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AddButton_Click"/>
     </Grid>
 </Window>

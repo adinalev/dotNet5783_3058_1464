@@ -135,4 +135,9 @@ internal class Product : BlApi.IProduct
         }
         return (int)product?.InStock!; // return the stock number
     }
+
+    public int GetNextID()
+    {
+        return DO.Product.productCounter + 1;
+    }
 }

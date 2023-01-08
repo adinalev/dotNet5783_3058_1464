@@ -32,7 +32,7 @@ namespace PL
         private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new ProductListWindow().Show();
 
         // When the button to add a product is pressed, open the append window to add a product
-        private void AddButton_Click(object sender, RoutedEventArgs e) => new AppendWindow().Show();
+        //private void AddButton_Click(object sender, RoutedEventArgs e) => new AppendWindow().Show();
 
         //private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new ProductListWindow().Show();
 

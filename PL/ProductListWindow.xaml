@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ProductListWindow" Height="450" Width="800">
-    <Grid Name = "ProductsGrid">
+    <Grid Name = "ProductsGrid" Background="LightGray">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="787*"/>
             <ColumnDefinition Width="3*"/>
@@ -17,7 +17,7 @@
             <RowDefinition Height="500*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <ListView x:Name="ProductsListView" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListView_SelectionChanged" Grid.ColumnSpan="3" Margin="0,32,0,0" Grid.RowSpan="2" MouseDoubleClick="DoubleClickEvent">
+        <ListView x:Name="ProductsListView" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListView_SelectionChanged" Margin="0,3,0,0" MouseDoubleClick="DoubleClickEvent" SelectedItem="" Grid.Row="1">
             <ListView.View>
                 <GridView>
                     <GridViewColumn/>
@@ -25,6 +25,11 @@
             </ListView.View>
         </ListView>
         <ComboBox x:Name ="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Select a category" SelectedItem="" Grid.ColumnSpan="3"/>
+        <Button Content="Add" Grid.Row="2" HorizontalAlignment="Right" Margin="5" Padding="5" Click="AddButton_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
 
     </Grid>
 </Window>

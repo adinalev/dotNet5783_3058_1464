@@ -21,16 +21,37 @@ namespace PL
     /// <summary>
     /// Interaction logic for AppendWindow.xaml
     /// </summary>
-    public partial class AppendWindow : Window
+    public partial class ProductWindow : Window
     {
         private IBl bl = new Bl();
         private BO.Product product = new BO.Product();
-        public AppendWindow() // constructor
+        public ProductWindow() // constructor
         {
             InitializeComponent();
             CategoryBox.ItemsSource = Enum.GetValues(typeof(BO.Enums.ProductCategory));
+            updateProductButton.Visibility = Visibility.Collapsed;//update invisible 
+            uinstock.Visibility = Visibility.Collapsed;
+            uprice.Visibility = Visibility.Collapsed;
+            uname.Visibility = Visibility.Collapsed;
+            ID.Text = bl.Product.GetNextID().ToString();
         }
 
+        public ProductWindow(Product prod)
+        {
+            InitializeComponent();
+            CategoryBox.ItemsSource = Enum.GetValues(typeof(BO.Enums.ProductCategory));
+            addProductButton.Visibility = Visibility.Collapsed;//add invisible
+            updateProductButton.Visibility = Visibility.Visible;//show update
+            tinstock.Visibility = Visibility.Collapsed;
+            tprice.Visibility = Visibility.Collapsed;
+            tname.Visibility = Visibility.Collapsed;
+            uinstock.Text = prod.InStock.ToString();
+            uprice.Text = prod.Price.ToString();
+            CategoryBox.SelectedItem = prod.Category;
+            uname.Text = prod.Name;
+            ID.Text = prod.ID.ToString();
+            //prod.ID.ToString();
+        }
         private void tid_previewtextinput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);//only gets numbers for id
@@ -47,6 +68,23 @@ namespace PL
         }
         private void tname_previewtextinput(object sender, TextCompositionEventArgs e)
         {
+            e.Handled = new Regex("[^a-z]+[A-Z]+").IsMatch(e.Text);//only get letters 
+        }
+
+        private void uinstock_previewtextinput(object sender, TextCompositionEventArgs e)
+        {
+            uinstock.Text = product.InStock.ToString();
+            e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);//only gets numbers for instock
+        }
+
+        private void uprice_previewtextinput(object sender, TextCompositionEventArgs e)
+        {
+            uprice.Text = product.Price.ToString();
+            e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);//only gets numbers for price
+        }
+        private void uname_previewtextinput(object sender, TextCompositionEventArgs e)
+        {
+            uname.Text = product.Name;
             e.Handled = new Regex("[^a-z]+[A-Z]+").IsMatch(e.Text);//only get letters 
         }
 
@@ -107,6 +145,12 @@ namespace PL
         private void AddProductButton_Click(object sender, RoutedEventArgs e)
         {
             bl.Product.AddProduct(product);
+            Close();
+        }
+
+        private void UpdateProductButton_Click(object sender, RoutedEventArgs e)
+        {
+            bl.Product.UpdateProduct(product);
             Close();
         }
     }

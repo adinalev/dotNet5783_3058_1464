@@ -19,6 +19,8 @@ namespace PL
             ProductsListView.ItemsSource = bl.Product.GetProductsForList();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.ProductCategory));
         }
+        private void AddButton_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
+
 
         // constructor to take in an ID
         public ProductListWindow(int ID)
@@ -76,9 +78,28 @@ namespace PL
 
         private void DoubleClickEvent(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            if (ProductsListView.SelectedItem is BO.ProductForList productForList)
+            {
+                BO.Product prod = new BO.Product();
+                prod = bl.Product.GetProduct(productForList.ID);
+                new ProductWindow(prod).ShowDialog();
+            }
+            //try
+            //{
+                ProductsListView.ItemsSource = bl?.Product.GetProductsForList();//update list view after add
+            //}
+            //catch (BO.Exceptions ex)
+            //{
+            //    new ErrorWindow("List View Window\n", ex.Message).ShowDialog();
+                //Console.WriteLine("List View Window\n");
+                //Console.WriteLine(ex.Message);
+                //Console.WriteLine("getting products failed-id is null\n");
+                //Console.WriteLine(ex.InnerException?.ToString());
+                ////id is null error on screen
+            //}
         }
 
-    }
+   }
 }
+
 

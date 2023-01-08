@@ -36,4 +36,5 @@ public interface IProduct
     /// public method to return the amount of product in stock
     /// </summary>
     public int GetStockNumber(int ID);
+    public int GetNextID();
 }
