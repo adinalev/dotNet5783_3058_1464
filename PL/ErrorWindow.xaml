@@ -9,10 +9,15 @@
     <Grid>
 
         <!--<Image Name="ErrorImage" Source="/errorIcon.png" Margin="200,20,200,0" Height="150"/>-->
-        <TextBox x:Name="ErrorTitle" Background="LightGray" FontSize="25" FontWeight="Bold" BorderThickness="4" Margin="50,71,50,289"
+        <TextBox x:Name="ErrorTitle" Background="LightGray" FontSize="25" FontWeight="Bold" BorderThickness="4" Margin="50,33,50,327"
                 TextAlignment="Center"/>
-        <TextBox x:Name="ErrorDetails" Background="Transparent" FontSize="22" Margin="50,150,50,217" TextAlignment="Center"/>
-        <Button x:Name="OKButton" Background="LightGray" FontSize="25" Width="100" Height="50" Content="OK"
-            FontWeight="DemiBold" BorderBrush="Transparent" Click="OKButton_Click" Margin="350,232,350,152" />
+        <TextBox x:Name="ErrorDetails" Background="Transparent" FontSize="22" Margin="50,112,50,255" TextAlignment="Center"/>
+        <!--<Button x:Name="OKButton" Background="LightGray" FontSize="25" Width="200" Height="50" Content="OK"
+            FontWeight="DemiBold" BorderBrush="Black" Click="OKButton_Click" Margin="300,217,300,167" />-->
+        <Button Name="OKButton" Content="OK" HorizontalAlignment="Center" Margin="0,198,0,184" Padding="5" Click="OKButton_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet" Width="100">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
     </Grid>
 </Window>

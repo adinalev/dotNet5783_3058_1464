@@ -60,6 +60,10 @@ internal class Product : BlApi.IProduct
 
             throw new BO.InvalidInputException();
         }
+        if (product.Category == BO.Enums.ProductCategory.NO_CATEGORY)
+        {
+            throw new BO.InvalidInputException();
+        }
         DO.Product newProduct = new DO.Product(); //create new DO product
         // set the DO product attributes equal to the values of the BO product attributes
         newProduct.Name = product.Name;
@@ -91,7 +95,16 @@ internal class Product : BlApi.IProduct
     /// </summary>
     public void UpdateProduct(BO.Product product)
     {
-        if (product.ID < 100 || product.Name == "" || product.Price <= 0 || product.InStock < 0) // validating user input
+        if (product.Name == "" || product.Price <= 0 || product.InStock < 0) // validating user input
+        {
+            throw new BO.InvalidInputException();
+        }
+        bool isLetters = product.Name.All(Char.IsLetter);
+        if(!isLetters)
+        {
+            throw new BO.InvalidInputException();
+        }
+        if (product.Category == BO.Enums.ProductCategory.NO_CATEGORY)
         {
             throw new BO.InvalidInputException();
         }

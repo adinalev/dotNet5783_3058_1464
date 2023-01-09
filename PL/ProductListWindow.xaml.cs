@@ -19,7 +19,11 @@ namespace PL
             ProductsListView.ItemsSource = bl.Product.GetProductsForList();
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.ProductCategory));
         }
-        private void AddButton_Click(object sender, RoutedEventArgs e) => new ProductWindow().Show();
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            new ProductWindow().Show();
+            Close();
+        }
        
         private void CategorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -56,6 +60,7 @@ namespace PL
                 new ProductWindow(prod).ShowDialog();
             }
             ProductsListView.ItemsSource = bl?.Product.GetProductsForList(); // update list view after add
+            //Close();
         }
 
    }

@@ -50,6 +50,7 @@ namespace PL
             CategoryBox.SelectedItem = prod.Category;
             uname.Text = prod.Name;
             ID.Text = prod.ID.ToString();
+            product.ID = prod.ID;
         }
         private void tid_previewtextinput(object sender, TextCompositionEventArgs e)
         {
@@ -93,7 +94,7 @@ namespace PL
         }
         
 
-    private void tname_TextChanged(object sender, TextChangedEventArgs e)
+        private void tname_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (tname != null && tname.Text != "")
             {
@@ -138,6 +139,51 @@ namespace PL
             tinstock.Clear();
         }
 
+        private void uname_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (uname != null && uname.Text != "")
+            {
+                product.Name = uname.Text;
+            }
+        }
+
+        private void uprice_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (uprice != null && uprice.Text != "")
+            {
+                if (int.TryParse(uprice.Text, out int val))
+                {
+                    product.Price = val;
+                }
+            }
+        }
+
+        private void uinstock_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (uinstock != null && uinstock.Text != "")
+            {
+                if (int.TryParse(uinstock.Text, out int val))
+                {
+                    product.InStock = val;
+                }
+            }
+        }
+
+        private void uname_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            uname.Clear();
+        }
+
+        private void uprice_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            uprice.Clear();
+        }
+
+        private void uinstock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            uinstock.Clear();
+        }
+
         private void SelectCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             BO.Enums.ProductCategory productCategory = (BO.Enums.ProductCategory)CategoryBox.SelectedItem; // saves the selected category
@@ -151,17 +197,27 @@ namespace PL
             {
                 bl.Product.AddProduct(product);
             }
-            catch(BO.InvalidInputException exc)
+            catch (BO.InvalidInputException exc)
             {
                 new ErrorWindow("Add Product Window\n", exc.Message).ShowDialog();
             }
+            //ProductListWindow.Close();
             Close();
+            new ProductListWindow().Show();
         }
 
         private void UpdateProductButton_Click(object sender, RoutedEventArgs e)
         {
-            bl.Product.UpdateProduct(product);
+            try
+            {
+                bl.Product.UpdateProduct(product);
+            }
+            catch(BO.InvalidInputException exc)
+            {
+                new ErrorWindow("Update Product Window\n", exc.Message).ShowDialog();
+            }
             Close();
+            //new ProductListWindow().Show();
         }
     }
 }
