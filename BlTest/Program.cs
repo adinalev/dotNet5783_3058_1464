@@ -1,19 +1,32 @@
 ﻿using BO;
-using BlApi;
-using BlImplementation;
+using System;
+using System;
+using System.Linq;
+using System.Windows;
+
+//using BlApi;
+//using BlImplementation;
 namespace BlTest;
+
 
 // ADDED METHOD TO TRACK AN ORDER!!
 
 class Program
 {
-    static IBl bl = new Bl();
+    //static IBl bl = new Bl();
+   // BlApi.IBl? bl = BlApi.Factory.Get();
+    //BlApi.IBl? bl = BlApi.Factory.Get();
+
     static void Main(string[] args)
     {
-        Cart cart = new() { Items = new List<BO.OrderItem?>() };
+        BlApi.IBl? bl = BlApi.Factory.Get();
+
+        //BlApi.Factory factory = new();
+        Cart? cart = new() { Items = new List<BO.OrderItem?>() };
         BO.Product product = new BO.Product();
         BO.Order order = new BO.Order();
-        int num1, option, ID;
+        int num1, option;
+        int ID;
         string categories;    
 
         while(true)
@@ -49,7 +62,7 @@ class Program
                     switch(option)
                     {
                         case 1: // view the product list
-                            IEnumerable<ProductForList?> productList = bl.Product.GetProductsForList(); // retrive the product list
+                            IEnumerable<ProductForList?> productList = bl?.Product.GetProductsForList(); // retrive the product list
                             foreach (ProductForList? prod in productList) // traverse through the product list and display each one
                             {
                                 Console.WriteLine(prod);
@@ -82,7 +95,7 @@ class Program
                             {
                                 Console.WriteLine("Enter the product ID#: ");
                                 ID = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine(bl.Product.GetProduct(ID)); // retrieve the product with the corresponding ID and display it
+                                Console.WriteLine(bl?.Product.GetProduct(ID)); // retrieve the product with the corresponding ID and display it
 
                             }
                             catch (BO.DoesNotExistException exc)
@@ -107,7 +120,7 @@ class Program
                                 }
                                 Console.WriteLine("Enter the stock number: ");
                                 product.InStock = Convert.ToInt32(Console.ReadLine());
-                                bl.Product.UpdateProduct(product); // Send the new product to the Update function in DalProduct
+                                bl?.Product.UpdateProduct(product); // Send the new product to the Update function in DalProduct
                             }
                             catch (InvalidInputException exc) 
                             {
@@ -119,7 +132,7 @@ class Program
                             {
                                 Console.WriteLine("Enter the product ID#: ");
                                 ID = Convert.ToInt32(Console.ReadLine());
-                                bl.Product.DeleteProduct(ID); // delete the product with the corresponding ID
+                                bl?.Product.DeleteProduct(ID); // delete the product with the corresponding ID
                             }
                             catch (BO.DoesNotExistException exc) 
                             {
@@ -147,11 +160,11 @@ class Program
                             {
                                 Console.WriteLine("Enter the product ID#: ");
                                 ID = Convert.ToInt32(Console.ReadLine());
-                                int stock = bl.Product.GetStockNumber(ID);
+                                int? stock = bl?.Product.GetStockNumber(ID);
                                 Console.WriteLine("There are " + stock + " of this product left in stock. \n" +
                                     "How many would you like to add to your cart?"); // how much are in stock
                                 int amount = Convert.ToInt32(Console.ReadLine());
-                                cart = bl.Cart.AddToCart(cart, ID, amount);
+                                cart = bl?.Cart.AddToCart(cart, ID, amount);
                             }
                             catch (OutOfStockException exc) 
                             {
@@ -174,7 +187,7 @@ class Program
                             /* Note to grader: The fields for name, email, and address stay empty until the user places an order, 
                              because generally when shopping online you only input those values when checking out your cart. */
                             Console.WriteLine(cart);
-                            List<string?> list = bl.Cart.GetItemNames(cart); // get the names of the items in the cart
+                            List<string?> list = bl?.Cart.GetItemNames(cart); // get the names of the items in the cart
                             Console.Write("\t \t");
                             foreach (string name in list) // travers through the list of names and print them to the screen
                             {
@@ -193,13 +206,13 @@ class Program
                             {
                                 Console.WriteLine("Enter the product ID: ");
                                 ID = Convert.ToInt32(Console.ReadLine());
-                                int exists = bl.Cart.InCart(cart, ID);
-                                int stock = bl.Product.GetStockNumber(ID);
+                                int? exists = bl?.Cart.InCart(cart, ID);
+                                int? stock = bl?.Product.GetStockNumber(ID);
                                 Console.WriteLine("There are " + stock + " of this product left in stock. \n" +
                                     "You currently have " + exists + " items of this product in your cart. \n" +
                                     "What would you like to change that to?"); // how much are in stock
                                 int amount = Convert.ToInt32(Console.ReadLine());
-                                bl.Cart.UpdateCart(cart, ID, amount); // send the inputted values into the update function
+                                bl?.Cart.UpdateCart(cart, ID, amount); // send the inputted values into the update function
                             }
                             catch (BO.DoesNotExistException exc) 
                             {
@@ -215,7 +228,7 @@ class Program
                             }
                             break;
                         case 4: // to delete the cart
-                            bl.Cart.DeleteCart(cart);
+                            bl?.Cart.DeleteCart(cart);
                             break;
                         case 5: // to place an order
                             try
@@ -231,7 +244,7 @@ class Program
                                 Console.WriteLine("Your order has been placed! Your order ID is: " + ID);
                                 // display the cart
                                 Console.WriteLine(cart);
-                                List<string?> myList = bl.Cart.GetItemNames(cart);
+                                List<string?> myList = bl?.Cart.GetItemNames(cart);
                                 Console.Write("\t \t");
                                 foreach (string? myItem in myList)
                                 {
@@ -244,7 +257,7 @@ class Program
                                     else
                                         Console.Write(", ");
                                 }                                
-                                bl.Cart.DeleteCart(cart); // delete/reset the cart
+                                bl?.Cart.DeleteCart(cart); // delete/reset the cart
                             }
                             catch (InvalidInputException exc) 
                             {
@@ -277,7 +290,7 @@ class Program
                             {
                                 Console.WriteLine("Enter the order ID#: ");
                                 ID = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine(bl.Order.GetBoOrder(ID));
+                                Console.WriteLine(bl?.Order.GetBoOrder(ID));
                                 //List<string> list = bl.Cart.GetItemNames(cart);
                                 //Console.Write("\t \t");
                                 //foreach (string name in list)
@@ -298,7 +311,7 @@ class Program
                             }
                             break;
                         case 2: // to view the order list
-                            List<OrderForList?> orderList = bl.Order.GetAllOrderForList();
+                            List<OrderForList?> orderList = bl?.Order.GetAllOrderForList();
                             foreach (OrderForList? ord in orderList)
                             {
                                 Console.WriteLine(ord);
@@ -309,7 +322,7 @@ class Program
                             {
                                 Console.WriteLine("Enter the order ID#: ");
                                 ID = Convert.ToInt32(Console.ReadLine());
-                                Console.WriteLine(bl.Order.TrackOrder(ID));
+                                Console.WriteLine(bl?.Order.TrackOrder(ID));
                             }
                             catch (BO.DoesNotExistException exc)
                             {
@@ -323,7 +336,7 @@ class Program
                                 ID = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine("Enter the updated shipping date (e.g. 10/22/1987 5:32:10): \n");
                                 DateTime inputtedDate = DateTime.Parse(Console.ReadLine());
-                                Console.WriteLine("The updated order is: \n" + bl.Order.UpdateShippingDate(ID, inputtedDate)); // update the shippping date and display the order
+                                Console.WriteLine("The updated order is: \n" + bl?.Order.UpdateShippingDate(ID, inputtedDate)); // update the shippping date and display the order
                             }
                             catch (DoesNotExistException exc) 
                             {
@@ -349,7 +362,7 @@ class Program
                                 ID = Convert.ToInt32(Console.ReadLine());
                                 Console.WriteLine("Enter the updated delivery date (e.g. 10/22/1987 5:32:10): \n");
                                 DateTime inputtedDate = DateTime.Parse(Console.ReadLine());
-                                Console.WriteLine("The updated order is: \n" + bl.Order.UpdateDeliveryDate(ID, inputtedDate)); // update the delivery date and display the order
+                                Console.WriteLine("The updated order is: \n" + bl?.Order.UpdateDeliveryDate(ID, inputtedDate)); // update the delivery date and display the order
                             }
                             catch (BO.DoesNotExistException exc) 
                             {

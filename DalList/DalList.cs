@@ -10,9 +10,15 @@ namespace Dal;
 /// <summary>
 /// public class to implement the interface IDal
 /// </summary>
-sealed public class DalList : IDal
+internal sealed class DalList : IDal // changed from sealed
 {
+    public static IDal Instance { get; } = new DalList(); 
     public IProduct dalProduct => new DalProduct();
     public IOrder dalOrder => new DalOrder();
     public IOrderItem dalOrderItem => new DalOrderItem();
+    private DalList()
+    {
+            
+    } // constructor
+
 }

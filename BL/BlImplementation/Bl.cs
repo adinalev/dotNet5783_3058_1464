@@ -1,13 +1,15 @@
-﻿using BlApi;
+﻿//using BlApi;
 namespace BlImplementation;
+
+
 
 /// <summary>
 /// Class Bl that carries public access permission, implements the interface IBl,
 /// and implements the properties defined in the IDal interface
 /// </summary>
-sealed public class Bl : IBl
+sealed internal class Bl : BlApi.IBl // used to be public
 {
-    public IProduct Product => new Product(); 
-    public IOrder Order => new Order();
-    public ICart Cart => new Cart();
+    public BlApi.IProduct Product => new Product(); 
+    public BlApi.IOrder Order => new Order();
+    public BlApi.ICart Cart => new Cart();
 }

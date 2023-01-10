@@ -1,4 +1,4 @@
-﻿using BlApi;
+﻿//using BlApi;
 using BO;
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using BlImplementation;
+//using BlImplementation;
 
 namespace PL
 {
@@ -23,7 +23,8 @@ namespace PL
     /// </summary>
     public partial class ProductWindow : Window
     {
-        private IBl bl = new Bl();
+        //private IBl bl = new Bl();
+        BlApi.IBl? bl = BlApi.Factory.Get();
         private BO.Product product = new BO.Product();
         public ProductWindow() // constructor
         {
@@ -195,7 +196,7 @@ namespace PL
         {
             try
             {
-                bl.Product.AddProduct(product);
+                bl?.Product.AddProduct(product);
             }
             catch (BO.InvalidInputException exc)
             {
@@ -210,7 +211,7 @@ namespace PL
         {
             try
             {
-                bl.Product.UpdateProduct(product);
+                bl?.Product.UpdateProduct(product);
             }
             catch(BO.InvalidInputException exc)
             {

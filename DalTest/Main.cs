@@ -1,15 +1,17 @@
 ﻿using DO;
 using DalApi;
 using Dal;
-namespace Test;
+//namespace Test;
+namespace DalTest;
 
 internal class Program
 {
-    public static IDal dalList { get; set; } = new DalList();
+    //public static IDal dalList { get; set; } = new DalList();
+    //DalApi.IDal? dal = DalApi.Factory.Get();
     static void Main(string[] args)
-    { 
-       // DataSource ds = new DataSource();
-        Product? product = new Product?();
+    {
+        DalApi.IDal? dal = DalApi.Factory.Get();
+        Product? product = new Product(-1); // ADDED -1
         Order? order = new Order?(); 
         OrderItem? item = new OrderItem?();
 
@@ -46,7 +48,7 @@ internal class Program
                 case (Enums.Type.PRODUCT, Enums.Action.ADD):
                     try
                     {
-                        Product prod = new Product();
+                        Product prod = new Product(-2);
                         Console.WriteLine("Enter the product name: ");
                         prod.Name = Console.ReadLine() ?? ""; // Read in the user's name. If they did not enter a name, input an empty string
                         Console.WriteLine("Enter the product price: ");
@@ -59,7 +61,7 @@ internal class Program
                         }
                         Console.WriteLine("Enter the stock number: ");
                         prod.InStock = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Your new product ID is: " + dalList.dalProduct.Add(prod)); // Add the product to the list and get the new ID
+                        Console.WriteLine("Your new product ID is: " + dal?.dalProduct.Add(prod)); // Add the product to the list and get the new ID
                     }
                     catch (AlreadyExistsException exc)
                     {
@@ -72,7 +74,7 @@ internal class Program
                     {
                         Console.WriteLine("Enter the product ID#: ");
                         int _ID = Convert.ToInt32(Console.ReadLine());
-                        product = dalList.dalProduct.GetByID(_ID); // Calling the GET method in DalProduct to retrieve the product
+                        product = dal?.dalProduct.GetByID(_ID); // Calling the GET method in DalProduct to retrieve the product
                         Console.WriteLine(product);
                     }
                     catch (DoesNotExistException exc)
@@ -84,7 +86,7 @@ internal class Program
                     try
                     {
                         IEnumerable<Product?> list = new List<Product?>();
-                        list = dalList.dalProduct.GetAll(); // Retrieve the product list by calling the GETLIST method in DalProduct
+                        list = dal?.dalProduct.GetAll(); // Retrieve the product list by calling the GETLIST method in DalProduct
                         foreach (Product prod in list) // Traverse through the list to print each product
                         {
                             Console.WriteLine(prod);
@@ -114,7 +116,7 @@ internal class Program
                         }
                         Console.WriteLine("Enter the stock number: ");
                         prod.InStock = Convert.ToInt32(Console.ReadLine());
-                        dalList.dalProduct.Update(prod); // Send the new product to the Update function in DalProduct
+                        dal?.dalProduct.Update(prod); // Send the new product to the Update function in DalProduct
                     }
                     catch (DoesNotExistException exc)
                     {
@@ -126,7 +128,7 @@ internal class Program
                     {
                         Console.WriteLine("Enter the product ID: ");
                         int _ID = Convert.ToInt32(Console.ReadLine());
-                        dalList.dalProduct.Delete(_ID); // Delete the product with the given ID#
+                        dal?.dalProduct.Delete(_ID); // Delete the product with the given ID#
                     }
                     catch (DoesNotExistException exc)
                     {
@@ -147,7 +149,7 @@ internal class Program
                         ord.Email = Console.ReadLine();
                         Console.WriteLine("Enter the customer address: ");
                         ord.Address = Console.ReadLine();
-                        Console.WriteLine("Your new order ID is: " + dalList.dalOrder.Add(ord)); // Adding a new order to the list and get the new order ID#
+                        Console.WriteLine("Your new order ID is: " + dal?.dalOrder.Add(ord)); // Adding a new order to the list and get the new order ID#
                     }
                     catch(AlreadyExistsException exc)
                     {
@@ -159,7 +161,7 @@ internal class Program
                     {
                         Console.WriteLine("Enter the order ID#: ");
                         int _ID = Convert.ToInt32(Console.ReadLine());
-                        order = dalList.dalOrder.GetByID(_ID); // Retrieve the desired order using the GET method in DalOrder
+                        order = dal?.dalOrder.GetByID(_ID); // Retrieve the desired order using the GET method in DalOrder
                         Console.WriteLine(order);
                     }
                     catch (DoesNotExistException exc)
@@ -171,7 +173,7 @@ internal class Program
                     try
                     {
                         IEnumerable<Order?> list = new List<Order?>();
-                        list = dalList.dalOrder.GetAll();
+                        list = dal?.dalOrder.GetAll();
                         foreach (Order ord in list) // traverse through the order list and print each of them to the screen
                         {
                             Console.WriteLine(ord); 
@@ -195,7 +197,7 @@ internal class Program
                         ord.Email = Console.ReadLine();
                         Console.WriteLine("Enter the customer address: ");
                         ord.Address = Console.ReadLine();
-                        dalList.dalOrder.Update(ord); // Send the new order to the update method in DalOrder
+                        dal?.dalOrder.Update(ord); // Send the new order to the update method in DalOrder
                     }
                     catch(DoesNotExistException exc)
                     {
@@ -207,7 +209,7 @@ internal class Program
                     {
                         Console.WriteLine("Enter the order ID: ");
                         int _ID = Convert.ToInt32(Console.ReadLine());
-                        dalList.dalOrder.Delete(_ID); // delete the order
+                        dal?.dalOrder.Delete(_ID); // delete the order
                     }
                     catch (DoesNotExistException exc)
                     {
@@ -229,7 +231,7 @@ internal class Program
                         myItem.Price = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Enter the quantity: ");
                         myItem.Quantity = Convert.ToInt32(Console.ReadLine());
-                        Console.WriteLine("Your new order item ID is: " + dalList.dalOrderItem.Add(myItem)); // Add a new order item and receive the new Order Item ID#
+                        Console.WriteLine("Your new order item ID is: " + dal?.dalOrderItem.Add(myItem)); // Add a new order item and receive the new Order Item ID#
                     }
                     catch (AlreadyExistsException exc)
                     {
@@ -246,7 +248,7 @@ internal class Program
                         {
                             Console.WriteLine("Enter the order item ID# ");
                             int _ID = Convert.ToInt32(Console.ReadLine());
-                            item = dalList.dalOrderItem.GetByID(_ID); // use the GET method in order item that takes in the order item ID# 
+                            item = dal?.dalOrderItem.GetByID(_ID); // use the GET method in order item that takes in the order item ID# 
                             Console.WriteLine(item);
                         }
                         if (option == 2) // if the know the product ID# and order ID#
@@ -255,7 +257,7 @@ internal class Program
                             int ordID = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Enter the Product ID#: ");
                             int prodID = Convert.ToInt32(Console.ReadLine());
-                            item = dalList.dalOrderItem.GetByIDs(prodID, ordID); // use the GET method in order item that takesn in the product ID# and order ID#
+                            item = dal?.dalOrderItem.GetByIDs(prodID, ordID); // use the GET method in order item that takesn in the product ID# and order ID#
                             Console.WriteLine(item);
                         }
                     }
@@ -271,7 +273,7 @@ internal class Program
                     try
                     {
                         IEnumerable<OrderItem?> list = new List<OrderItem?>();
-                        list = dalList.dalOrderItem.GetAll();
+                        list = dal?.dalOrderItem.GetAll();
                         foreach (OrderItem it in list) // traverse through the order item list and print each one to the screen
                         {
                             Console.WriteLine(it);
@@ -298,7 +300,7 @@ internal class Program
                             myItem.Price = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Enter the quantity: ");
                             myItem.Quantity = Convert.ToInt32(Console.ReadLine());
-                            dalList.dalOrderItem.Update(myItem); // Send the updated order item to the update method in DalOrderItem
+                            dal?.dalOrderItem.Update(myItem); // Send the updated order item to the update method in DalOrderItem
                         }
                         if (option == 2)
                         {
@@ -311,7 +313,7 @@ internal class Program
                             orderItem.Price = Convert.ToInt32(Console.ReadLine());
                             Console.WriteLine("Enter the quantity: ");
                             orderItem.Quantity = Convert.ToInt32(Console.ReadLine());
-                            dalList.dalOrderItem.UpdateByIDs(orderItem); // Send the updated order item to the update method in DalOrderItem
+                            dal?.dalOrderItem.UpdateByIDs(orderItem); // Send the updated order item to the update method in DalOrderItem
                         }
                     }
                     catch (DoesNotExistException exc)
@@ -324,7 +326,7 @@ internal class Program
                     {
                         Console.WriteLine("Enter the order item ID: ");
                         int _ID = Convert.ToInt32(Console.ReadLine());
-                        dalList.dalOrderItem.Delete(_ID); // delete the order item
+                        dal?.dalOrderItem.Delete(_ID); // delete the order item
                     }
                     catch (DoesNotExistException exc)
                     {

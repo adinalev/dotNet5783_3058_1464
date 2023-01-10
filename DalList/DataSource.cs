@@ -41,6 +41,7 @@ internal static class DataSource
                 new()
                 {
                     //ID = 0,
+                    ID = Product.productCounter++, // ADDED THIS
                     Name = NameOfProduct[rand.Next(NameOfProduct.Length)], // randomly choosing one of the 10 products listed above
                     Price = rand.Next(20, 100),
                     Category = (Enums.Category)rand.Next(1, 7),

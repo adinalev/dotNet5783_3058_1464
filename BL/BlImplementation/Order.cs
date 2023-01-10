@@ -1,11 +1,12 @@
-﻿using DalApi;
-using Dal;
-namespace BlImplementation;
+﻿//using DalApi;
+//using Dal;
+//namespace BlImplementation;
 
 internal class Order : BlApi.IOrder
 {
-    static IDal? dal = new DalList();
-
+    //static IDal? dal = new DalList();
+    BlApi.IBl? bl = BlApi.Factory.Get();
+    DalApi.IDal? dal = DalApi.Factory.Get();
     /// <summary>
     /// public method to return the order list
     /// </summary>
@@ -110,7 +111,7 @@ internal class Order : BlApi.IOrder
     /// <summary>
     /// public method to update the delivery date of an order
     /// </summary>
-    public BO.Order UpdateDeliveryDate(int orderID, DateTime date)
+    public BO.Order? UpdateDeliveryDate(int orderID, DateTime date)
     {
         DO.Order? order = dal!.dalOrder.GetByID(orderID); // retrieve the corresponding DO order
         BO.Order? orderBO = GetBoOrder(orderID); // retrieve the status of an order
@@ -150,7 +151,7 @@ internal class Order : BlApi.IOrder
     /// <summary>
     /// public method to update a shipping date of an order
     /// </summary>
-    public BO.Order UpdateShippingDate(int orderID, DateTime date)
+    public BO.Order? UpdateShippingDate(int orderID, DateTime date)
     {
         DO.Order? order = dal!.dalOrder.GetByID(orderID); // retrieve the corresponding DO order
         BO.Order? orderBO = GetBoOrder(orderID); // retrieve the corresponding BO order

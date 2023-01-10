@@ -14,6 +14,7 @@ namespace DO
 
         public Product()
         {
+            ID = 0;
             Name = "";
             Price = 0;
             InStock = 0;
@@ -32,7 +33,7 @@ namespace DO
         /// <summary>
         /// unique ID for a product (autoincremental)
         /// </summary>
-        public int ID { get; init; } = productCounter++; // MAY NEED TO ADD AN EMPTY CTOR FOR EVERYTHING ELSE!!
+        public int ID { get; set; } //= productCounter++; // MAY NEED TO ADD AN EMPTY CTOR FOR EVERYTHING ELSE!!
         public string? Name { get; set; }
         public double Price { get; set; }
         public Enums.Category? Category { get; set; } // also supposed to be nullable?

@@ -15,9 +15,10 @@ internal class DalProduct : IProduct
     public int Add(DO.Product prod)
     {
         // case 1: Product does not exist yet. Need to intialize and add it.
-        if (prod.ID == 0)
+        if (prod.ID == -2)
         {
             Product product = new Product(); // this will use the init to get the next ID#
+            product.ID = Product.productCounter++;
             product.Name = prod.Name;
             product.Price = prod.Price;   
             product.InStock = prod.InStock;

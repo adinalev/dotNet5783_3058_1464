@@ -13,17 +13,17 @@ public interface IOrder
     /// <summary>
     /// public method to get a BO order using the inputted ID
     /// </summary>
-    public Order? GetBoOrder(int ID);
+    public BO.Order? GetBoOrder(int ID);
 
     /// <summary>
     /// public method for the manager to update the shipping date of an order
     /// </summary>
-    public Order UpdateShippingDate(int orderID, DateTime date);
+    public BO.Order? UpdateShippingDate(int orderID, DateTime date);
 
     /// <summary>
     /// public method for the manager to update the delivery date of an order
     /// </summary>
-    public Order UpdateDeliveryDate(int orderID, DateTime date);
+    public BO.Order? UpdateDeliveryDate(int orderID, DateTime date);
 
     /// <summary>
     /// public method to update and return the status of anorder

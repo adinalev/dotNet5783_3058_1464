@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DO;
 
-[Serializable] // NEED THIS??
+[Serializable] 
 public class DoesNotExistException : Exception
 {
     public DoesNotExistException() : base($"The item does not exist.") { }
@@ -23,3 +23,10 @@ public class TooManyProductsException : Exception
 {
     public TooManyProductsException() : base("Cannot have more than 4 types of products per order! ") { }
 }
+[Serializable]
+public class DalConfigException : Exception
+{
+    public DalConfigException(string msg) : base(msg) { }
+    public DalConfigException(string msg, Exception ex) : base(msg, ex) { }
+}
+

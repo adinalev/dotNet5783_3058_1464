@@ -1,11 +1,12 @@
-﻿using BlApi;
-using DalApi;
-using Dal;
+﻿//using BlApi;
+//using DalApi;
+//using Dal;
 namespace BlImplementation;
-internal class Cart : ICart
+internal class Cart : BlApi.ICart
 {
-    static IDal? dal = new DalList();
-    static IBl bl = new Bl();
+    //static IDal? dal = new DalApi.Factory.Get()
+    DalApi.IDal? dal = DalApi.Factory.Get();
+    static BlApi.IBl bl = new Bl();
 
     /// <summary>
     /// method to add to the cart
