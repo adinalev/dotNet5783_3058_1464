@@ -68,6 +68,7 @@ internal static class DataSource
             Order myOrder = new()
             {
                 //ID = 0, // was originally nextproduct but changed it -- ok???
+                ID = Order.orderCounter++, // ADDED THIS
                 CustomerName = CustomerName[rand.Next(CustomerName.Length)],
                 Email = Email[rand.Next(Email.Length)],
                 Address = Address[rand.Next(Address.Length)],

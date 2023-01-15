@@ -5,8 +5,8 @@ namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
 {
-    //static IDal? dal = new DalList();
     DalApi.IDal? dal = DalApi.Factory.Get();
+
     /// <summary>
     /// public method to retrive a list of products for display
     public IEnumerable<BO.ProductForList?> GetProductsForList()
@@ -70,7 +70,7 @@ internal class Product : BlApi.IProduct
         newProduct.Name = product.Name;
         newProduct.Price = product.Price;
         newProduct.InStock = product.InStock;
-        newProduct.Category = (DO.Enums.Category)product.Category;
+        newProduct.Category = (DO.Enums.Category?)product.Category;
         return dal.dalProduct.Add(newProduct); // add to product list
     } 
 

@@ -4,7 +4,6 @@
 namespace BlImplementation;
 internal class Cart : BlApi.ICart
 {
-    //static IDal? dal = new DalApi.Factory.Get()
     DalApi.IDal? dal = DalApi.Factory.Get();
     static BlApi.IBl bl = new Bl();
 
@@ -52,7 +51,7 @@ internal class Cart : BlApi.ICart
     public List<string?> GetItemNames(BO.Cart cart)
     {
         int productID;
-        DO.Product? product = new DO.Product(-1); // create a new DO product
+        DO.Product? product = new DO.Product(-1); // create a new DO product                              
         List<string?> list = new List<string?>(); // create a list to hold a string of names
         // loop to get all the names of the products in the cart and to add them to the list of strings
         foreach(BO.OrderItem? item in cart.Items!)
@@ -72,15 +71,24 @@ internal class Cart : BlApi.ICart
         int amount = 0;
         bool exists = false;
         // loop which checks how much of a product is already in the cart
-        foreach(BO.OrderItem? item in cart.Items!)
+        //cart.Items.ForEach(item => item.ProductID == prodID );
+        var v = from item in cart.Items
+                where item.ProductID == prodID
+                select item;
+        foreach(var item in v)
         {
-            if (item?.ProductID == prodID)
-            {
-                exists = true;
-                amount = item.Quantity;
-                break;
-            }
+            exists = true;
+            amount = item.Quantity;
         }
+        //foreach(BO.OrderItem? item in cart.Items!)
+        //{
+        //    if (item?.ProductID == prodID)
+        //    {
+        //        exists = true;
+        //        amount = item.Quantity;
+        //        break;
+        //    }
+        //}
         if (!exists) throw new BO.NotInCartException(); // if the product is not in the cart yet, throw an exception
         return amount;
     }
@@ -90,7 +98,7 @@ internal class Cart : BlApi.ICart
     /// </summary>
     public BO.Cart UpdateCart(BO.Cart cart, int _ID, int quantity)
     {
-        int index = cart.Items!.FindIndex(x => x.ProductID == _ID); // find the index in the items list where the product sits
+        int index = cart.Items!.FindIndex(x => x?.ProductID == _ID); // find the index in the items list where the product sits
         DO.Product? product = new DO.Product(-1); // create a new DO product
         try
         {
@@ -133,48 +141,90 @@ internal class Cart : BlApi.ICart
         cart.CustomerName = name;
         cart.CustomerEmail = email;
         cart.CustomerAddress = address;
-        DO.Product product = new DO.Product();
-        DO.Order order = new DO.Order(); // create an instance of order
-        BO.Order? orderBO = new BO.Order(); 
-        int ordID = dal!.dalOrder.Add(order); // adding a new order to the list (this is the new order)
-        order.OrderDate = DateTime.Now;
-        orderBO.ID = ordID;
-        orderBO.CustomerName = order.CustomerName;
-        orderBO.Email = order.Email;
-        orderBO.Address = order.Address;
-        orderBO.PaymentDate = order.OrderDate;
-        orderBO.ShippingDate = order.ShippingDate;
-        orderBO.DeliveryDate = order.DeliveryDate;
-        orderBO.Status = bl.Order.GetStatus(order);
-        orderBO.TotalPrice = cart.TotalPrice;
-        int quantity = 0;
-        foreach (BO.OrderItem? item in cart.Items!)
+        //DO.Product product = new DO.Product();
+        //DO.Order order = new DO.Order(); // create an instance of order
+        //BO.Order? orderBO = new BO.Order(); 
+        //int ordID = dal!.dalOrder.Add(order); // adding a new order to the list (this is the new order)
+        //order.OrderDate = DateTime.Now;
+        //orderBO.ID = ordID;
+        //orderBO.CustomerName = order.CustomerName;
+        //orderBO.Email = order.Email;
+        //orderBO.Address = order.Address;
+        //orderBO.PaymentDate = order.OrderDate;
+        //orderBO.ShippingDate = order.ShippingDate;
+        //orderBO.DeliveryDate = order.DeliveryDate;
+        //orderBO.Status = bl.Order.GetStatus(order);
+        //orderBO.TotalPrice = cart.TotalPrice;
+        //int quantity = 0;
+        //foreach (BO.OrderItem? item in cart.Items!)
+        //{
+        //    orderBO.Items!.Add(item);
+        //    quantity++;
+        //}
+
+        // add a new order for the cart and get its ID
+        IEnumerable<DO.Product?> productList = dal?.dalProduct.GetAll()!;//get all products from dal
+        IEnumerable<string> check = from BO.OrderItem item in cart.Items!
+                                             let prod = productList.FirstOrDefault(x => x?.ID == item.ID)
+                                             where item.Quantity < 1 || prod?.InStock < item.Quantity
+                                             select item.ProductName + " is not in stock\n";//check if all of the products in cart are in stock
+        if (check.Any())//if no products are available 
+            throw new BO.NotEnoughInStockException();
+
+        int? ordID = dal?.dalOrder.Add(new DO.Order()
         {
-            orderBO.Items!.Add(item);
-            quantity++;
+            CustomerName = cart.CustomerName!,
+            Email = cart.CustomerEmail!,
+            Address = cart.CustomerAddress!,
+            OrderDate = DateTime.Now
+        });
+
+        try
+        {
+            cart.Items!.ForEach(x => dal?.dalOrderItem.Add(new DO.OrderItem()
+            {
+                Quantity = x.Quantity,
+                ID = x.ID,
+                OrderID = (int)ordID!,
+                Price = x.Price,
+                ProductID = x.ProductID,
+            }));
+        }
+        catch (DO.AlreadyExistsException exc)
+        {
+            throw new BO.AlreadyExistsException();
+        }
+        catch (DO.TooManyProductsException exc)
+        {
+            throw new BO.TooManyProductsException();
         }
         try
         {
-            foreach(BO.OrderItem it in cart.Items)
-            {
-                int quant = it.Quantity;
-                DO.OrderItem item = new DO.OrderItem();
-                item.ProductID = it.ProductID;
-                item.OrderID = ordID;
-                product = (DO.Product)dal.dalProduct.GetByID(it.ProductID)!;
-                if (product.InStock < quant)
-                {
-                    throw new BO.NotEnoughInStockException();
-                }
-                product.InStock -= quant;
-                dal.dalProduct.Update(product);
-            }
+
+            //cart.Items.ForEach(x => (DO.Product)dal.dalProduct.GetByID(x!.ProductID).InStock -= x!.Quantity);
+            cart.Items.ForEach(x => dal?.dalProduct.Update((DO.Product)dal.dalProduct.GetByID(x!.ProductID)));
         }
-        catch
+        
+        //foreach(BO.OrderItem? it in cart.Items)
+        //{
+        //    int quant = it.Quantity;
+        //    DO.OrderItem item = new DO.OrderItem();
+        //    item.ProductID = it.ProductID;
+        //    item.OrderID = ordID;
+        //    product = (DO.Product)dal.dalProduct.GetByID(it.ProductID)!;
+        //    if (product.InStock < quant)
+        //    {
+        //        throw new BO.NotEnoughInStockException();
+        //    }
+        //    product.InStock -= quant;
+        //    dal.dalProduct.Update(product);
+        //}
+        //}
+        catch(DO.DoesNotExistException exc)
         {
-            throw new DO.DoesNotExistException();
+            throw new BO.DoesNotExistException();
         }
-        return ordID;
+        return (int)ordID!;
     }
 
     /// <summary>

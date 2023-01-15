@@ -8,6 +8,6 @@ namespace BlApi;
 
 public static class Factory
 {
-    public static IBl? Get() => new BlImplementation.Bl(); // took away ?
+    public static IBl? Get() => new BlImplementation.Bl(); 
 }
 

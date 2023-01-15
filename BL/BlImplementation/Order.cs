@@ -4,7 +4,6 @@
 
 internal class Order : BlApi.IOrder
 {
-    //static IDal? dal = new DalList();
     BlApi.IBl? bl = BlApi.Factory.Get();
     DalApi.IDal? dal = DalApi.Factory.Get();
     /// <summary>
@@ -12,34 +11,48 @@ internal class Order : BlApi.IOrder
     /// </summary>
     public List<BO.OrderForList?> GetAllOrderForList()
     {
-        IEnumerable<DO.Order?> orders = dal.dalOrder.GetAll(); // get all the orders from DO 
-        IEnumerable<DO.OrderItem?> orderItems = dal.dalOrderItem.GetAll(); // get all the order items from DO
-        List<BO.OrderForList> list = new List<BO.OrderForList>(); // create a list of BO orders
-        foreach (DO.Order order in orders)
-        {
-            int quantity = 0;
-            double total = 0;
+        IEnumerable<DO.Order?>? orders = dal?.dalOrder.GetAll(); // get all the orders from DO 
+        IEnumerable<DO.OrderItem?>? orderItems = dal?.dalOrderItem.GetAll(); // get all the order items from DO
+       // List<BO.OrderForList?>? list = new List<BO.OrderForList?>(); // create a list of BO orders
+        return from DO.Order? ord in orders!
+               select new BO.OrderForList
+               {
+                   ID = ord.ID,
+                   CustomerName = ord?.CustomerName!,
+                   Status = GetStatus(ord),
+                   AmountOfItems = orderItems!.Select(orderItems => orderItems?.ID == ord.ID).Count(),
+                   TotalPrice = (double)orderItems!.Sum(orderItems => orderItems?.Price)
+               };
+        //foreach (DO.Order order in orders)
+        //{
+        //    int quantity = 0;
+        //    double total = 0;
 
-            foreach (DO.OrderItem item in orderItems) // for each order item in DO
-            {
-                if (item.OrderID == order.ID) // if the OrderID of that order item matches with an order ID (meaning it's part of that order)
-                {
-                    quantity++; // increase the amount of items inside of an order
-                    total += item.Price; // increase the total by the price of that item
-                }
-            }
-            list.Add(new BO.OrderForList // add a new BO order to the list created above
-            {
-                ID = order.ID,
-                CustomerName = order.CustomerName,
-                Status = GetStatus(order),
-                AmountOfItems = quantity,
-                TotalPrice = total // set the total price equal to the variable total
-            }); 
+        //    foreach (DO.OrderItem item in orderItems) // for each order item in DO
+        //    {
+        //        if (item.OrderID == order.ID) // if the OrderID of that order item matches with an order ID (meaning it's part of that order)
+        //        {
+        //            quantity++; // increase the amount of items inside of an order
+        //            total += item.Price; // increase the total by the price of that item
+        //        }
+        //    }
+        //    list.Add(new BO.OrderForList // add a new BO order to the list created above
+        //    {
+        //        ID = order.ID,
+        //        CustomerName = order.CustomerName,
+        //        Status = GetStatus(order),
+        //        AmountOfItems = quantity,
+        //        TotalPrice = total // set the total price equal to the variable total
+        //    }); 
 
-        }
-        return list!; // return the list of new BO orders
+        //}
+        //return list!; // return the list of new BO orders
     }
+
+    //public int GetID(BO.Order ord)
+    //{
+    //    return ord.ID;
+    //}
 
     /// <summary>
     /// method to return the status of an order
@@ -62,16 +75,6 @@ internal class Order : BlApi.IOrder
     /// </summary>
     public BO.Order? GetBoOrder(int _ID)
     {
-        //DO.Product? product = new DO.Product(-1); // create a DO product
-        //try
-        //{
-        //    product = dal!.dalProduct.GetByID(_ID); // retrieve the corresponding DO product
-        //}
-        //catch
-        //{
-        //    throw new BO.DoesNotExistException();
-        //}
-
         DO.Order? order = new DO.Order(-1);
         try
         {

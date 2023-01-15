@@ -69,7 +69,7 @@ namespace PL
         }
         private void tname_previewtextinput(object sender, TextCompositionEventArgs e)
         {
-            e.Handled = new Regex("[^a-z]+[A-Z]+").IsMatch(e.Text);//only get letters 
+            e.Handled = new Regex("[^a-z]+[^A-Z]+").IsMatch(e.Text);//only get letters 
         }
 
         private void uinstock_previewtextinput(object sender, TextCompositionEventArgs e)

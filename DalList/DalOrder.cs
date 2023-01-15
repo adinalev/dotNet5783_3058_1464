@@ -29,7 +29,7 @@ internal class DalOrder : IOrder
             order.OrderDate = ord.OrderDate;
             order.ShippingDate = ord.ShippingDate;
             order.DeliveryDate = ord.DeliveryDate;
-            //ord.ID = Order.orderCounter++;
+            order.ID = Order.orderCounter++;
             DataSource.orderList.Add(order);
             return order.ID;     // CHANGED THIS FROM ORD.ID TO ORDER.ID!!!     
         }
@@ -48,6 +48,11 @@ internal class DalOrder : IOrder
             return ord.ID;
         }
     }
+
+    //public int GetID(DO.Order? ord)
+    //{
+    //    return (int)ord.ID;
+    //}
 
     ///// <summary>
     ///// public method to read an Order

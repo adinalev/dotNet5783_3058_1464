@@ -9,5 +9,6 @@ namespace DalApi;
 
 public interface IOrder : ICrud<Order>
 {
+    //public void GetID(DO.Order? order);
 
 }
