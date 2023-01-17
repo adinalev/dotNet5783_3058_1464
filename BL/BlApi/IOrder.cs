@@ -34,5 +34,6 @@ public interface IOrder
     /// public method to track an order
     /// </summary>
     public OrderTracking TrackOrder(int orderID);
+    public List<string> GetItemNames(int orderID);
 
 }

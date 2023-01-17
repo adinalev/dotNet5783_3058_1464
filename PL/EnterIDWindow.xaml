@@ -1,0 +1,16 @@
+﻿<Window x:Class="PL.EnterIDWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="EnterIDWindow" Height="450" Width="800">
+    <Grid>
+        <TextBlock x:Name="EnterOrderID" FontSize="25" TextAlignment="Center" FontWeight="DemiBold" FontFamily="italic" Text="Enter Your Order ID:" Margin="241,109,241,287"/>
+        <TextBox x:Name="IDInput" FontSize="25" TextAlignment="Center" FontFamily="italic" Background="GhostWhite" BorderThickness="5" Margin="214,147,214,236" PreviewTextInput="tid_previewtextinput"
+                     KeyDown="EnterPressed_KeyDown" MaxLength="4"/>
+        <Button x:Name="OKButton" Background="LightGray" FontSize="25" Width="100" Height="50" Content="OK"
+                    FontWeight="DemiBold" BorderBrush="Transparent" Click="OKButton_Click" Margin="350,217,350,167"/>
+    </Grid>
+</Window>

@@ -19,7 +19,7 @@ internal class DalOrderItem : IOrderItem
         if (item.ID == 0)
         {
             OrderItem myItem = new OrderItem();
-            //item.ID = OrderItem.itemCounter++;
+            item.ID = OrderItem.itemCounter++;
             myItem.ProductID = item.ProductID;
             myItem.OrderID = item.OrderID;
             myItem.Price = item.Price;
@@ -35,6 +35,7 @@ internal class DalOrderItem : IOrderItem
             throw new AlreadyExistsException();
         }
         int counter = 0;
+        //DataSource.orderItemList.ForEach(item2 => item2?.OrderID == item.OrderID  )
         foreach (DO.OrderItem item2 in DataSource.orderItemList)
         {
             if (item2.OrderID == item.OrderID)
@@ -98,18 +99,19 @@ internal class DalOrderItem : IOrderItem
 /// </summary>
 public void Delete(int _ID)
     {
-        int ind = 0;
-        // traverse through the order item list and find an order item with a matching ID#
-        foreach (DO.OrderItem item in DataSource.orderItemList)
-        {
-            if (item.ID == _ID)
-            {
-                // saved the ID# of the matching order item
-                ind = DataSource.orderItemList.IndexOf(item);
-                break;
-            }
-        }
-        if (ind == 0)
+        //int ind = 0;
+        //// traverse through the order item list and find an order item with a matching ID#
+        //foreach (DO.OrderItem item in DataSource.orderItemList)
+        //{
+        //    if (item.ID == _ID)
+        //    {
+        //        // saved the ID# of the matching order item
+        //        ind = DataSource.orderItemList.IndexOf(item);
+        //        break;
+        //    }
+        //}
+        int ind = DataSource.orderItemList.FindIndex(x => x?.ID == _ID);
+        if (ind == -1)
         {
             throw new DoesNotExistException();
         }
@@ -139,26 +141,48 @@ public void Delete(int _ID)
     /// </summary>
     public void UpdateByIDs(DO.OrderItem item) // WHAT DO I DO ABOUT THIS UPDATE FUCNTION?! USED TO BE CALLED DIFF NAMES BC CANNOT OVERLOAD
     {
-        //OrderItem myItem = new OrderItem();
-        int index = 0;
-        int ID = 0;
-        foreach (DO.OrderItem it in DataSource.orderItemList)
+        //int ID = 0;
+        var v = from newItem in DataSource.orderItemList
+                where newItem?.OrderID == item.OrderID && newItem?.ProductID == item.ProductID
+                select DataSource.orderItemList.IndexOf(newItem);
+        var v2 = from newItem in DataSource.orderItemList
+                where newItem?.OrderID == item.OrderID && newItem?.ProductID == item.ProductID
+                select newItem?.ID;
+        if (!v.Any())
         {
-            if (it.ProductID == item.ProductID)
-            {
-                if (it.OrderID == item.OrderID)
-                {
-                    ID = it.ID;
-                    index = DataSource.orderItemList.IndexOf(it);
-                }
-            }
+            throw new DO.DoesNotExistException();
         }
-        OrderItem myItem = new OrderItem(ID);
+        OrderItem myItem = new OrderItem();
+        foreach(var id in v2.ToList())
+        {
+            myItem.ID = (int)id;
+        }
         myItem.ProductID = item.ProductID;
         myItem.OrderID = item.OrderID;
         myItem.Price = item.Price;
         myItem.Quantity = item.Quantity;
-        DataSource.orderItemList[index] = myItem;
+        foreach (var index in v.ToList())
+        {
+            DataSource.orderItemList[index] = myItem;
+        }
+
+        //foreach (DO.OrderItem it in DataSource.orderItemList)
+        //{
+        //    if (it.ProductID == item.ProductID)
+        //    {
+        //        if (it.OrderID == item.OrderID)
+        //        {
+        //            ID = it.ID;
+        //            index = DataSource.orderItemList.IndexOf(it);
+        //        }
+        //    }
+        //}
+        //OrderItem myItem = new OrderItem(ID);
+        //myItem.ProductID = item.ProductID;
+        //myItem.OrderID = item.OrderID;
+        //myItem.Price = item.Price;
+        //myItem.Quantity = item.Quantity;
+        //DataSource.orderItemList[index] = myItem;
     }
 
     /// <summary>
@@ -171,11 +195,10 @@ public void Delete(int _ID)
         myItem.OrderID = ordID;
         //myItem.ID = -1;
         // traverse through the the order item list and find an order item with a matching product ID# and order ID#
-        foreach(DO.OrderItem item in DataSource.orderItemList)
+        foreach (DO.OrderItem item in DataSource.orderItemList)
         {
-            if (item.ProductID == myItem.ProductID)
+            if (item.ProductID == myItem.ProductID && item.OrderID == myItem.OrderID)
             {
-                if (item.OrderID == myItem.OrderID)
                     myItem = item;
             }
         }

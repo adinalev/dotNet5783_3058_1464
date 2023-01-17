@@ -31,4 +31,5 @@ public interface ICart
     /// public method to delete the details of the cart
     /// </summary>
     public void DeleteCart(BO.Cart myCart);
+    public IEnumerable<BO.OrderItem> GetItems(BO.Cart cart);
 }

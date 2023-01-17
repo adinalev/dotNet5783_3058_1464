@@ -1,4 +1,5 @@
 ﻿using BO;
+using System.Collections.ObjectModel;
 namespace BlApi;
 /// <summary>
 /// Interface for the BoEntity "Product"
@@ -37,4 +38,6 @@ public interface IProduct
     /// </summary>
     public int GetStockNumber(int ID);
     public int GetNextID();
+
+    public IEnumerable<ProductItem?> GetCatalog();
 }

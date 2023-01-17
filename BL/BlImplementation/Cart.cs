@@ -12,7 +12,45 @@ internal class Cart : BlApi.ICart
     /// </summary>
     public BO.Cart AddToCart(BO.Cart cart, int _ID, int amount)
     {
-        int index = cart.Items!.FindIndex(x => x != null && x.ID == _ID); // find the index of where the product is sitting in the Items list
+        if (cart.Items == null)
+        {
+            DO.Product? prod = new DO.Product();
+            try
+            {
+                prod = dal.dalProduct.GetByID(_ID);
+            }
+            catch
+            {
+                throw new BO.DoesNotExistException();
+            }
+            if (amount < 0) // if the amount is negative
+            {
+                throw new BO.InvalidInputException();
+            }
+            if (prod?.InStock < 1) // if the product has nothing left in stock
+            {
+                throw new BO.OutOfStockException();
+            }
+            if (prod?.InStock < amount) // if there is not enough products in stock
+            {
+                throw new BO.NotEnoughInStockException();
+            }
+            BO.OrderItem myItem = new BO.OrderItem//create new orderitem that is being added 
+            {
+                ID = _ID,
+                ProductName = prod?.Name!,
+                ProductPrice = (double)prod?.Price!,
+                Quantity = 1,
+                Price = (double)prod?.Price!,
+                ProductID = (int)prod?.ID
+            };
+            cart.Items = new List<BO.OrderItem?>();//new list in cart bcs first order item
+            cart.Items!.Add(myItem);//add the orderitem to cart
+            cart.TotalPrice = (double)prod?.Price!;//add the prudoct price to cart price
+            return cart;
+        }
+
+        int index = cart.Items.FindIndex(x => /*x != null &&*/ x.ID == _ID); // find the index of where the product is sitting in the Items list
         DO.Product? product = new DO.Product(-1); // create a DO product
         product = dal!.dalProduct.GetByID(_ID); // get the DO product with the matching ID.
         if (amount < 0) // if the amount is negative
@@ -239,6 +277,12 @@ internal class Cart : BlApi.ICart
         myCart.Items!.Clear();
         myCart.TotalPrice = 0;
     }
+
+    public IEnumerable<BO.OrderItem> GetItems(BO.Cart cart)
+    {
+        return from items in cart.Items select items;
+    }
+
 }
 
 

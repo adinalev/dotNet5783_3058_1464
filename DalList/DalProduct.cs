@@ -78,20 +78,24 @@ internal class DalProduct : IProduct
     /// </summary>
     public void Delete(int _ID) 
     {
-        int ind = -1;
         // traverse through the product list and find a product with a matching ID#
-        foreach (DO.Product prod in DataSource.productList)
-        {
-            if (prod.ID == _ID)
-            {
-                ind = DataSource.productList.IndexOf(prod); // save the index of the product with the matching ID#
-                break;
-            }
-        }
+        int ind = DataSource.productList.FindIndex(x => x?.ID == _ID);
         if (ind == -1)
         {
             throw new DoesNotExistException();
         }
+        //foreach (DO.Product prod in DataSource.productList)
+        //{
+        //    if (prod.ID == _ID)
+        //    {
+        //        ind = DataSource.productList.IndexOf(prod); // save the index of the product with the matching ID#
+        //        break;
+        //    }
+        //}
+        //if (ind == -1)
+        //{
+        //    throw new DoesNotExistException();
+        //}
         DO.Product DelProd = (Product)DataSource.productList[ind]!; // save the product in the found index // ADDED A CAST!!!!
         DataSource.productList.Remove(DelProd); // remove the product
     }

@@ -1,6 +1,7 @@
 ﻿//using DalApi;
 //using Dal;
-//using BlApi;
+//using 
+using System.Collections.ObjectModel;
 namespace BlImplementation;
 
 internal class Product : BlApi.IProduct
@@ -11,7 +12,7 @@ internal class Product : BlApi.IProduct
     /// public method to retrive a list of products for display
     public IEnumerable<BO.ProductForList?> GetProductsForList()
     {
-        return from DO.Product item in dal.dalProduct.GetAll() // traversing through the list of DO products
+        return from DO.Product item in dal?.dalProduct?.GetAll() // traversing through the list of DO products
                /*where item != null*/
                select new BO.ProductForList //for each of these DO items we are creating a new ProductForList with corresponding criteria
                {
@@ -79,7 +80,24 @@ internal class Product : BlApi.IProduct
     /// </summary>
     public void DeleteProduct(int _ID)
     {
-        DO.Product? product = new DO.Product(-1); // create a DO product
+        //var v = from orders in dal?.dalOrder.GetAll()
+        //        where orders != null 
+        //        select from item in dal?.dalOrderItem.GetAll()
+        //               where item != null && item?.OrderID == orders?.ID && item?.ProductID == _ID
+        //               select item;
+        //if (!v.Any())
+        //{
+        //    throw new BO.DoesNotExistException();
+        //}
+        //try
+        //{
+        //    dal?.dalProduct.Delete(_ID);
+        //}
+        //catch
+        //{
+        //    throw new BO.DoesNotExistException();
+        //}
+        DO.Product? product = new DO.Product(); // create a DO product
         try
         {
             product = dal!.dalProduct.GetByID(_ID); // retrieve the corresponding DO product
@@ -159,5 +177,35 @@ internal class Product : BlApi.IProduct
     public int GetNextID()
     {
         return DO.Product.productCounter;
+    }
+
+    public IEnumerable<BO.ProductItem?> GetCatalog()
+    {
+        //ObservableCollection<BO.ProductItem?> catalog = new ObservableCollection<BO.ProductItem?>();
+        //foreach(DO.Product product in dal.dalProduct.GetAll())
+        //{
+        //    catalog.Add(new()
+        //    {
+        //        ID = product.ID,
+        //        Name = product.Name!,
+        //        Price = (double)product.Price!,
+        //        Amount = (int)product.InStock!,
+        //        Category = (BO.Enums.ProductCategory)product.Category!,
+        //        InStock = product.InStock == 0 ? false : true
+        //    });
+        //};
+        //return catalog;
+        var v = from prods in dal?.dalProduct.GetAll()
+                where prods != null
+                select new BO.ProductItem()
+                {
+                    ID = prods?.ID ?? throw new BO.DoesNotExistException(),
+                    Name = prods?.Name!,
+                    Price = (double)prods?.Price!,
+                    Amount = (int)prods?.InStock!,
+                    Category = (BO.Enums.ProductCategory)prods?.Category!,
+                    InStock = prods?.InStock == 0 ? false : true
+                };
+        return v;
     }
 }

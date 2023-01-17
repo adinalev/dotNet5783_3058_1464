@@ -39,7 +39,8 @@ namespace DO
         public Enums.Category? Category { get; set; } // also supposed to be nullable?
         public int InStock { get; set; }
         public override string ToString() => $@"
-            Product ID = {ID}: {Name},
+            Product ID = {ID}: 
+            {Name}
             Category: {Category}
             Price: {Price}
             Amount in stock: {InStock}

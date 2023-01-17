@@ -25,7 +25,17 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
             <!--<Label Content="Pharmacy" HorizontalAlignment="Left" Margin="118,0,0,0" VerticalAlignment="Center"/>-->
-            <Button Click="ShowProductsButton_Click" Grid.ColumnSpan="2" Margin="248,262,276,-263" FontSize="27" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">View Products
+            <Button Click="AdministratorButton_Click" Margin="50,174,85,-174" FontSize="27" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">Administrator
+                <Button.Effect>
+                    <DropShadowEffect/>
+                </Button.Effect>
+            </Button>
+            <Button Click="NewOrderWindow_Click" Margin="50,262,85,-262" FontSize="27" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">New Order
+                <Button.Effect>
+                    <DropShadowEffect/>
+                </Button.Effect>
+            </Button>
+            <Button Click="TrackOrder_Click" Margin="50,350,85,-350" FontSize="27" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">Track an Order
                 <Button.Effect>
                     <DropShadowEffect/>
                 </Button.Effect>

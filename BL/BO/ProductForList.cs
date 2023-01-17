@@ -8,7 +8,8 @@ public class ProductForList
     public double Price { get; set; }
     public Enums.ProductCategory? Category { get; set; }
     public override string ToString() => $@"
-            Product ID = {ID}: {Name},
+            Product ID = {ID}
+            Product Name: {Name}
             Category: {Category}
             Price: {Price}
         ";

@@ -104,6 +104,7 @@ internal static class DataSource
             orderItemList.Add(
                 new OrderItem
                 {
+                    ID = OrderItem.itemCounter++, // ADDED THIS
                     ProductID = prod.ID,
                     OrderID = ord.ID, 
                     Price = prod.Price,

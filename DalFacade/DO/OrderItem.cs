@@ -14,6 +14,7 @@ namespace DO
 
         public OrderItem()
         {
+            ID = 0;
             OrderID = 0;
             ProductID = 0;
             Price = 0;
@@ -32,7 +33,7 @@ namespace DO
         /// <summary>
         /// unique ID for order item that's auto-incremental
         /// </summary>
-        public int ID { get; init; } = ++itemCounter;
+        public int ID { get; set; } //= ++itemCounter;
         public int OrderID { get; set; } // Order's identifier // SUPPOSED TO BE NULLABLE?
         public int ProductID { get; set; } // Product's identifier // SUPPOSED TO BE NULLABLE?
         public double Price { get; set; }

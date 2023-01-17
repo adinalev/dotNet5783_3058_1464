@@ -90,17 +90,18 @@ internal class DalOrder : IOrder
     /// </summary>
     public void Delete(int _ID)
     {
-        int ind = -1;
+        //int ind = -1;
         // traverse through the order list to find an order with a matching ID#
-        foreach (DO.Order ord in DataSource.orderList)
-        {
-            if (ord.ID == _ID) 
-            {
-                // if an order with a matching ID# is found, save the index and break out of the loop
-                ind = DataSource.orderList.IndexOf(ord);
-                break;
-            }
-        }
+        //foreach (DO.Order ord in DataSource.orderList)
+        //{
+        //    if (ord.ID == _ID) 
+        //    {
+        //        // if an order with a matching ID# is found, save the index and break out of the loop
+        //        ind = DataSource.orderList.IndexOf(ord);
+        //        break;
+        //    }
+        //}
+        int ind = DataSource.orderList.FindIndex(x => x?.ID == _ID);
         if(ind == -1)
         {
             throw new DoesNotExistException();

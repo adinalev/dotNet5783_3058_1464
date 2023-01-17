@@ -30,7 +30,11 @@ namespace PL
             InitializeComponent();
         }
 
-        private void ShowProductsButton_Click(object sender, RoutedEventArgs e) => new ProductListWindow().Show();
+        private void AdministratorButton_Click(object sender, RoutedEventArgs e) => new ProductListWindow().Show();
+        private void NewOrderWindow_Click(object sender, RoutedEventArgs e) => new CatalogWindow().Show();
+
+        private void TrackOrder_Click(object sender, RoutedEventArgs e) => new EnterIDWindow().Show();
+
 
     }
 }

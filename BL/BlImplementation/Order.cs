@@ -13,40 +13,40 @@ internal class Order : BlApi.IOrder
     {
         IEnumerable<DO.Order?>? orders = dal?.dalOrder.GetAll(); // get all the orders from DO 
         IEnumerable<DO.OrderItem?>? orderItems = dal?.dalOrderItem.GetAll(); // get all the order items from DO
-       // List<BO.OrderForList?>? list = new List<BO.OrderForList?>(); // create a list of BO orders
-        return from DO.Order? ord in orders!
-               select new BO.OrderForList
-               {
-                   ID = ord.ID,
-                   CustomerName = ord?.CustomerName!,
-                   Status = GetStatus(ord),
-                   AmountOfItems = orderItems!.Select(orderItems => orderItems?.ID == ord.ID).Count(),
-                   TotalPrice = (double)orderItems!.Sum(orderItems => orderItems?.Price)
-               };
-        //foreach (DO.Order order in orders)
-        //{
-        //    int quantity = 0;
-        //    double total = 0;
+        List<BO.OrderForList?>? list = new List<BO.OrderForList?>(); // create a list of BO orders
+        //return (List<BO.OrderForList?>)(from DO.Order ord in orders
+        //       select new BO.OrderForList
+        //       {
+        //           ID = ord.ID,
+        //           CustomerName = ord.CustomerName!,
+        //           Status = GetStatus(ord),
+        //           AmountOfItems = orderItems.Select(orderItems => orderItems?.ID == ord.ID).Count(),
+        //           TotalPrice = (double)orderItems.Sum(orderItems => orderItems?.Price)
+        //       });
+        foreach (DO.Order order in orders)
+        {
+            int quantity = 0;
+            double total = 0;
 
-        //    foreach (DO.OrderItem item in orderItems) // for each order item in DO
-        //    {
-        //        if (item.OrderID == order.ID) // if the OrderID of that order item matches with an order ID (meaning it's part of that order)
-        //        {
-        //            quantity++; // increase the amount of items inside of an order
-        //            total += item.Price; // increase the total by the price of that item
-        //        }
-        //    }
-        //    list.Add(new BO.OrderForList // add a new BO order to the list created above
-        //    {
-        //        ID = order.ID,
-        //        CustomerName = order.CustomerName,
-        //        Status = GetStatus(order),
-        //        AmountOfItems = quantity,
-        //        TotalPrice = total // set the total price equal to the variable total
-        //    }); 
+            foreach (DO.OrderItem item in orderItems) // for each order item in DO
+            {
+                if (item.OrderID == order.ID) // if the OrderID of that order item matches with an order ID (meaning it's part of that order)
+                {
+                    quantity++; // increase the amount of items inside of an order
+                    total += item.Price; // increase the total by the price of that item
+                }
+            }
+            list.Add(new BO.OrderForList // add a new BO order to the list created above
+            {
+                ID = order.ID,
+                CustomerName = order.CustomerName,
+                Status = GetStatus(order),
+                AmountOfItems = quantity,
+                TotalPrice = total // set the total price equal to the variable total
+            });
 
-        //}
-        //return list!; // return the list of new BO orders
+        }
+        return list!; // return the list of new BO orders
     }
 
     //public int GetID(BO.Order ord)
@@ -206,4 +206,22 @@ internal class Order : BlApi.IOrder
         orderTracking.Status = GetStatus(order);
         return orderTracking;
     }
+    public List<string> GetItemNames(int orderID)
+    {
+        IEnumerable<DO.Order?> orders = dal?.dalOrder.GetAll();
+        IEnumerable<DO.OrderItem?> items = dal?.dalOrderItem.GetAll();
+        IEnumerable<DO.Product?> products = dal?.dalProduct.GetAll();
+        List<string> productNames = new List<string>();
+        DO.Product product = new DO.Product();
+        foreach(DO.OrderItem item in items)
+        {
+            if (item.OrderID == orderID)
+            {
+                product = (DO.Product)dal?.dalProduct.GetByID(item.ProductID);
+                productNames.Add(product.Name);
+            }
+        }
+        return productNames;               
+    }
+
 }

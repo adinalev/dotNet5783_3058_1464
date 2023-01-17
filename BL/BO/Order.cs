@@ -13,7 +13,8 @@ public class Order
     public List<OrderItem?>? Items { get; set; } = new List<OrderItem?>();
     public double TotalPrice { get; set; }
     public override string ToString() => $@"
-            Order ID={ID}: {CustomerName},
+            Order ID={ID}: 
+            Customer Name: {CustomerName}
             Email: {Email}
             Address: {Address}
             Order Date: {OrderDate}

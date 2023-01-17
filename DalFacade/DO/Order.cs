@@ -45,7 +45,8 @@ namespace DO
         public DateTime? ShippingDate { get; set; }
         public DateTime? DeliveryDate { get; set; }
         public override string ToString() => $@"
-            Order ID={ID}: {CustomerName},
+            Order ID={ID}: 
+            Customer Name: {CustomerName}
             Email: {Email}
             Address: {Address}
             Order Date: {OrderDate}

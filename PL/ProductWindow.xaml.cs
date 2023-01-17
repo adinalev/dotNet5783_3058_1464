@@ -34,7 +34,7 @@ namespace PL
             uinstock.Visibility = Visibility.Collapsed;
             uprice.Visibility = Visibility.Collapsed;
             uname.Visibility = Visibility.Collapsed;
-            ID.Text = bl.Product.GetNextID().ToString();
+            ID.Text = bl?.Product.GetNextID().ToString();
         }
 
         public ProductWindow(Product prod)
@@ -200,7 +200,8 @@ namespace PL
             }
             catch (BO.InvalidInputException exc)
             {
-                new ErrorWindow("Add Product Window\n", exc.Message).ShowDialog();
+                MessageBox.Show(exc.Message, "Add Product Window", MessageBoxButton.OK, MessageBoxImage.Error);
+                //new ErrorWindow("Add Product Window\n", exc.Message).ShowDialog();
             }
             //ProductListWindow.Close();
             Close();
@@ -215,7 +216,8 @@ namespace PL
             }
             catch(BO.InvalidInputException exc)
             {
-                new ErrorWindow("Update Product Window\n", exc.Message).ShowDialog();
+                MessageBox.Show(exc.Message, "Update Product Window", MessageBoxButton.OK, MessageBoxImage.Error);
+                //new ErrorWindow("Update Product Window\n", exc.Message).ShowDialog();
             }
             Close();
             //new ProductListWindow().Show();
