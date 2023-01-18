@@ -19,9 +19,29 @@ namespace PL
     /// </summary>
     public partial class TrackOrderWindow : Window
     {
+        BlApi.IBl? bl = BlApi.Factory.Get();
+        PO.OrderTracking orderTracking = new();
+        PO.Cart myCart = new();
         public TrackOrderWindow()
         {
             InitializeComponent();
+            DataContext = orderTracking;
+        }
+
+        public TrackOrderWindow(int ID)
+        {
+            InitializeComponent();
+            BO.OrderTracking track = new BO.OrderTracking();
+            try
+            {
+                track = bl.Order.GetOrderTracking(ID);
+            }
+            catch(BO.DoesNotExistException exc)
+            {
+                MessageBox.Show(exc.Message, "Track Order Window", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            orderTracking = PL.Tools.CastBoOTToPo(track);
+            DataContext = orderTracking;
         }
 
         public TrackOrderWindow(BO.OrderTracking order)

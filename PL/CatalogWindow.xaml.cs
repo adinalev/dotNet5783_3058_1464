@@ -117,8 +117,12 @@ namespace PL
                 }
                 catch (BO.DoesNotExistException exc)
                 {
-                    MessageBox.Show(exc.Message, "Cart Window", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(exc.Message, "Catalog Window", MessageBoxButton.OK, MessageBoxImage.Error);
                     //new ErrorWindow("Cart Window Window", ex.Message).ShowDialog();
+                }
+                catch(BO.OutOfStockException exc)
+                {
+                    MessageBox.Show(exc.Message, "Catalog Window", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

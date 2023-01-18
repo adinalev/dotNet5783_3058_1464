@@ -224,4 +224,24 @@ internal class Order : BlApi.IOrder
         return productNames;               
     }
 
+    public BO.OrderTracking GetOrderTracking(int orderID)
+    {
+        DO.Order order = new DO.Order();
+        try
+        {
+            order = (DO.Order)dal.dalOrder.GetByID(orderID);
+        }
+        catch
+        {
+            throw new BO.DoesNotExistException();
+        }
+        return new BO.OrderTracking()
+        {
+            ID = orderID,
+            Status = GetStatus(order),
+            Tracking = new List<Tuple<DateTime?, string>> { new Tuple<DateTime?, string>(order.OrderDate, "Ordered"), new Tuple<DateTime?, string>(order.ShippingDate, "Shipped"),
+            new Tuple<DateTime?, string>(order.DeliveryDate, "Delivered")}
+        };
+    }
+
 }

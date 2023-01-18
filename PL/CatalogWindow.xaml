@@ -73,8 +73,11 @@
                                     MinWidth="10" Width="*"/>
                 <DataGridTextColumn Header="Price" Binding="{Binding Price}"
                                     MinWidth="10" Width="*"/>
+                <DataGridTextColumn Header="In stock" Binding="{Binding Amount}"
+                                    MinWidth="10" Width="*"/>
                 <DataGridTextColumn Header="Category" Binding="{Binding Category}"
                                     MinWidth="10" Width="*"/>
+
             </DataGrid.Columns>
 
 
