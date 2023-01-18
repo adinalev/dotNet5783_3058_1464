@@ -1,4 +1,6 @@
-﻿namespace BO;
+﻿using System.Threading.Channels;
+
+namespace BO;
 public class OrderTracking
 {
     public int ID { get; set; }
@@ -7,8 +9,9 @@ public class OrderTracking
 
     //public override string ToString() => this.ToStringProperty();
 
-    public override string ToString() => $@"
-            ID = {ID}
-            Status: {Status} 
-        ";
+    //public override string ToString() => $@"
+    //        ID = {ID}
+    //        Status: {Status} 
+    //    ";
 }
+//changed from lowercase

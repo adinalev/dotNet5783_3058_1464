@@ -26,7 +26,7 @@
     </Window.Resources>
     <Grid>
 
-        <DataGrid Name="catalogGrid" Grid.Column="0" Width="415" HorizontalAlignment="Left"
+        <DataGrid Name="catalogGrid" Grid.Column="0" Width="439" HorizontalAlignment="Left"
                   CanUserAddRows="False"
                   IsTextSearchEnabled="True" 
                   AutoGenerateColumns="False" 
@@ -89,13 +89,13 @@
                 </GridView>
             </ListView.View>
         </ListView>-->
-        <ComboBox x:Name ="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Select a category" SelectedItem="" Margin="415,0,187,382"/>
-        <Button Content="View Cart" HorizontalAlignment="Right" Margin="0,290,10,97" Padding="5" Click="ViewCart_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">
+        <ComboBox x:Name ="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Select a category" SelectedItem="" Margin="439,0,163,392" RenderTransformOrigin="0.062,0.614"/>
+        <Button Content="View Cart" HorizontalAlignment="Right" Margin="0,241,33,119" Padding="5" Click="ViewCart_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet" RenderTransformOrigin="0.443,-0.035">
             <Button.Effect>
                 <DropShadowEffect/>
             </Button.Effect>
         </Button>
-        <Button Content="Return to Home" HorizontalAlignment="Right" Margin="0,342,10,45" Padding="5" Click="ReturnHome_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">
+        <Button Content="Return to Home" HorizontalAlignment="Right" Margin="0,334,33,30" Padding="5" Click="ReturnHome_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">
             <Button.Effect>
                 <DropShadowEffect/>
             </Button.Effect>

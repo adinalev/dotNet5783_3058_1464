@@ -22,6 +22,7 @@ namespace PL
         BlApi.IBl? bl = BlApi.Factory.Get();
         PO.OrderTracking orderTracking = new();
         PO.Cart myCart = new();
+
         public TrackOrderWindow()
         {
             InitializeComponent();
@@ -36,7 +37,7 @@ namespace PL
             {
                 track = bl.Order.GetOrderTracking(ID);
             }
-            catch(BO.DoesNotExistException exc)
+            catch (BO.DoesNotExistException exc)
             {
                 MessageBox.Show(exc.Message, "Track Order Window", MessageBoxButton.OK, MessageBoxImage.Error);
             }
