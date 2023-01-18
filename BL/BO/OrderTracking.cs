@@ -9,9 +9,9 @@ public class OrderTracking
 
     //public override string ToString() => this.ToStringProperty();
 
-    //public override string ToString() => $@"
-    //        ID = {ID}
-    //        Status: {Status} 
-    //    ";
+    public override string ToString() => $@"
+            ID = {ID}
+            Status: {Status} 
+        ";
 }
 //changed from lowercase
