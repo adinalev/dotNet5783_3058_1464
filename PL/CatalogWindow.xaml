@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="CatalogWindow" Height="450" Width="800">
     <Window.Resources>
-        <Style x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
+        <Style  x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type GroupItem}">

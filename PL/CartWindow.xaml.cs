@@ -23,6 +23,11 @@ namespace PL
         BlApi.IBl? bl = BlApi.Factory.Get();
         ObservableCollection<PO.OrderItem> items = new();
 
+        public CartWindow()
+        {
+            InitializeComponent();
+        }
+
         public CartWindow(BO.Cart cart)
         {
             InitializeComponent();

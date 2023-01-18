@@ -125,7 +125,8 @@ namespace PL
 
         private void ViewCart_Click(object sender, RoutedEventArgs e)
         {
-
+            new CartWindow(Tools.CastPoCToBo(cart)).Show();
+            Close();
         }
 
         private void ReturnHome_Click(object sender, RoutedEventArgs e)
