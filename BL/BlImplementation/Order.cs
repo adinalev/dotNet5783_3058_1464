@@ -229,7 +229,7 @@ internal class Order : BlApi.IOrder
         DO.Order order = new DO.Order();
         try
         {
-            order = (DO.Order)dal.dalOrder.GetByID(orderID);
+            order = (DO.Order)dal?.dalOrder.GetByID(orderID);
         }
         catch
         {

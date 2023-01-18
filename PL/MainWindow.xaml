@@ -13,6 +13,7 @@
             <Setter Property="FontSize" Value="27"/>
         </Style>
     </Window.Resources>
+    
     <Grid Name = "MainGrid" Background="LightGray">
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>

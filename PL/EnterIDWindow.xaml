@@ -7,10 +7,10 @@
         mc:Ignorable="d"
         Title="EnterIDWindow" Height="450" Width="800">
     <Grid>
-        <TextBlock x:Name="EnterOrderID" FontSize="25" TextAlignment="Center" FontWeight="DemiBold" FontFamily="italic" Text="Enter Your Order ID:" Margin="241,109,241,287"/>
-        <TextBox x:Name="IDInput" FontSize="25" TextAlignment="Center" FontFamily="italic" Background="GhostWhite" BorderThickness="5" Margin="214,147,214,236" PreviewTextInput="tid_previewtextinput"
+        <TextBlock x:Name="EnterOrderID" FontSize="25" TextAlignment="Center" FontWeight="DemiBold" FontFamily="italic" Text="Enter Your Order ID:" Margin="241,80,241,294"/>
+        <TextBox x:Name="IDInput" FontSize="25" TextAlignment="Center" FontFamily="italic" Background="GhostWhite" BorderThickness="5" Margin="214,145,214,213" PreviewTextInput="tid_previewtextinput"
                      KeyDown="EnterPressed_KeyDown" MaxLength="4"/>
-        <Button x:Name="OKButton" Background="LightGray" FontSize="25" Width="100" Height="50" Content="OK"
-                    FontWeight="DemiBold" BorderBrush="Transparent" Click="OKButton_Click" Margin="350,217,350,167"/>
+        <Button x:Name="OKButton" Background="LightGray" FontSize="25" Content="OK"
+                    FontWeight="DemiBold" BorderBrush="Transparent" Click="OKButton_Click" Margin="342,251,342,107"/>
     </Grid>
 </Window>
