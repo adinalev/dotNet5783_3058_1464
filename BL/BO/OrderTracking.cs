@@ -5,10 +5,10 @@ public class OrderTracking
     public Enums.OrderStatus? Status { get; set; }
     public List<Tuple<DateTime?, string>>? Tracking { set; get; }
 
-    public override string ToString() => this.ToStringProperty();
+    //public override string ToString() => this.ToStringProperty();
 
-    //public override string ToString() => $@"
-    //        ID = {ID}
-    //        Status: {Status} 
-    //    ";
+    public override string ToString() => $@"
+            ID = {ID}
+            Status: {Status} 
+        ";
 }
