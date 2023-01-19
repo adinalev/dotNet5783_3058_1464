@@ -13,6 +13,22 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="images\minussign.png" />
+    <None Remove="images\pharmacyForBackground.jpg" />
+    <None Remove="images\pharmLogo.png" />
+    <None Remove="images\plussign.png" />
+    <None Remove="images\ShoppingCart.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="images\minussign.png" />
+    <Resource Include="images\pharmacyForBackground.jpg" />
+    <Resource Include="images\pharmLogo.png" />
+    <Resource Include="images\plussign.png" />
+    <Resource Include="images\ShoppingCart.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\BL\BL.csproj" />
   </ItemGroup>
 

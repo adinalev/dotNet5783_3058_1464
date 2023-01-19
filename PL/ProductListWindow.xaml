@@ -27,10 +27,9 @@
     </Window.Resources>
 
     <Grid x:Name="MainGrid">
-        <TabControl>
-
+        <TabControl ItemsSource="{Binding Tabs}">
             <!--Products-->
-            <TabItem Header="Products">
+            <TabItem Header="products">
                 <Grid Name="UpGrid" Height="auto" Grid.Row="0" Grid.Column="0" Width="auto">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="95*"/>
@@ -39,7 +38,10 @@
                         <ColumnDefinition Width="397*"/>
                     </Grid.ColumnDefinitions >
 
+                    <!--<ComboBox x:Name ="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Select a category" SelectedItem="" Margin="18,0,379,371" Grid.Column="3"/>-->
+
                     <DataGrid Name="productGrid" Grid.Column="0" Width="528" HorizontalAlignment="Left"
+                      ItemsSource="{Binding}" 
                       CanUserAddRows="False"
                       IsTextSearchEnabled="True" 
                       AutoGenerateColumns="False" 
@@ -57,7 +59,8 @@
                       Foreground="Black"
                       IsReadOnly="True"
                       FontSize="16"
-                      ItemsSource="{Binding}" MouseDoubleClick="ProductItemView_click" Grid.ColumnSpan="4" >
+                      Grid.ColumnSpan="4" MouseDoubleClick="ProductItemView_click">
+                        <!--moved binding from here to top-->
                         <!--<DataGrid.GroupStyle>
                             <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
                                 <GroupStyle.Panel>
@@ -67,7 +70,6 @@
                                 </GroupStyle.Panel>
                             </GroupStyle>
                         </DataGrid.GroupStyle>-->
-
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" Binding="{Binding ID}"
                                     MinWidth="10" Width="*"/>
@@ -78,18 +80,21 @@
                             <DataGridTextColumn Header="Price" Binding="{Binding Price}"
                                     MinWidth="10" Width="*"/>
                         </DataGrid.Columns>
-
                     </DataGrid>
+
                     <ComboBox x:Name ="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Select a category" SelectedItem="" Margin="18,0,379,371" Grid.Column="3"/>
+
                     <Button Content="Add" HorizontalAlignment="Right" Margin="0,336,30,28" Padding="5" Click="AddButton_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet" Grid.Column="3" Width="41">
                         <Button.Effect>
                             <DropShadowEffect/>
                         </Button.Effect>
                     </Button>
+
                 </Grid>
+            </TabItem>
+            
 
-
-                <!--<Grid Name = "ProductsGrid" Background="LightGray">
+            <!--<Grid Name = "ProductsGrid" Background="LightGray">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="787*"/>
                         <ColumnDefinition Width="3*"/>
@@ -109,7 +114,7 @@
                     </ListView>
                     
                 </Grid>-->
-            </TabItem>
+            
 
             <!--Orders-->
             <TabItem Header="Orders">
@@ -120,6 +125,7 @@
                     </Grid.ColumnDefinitions>
 
                     <DataGrid Name="orderGrid" Grid.Column="0" Width="415" HorizontalAlignment="Left"
+                      ItemsSource="{Binding}" 
                       CanUserAddRows="False"
                       IsTextSearchEnabled="True" 
                       AutoGenerateColumns="False" 
@@ -137,7 +143,7 @@
                       Foreground="Black"
                       IsReadOnly="True"
                       FontSize="16"
-                      ItemsSource="{Binding}" MouseDoubleClick="OrderListView_click" >
+                      MouseDoubleClick="OrderListView_click" >
                         <!--<DataGrid.GroupStyle>
                             <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
                                 <GroupStyle.Panel>
@@ -187,7 +193,5 @@
                 </Grid>-->
             </TabItem>
         </TabControl>
-
-
     </Grid>
 </Window>

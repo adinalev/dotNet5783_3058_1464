@@ -71,7 +71,7 @@
                             <Button Click="Increase_Click"
                                     Height="30" Width="30"
                                     HorizontalAlignment="Center">
-                                <Image Source="images\plussign.png"></Image>
+                                <Image Source="\Images\plussign.png"></Image>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -82,7 +82,7 @@
                             <Button Click="Decrease_Click"
                                     Height="30" Width="30"
                                     HorizontalAlignment="Center" >
-                                <Image Source="images\minussign.png"></Image>
+                                <Image Source="\Images\minussign.png"></Image>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

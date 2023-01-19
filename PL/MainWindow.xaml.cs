@@ -26,14 +26,11 @@ namespace PL
         //private IBl bl = new Bl(); 
         BlApi.IBl? bl = BlApi.Factory.Get();
         public MainWindow()
-        {
-            InitializeComponent();
+        {            InitializeComponent();
         }
 
-        private void AdministratorButton_Click(object sender, RoutedEventArgs e)
-        {
-            new ProductListWindow().Show();
-        }
+        private void AdministratorButton_Click(object sender, RoutedEventArgs e) => new ProductListWindow().Show();
+        
         private void NewOrderWindow_Click(object sender, RoutedEventArgs e) => new CatalogWindow().Show();
 
         private void TrackOrder_Click(object sender, RoutedEventArgs e) => new EnterIDWindow().Show();

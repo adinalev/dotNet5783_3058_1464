@@ -14,7 +14,10 @@
         </Style>
     </Window.Resources>
     
-    <Grid Name = "MainGrid" Background="LightGray">
+    <Grid Name = "MainGrid">
+        <Grid.Background>
+            <ImageBrush ImageSource="/images/pharmacyForBackground.jpg"/>
+        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="40*"/>
             <RowDefinition Height="500*"/>
@@ -42,6 +45,8 @@
                 </Button.Effect>
             </Button>
         </Grid>
-        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1"/>
+        <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1">
+            <Image Margin="351,116,9,-23" Source="/images/pharmLogo.png" Stretch="Fill"/>
+        </Border>
     </Grid>
 </Window>
