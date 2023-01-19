@@ -22,6 +22,9 @@ namespace PL
     {
         BlApi.IBl? bl = BlApi.Factory.Get();
         ObservableCollection<PO.OrderItem> items = new();
+        PO.Cart poCart = new();
+        BO.Cart boCart = new BO.Cart();
+        int productID;
 
         public CartWindow()
         {
@@ -38,9 +41,17 @@ namespace PL
             }
             catch
             {
-                MessageBox.Show("Error", "Update Product Window", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Error", "Cart Window", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             cartGrid.DataContext = items;
+            //PO.OrderItem poItem = new();
+            //foreach(BO.OrderItem item in cart.Items)
+            //{
+            //    //poItem = PL.Tools.CastBoOIToPo(item);
+            //    myCart.orderItems.Add(item);
+            //}
+            poCart.OrderItems = cart.Items; // MLOWERCASE VS. UPPERCASE
+            poCart.Price = cart.TotalPrice; // MLOWERCASE VS. UPPERCASE
         }
 
         private void ProductItemView_click(object sender, RoutedEventArgs e)
@@ -50,6 +61,60 @@ namespace PL
         private void AddToCart_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void CheckOut_Click(object sender, RoutedEventArgs e)
+        {
+            new CheckOutWindow().Show();
+            Close();
+        }
+        private void ReturnHome_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            Close();
+        }
+
+        private void Increase_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (cartGrid.SelectedItem is PO.OrderItem orderItem)
+                {
+                    //myCart = PL.Tools.CastPoCToBo(poCart);
+                    poCart = PL.Tools.CastBoCToPo(bl.Cart.IncreaseCart(PL.Tools.CastPoCToBo(poCart), orderItem.ProductID));
+                }
+                //poCart = bl.Cart.IncreaseCart(poCart, cartGrid.SelectedItem.ID);
+            }
+            catch(BO.NotEnoughInStockException exc)
+            {
+                MessageBox.Show(exc.Message, "Cart Window", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (BO.DoesNotExistException exc)
+            {
+                MessageBox.Show(exc.Message, "Cart Window", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            //cartGrid.DataContext = items;
+
+            Close();
+            new CartWindow(PL.Tools.CastPoCToBo(poCart)).Show();
+        }
+        private void Decrease_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (cartGrid.SelectedItem is PO.OrderItem orderItem)
+                {
+                    poCart = PL.Tools.CastBoCToPo(bl.Cart.DecreaseCart(PL.Tools.CastPoCToBo(poCart), orderItem.ProductID));
+                }
+            }
+            catch (BO.DoesNotExistException exc)
+            {
+                MessageBox.Show(exc.Message, "Cart Window", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            //cartGrid.DataContext = items;
+
+            new CartWindow(PL.Tools.CastPoCToBo(poCart)).Show();
+            Close();
         }
     }
 }

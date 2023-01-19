@@ -35,7 +35,7 @@ namespace PL
             }
             catch(BO.DoesNotExistException exc)
             {
-                new ErrorWindow("Catalog Window\n", exc.Message).ShowDialog();
+                MessageBox.Show(exc.Message, "Catalog Window", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catalogGrid.DataContext = catalog;
             CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.ProductCategory));

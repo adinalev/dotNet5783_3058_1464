@@ -32,4 +32,7 @@ public interface ICart
     /// </summary>
     public void DeleteCart(BO.Cart myCart);
     public IEnumerable<BO.OrderItem> GetItems(BO.Cart cart);
+    public BO.Cart IncreaseCart(BO.Cart cart, int ID);
+    public BO.Cart DecreaseCart(BO.Cart cart, int ID);
+
 }

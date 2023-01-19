@@ -56,17 +56,7 @@
             </DataGrid.GroupStyle>
 
             <DataGrid.Columns>
-                <DataGridTemplateColumn x:Name="AddProductToCart" MinWidth="10" Width="30">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <Button  Click="AddToCart_Click"
-                                    Height="30" Width="30"
-                                    HorizontalAlignment="Center" >
-                                <Image Source="images\ShoppingCart.png" ></Image>
-                            </Button>
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+
                 <DataGridTextColumn Header="ID" Binding="{Binding ID}"
                                     MinWidth="10" Width="*"/>
                 <DataGridTextColumn Header="Product" Binding="{Binding ProductName}"
@@ -75,10 +65,43 @@
                                     MinWidth="10" Width="*"/>
                 <DataGridTextColumn Header="Amount in Cart" Binding="{Binding Amount}"
                                     MinWidth="10" Width="*"/>
+                <DataGridTemplateColumn x:Name="IncreaseAmount" MinWidth="10" Width="30">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="Increase_Click"
+                                    Height="30" Width="30"
+                                    HorizontalAlignment="Center">
+                                <Image Source="images\plussign.png"></Image>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn x:Name="DecreaseAmount" MinWidth="10" Width="30">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="Decrease_Click"
+                                    Height="30" Width="30"
+                                    HorizontalAlignment="Center" >
+                                <Image Source="images\minussign.png"></Image>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
 
 
         </DataGrid>
+
+        <Button Content="Check Out" HorizontalAlignment="Right" Margin="0,218,-165,160" Padding="5" Click="CheckOut_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet" RenderTransformOrigin="0.443,-0.035">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+        <Button Content="Return to Home" HorizontalAlignment="Right" Margin="0,316,-165,54" Padding="5" Click="ReturnHome_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
         <!--<StackPanel Margin="0,103,0,40" Grid.RowSpan="3">
             <ListView x:Name="PList" ItemsSource="{Binding}" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" ScrollViewer.IsDeferredScrollingEnabled="True" >
                 <ListView.Resources>

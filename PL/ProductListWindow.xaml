@@ -28,18 +28,18 @@
 
     <Grid x:Name="MainGrid">
         <TabControl>
-            
+
             <!--Products-->
             <TabItem Header="Products">
                 <Grid Name="UpGrid" Height="auto" Grid.Row="0" Grid.Column="0" Width="auto">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="81*"/>
-                        <ColumnDefinition Width="14*"/>
+                        <ColumnDefinition Width="95*"/>
                         <ColumnDefinition Width="302*"/>
+                        <ColumnDefinition Width="0*"/>
                         <ColumnDefinition Width="397*"/>
                     </Grid.ColumnDefinitions >
 
-                    <DataGrid Name="productGrid" Grid.Column="0" Width="415" HorizontalAlignment="Left"
+                    <DataGrid Name="productGrid" Grid.Column="0" Width="528" HorizontalAlignment="Left"
                       CanUserAddRows="False"
                       IsTextSearchEnabled="True" 
                       AutoGenerateColumns="False" 
@@ -57,7 +57,7 @@
                       Foreground="Black"
                       IsReadOnly="True"
                       FontSize="16"
-                      ItemsSource="{Binding}" MouseDoubleClick="ProductItemView_click" >    
+                      ItemsSource="{Binding}" MouseDoubleClick="ProductItemView_click" Grid.ColumnSpan="4" >
                         <!--<DataGrid.GroupStyle>
                             <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
                                 <GroupStyle.Panel>
@@ -80,8 +80,8 @@
                         </DataGrid.Columns>
 
                     </DataGrid>
-                    <ComboBox x:Name ="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Select a category" SelectedItem="" Margin="415,0,156,371"/>
-                    <Button Content="Add" HorizontalAlignment="Right" Margin="0,355,5,10" Padding="5" Click="AddButton_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">
+                    <ComboBox x:Name ="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Select a category" SelectedItem="" Margin="18,0,379,371" Grid.Column="3"/>
+                    <Button Content="Add" HorizontalAlignment="Right" Margin="0,336,30,28" Padding="5" Click="AddButton_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet" Grid.Column="3" Width="41">
                         <Button.Effect>
                             <DropShadowEffect/>
                         </Button.Effect>

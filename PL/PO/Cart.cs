@@ -58,7 +58,7 @@ namespace PL.PO
         }
 
 
-        private List<BO.OrderItem?>? orderItems;
+        public List<BO.OrderItem?>? orderItems;
         public List<BO.OrderItem?>? OrderItems
         {
             get
@@ -74,7 +74,7 @@ namespace PL.PO
         }
 
 
-        private double price;
+        public double price;
         public double Price
         {
             get

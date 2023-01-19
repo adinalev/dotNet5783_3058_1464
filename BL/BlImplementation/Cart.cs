@@ -36,11 +36,11 @@ internal class Cart : BlApi.ICart
                 throw new BO.NotEnoughInStockException();
             }
             BO.OrderItem myItem = new BO.OrderItem//create new orderitem that is being added 
-            {
+            { // Quantity used to be equal to 1 but i dont think it makes a difference anymore
                 ID = _ID,
                 ProductName = prod?.Name!,
                 ProductPrice = (double)prod?.Price!,
-                Quantity = 1,
+                Quantity = amount,
                 Price = (double)prod?.Price!,
                 ProductID = (int)prod?.ID
             };
@@ -74,6 +74,7 @@ internal class Cart : BlApi.ICart
         BO.OrderItem item = new BO.OrderItem // create new orderitem that is being added to the list
         {
             ID = _ID,
+            ProductName = product?.Name!,
             Price = (double)product?.Price!,
             Quantity = amount,
             ProductID = (int)product?.ID! 
@@ -130,6 +131,65 @@ internal class Cart : BlApi.ICart
         if (!exists) throw new BO.NotInCartException(); // if the product is not in the cart yet, throw an exception
         return amount;
     }
+
+    /// <summary>
+    /// method to adjust the amount of a product is in the cart
+    /// </summary>
+    public BO.Cart IncreaseCart(BO.Cart cart, int _ID)
+    {
+        int index = cart.Items!.FindIndex(x => x?.ProductID == _ID); // find the index in the items list where the product sits
+        DO.Product? product = new DO.Product(-1); // create a new DO product
+        try
+        {
+            product = dal!.dalProduct.GetByID(_ID); //retrieve the product with the matching ID
+        }
+        catch
+        {
+            throw new BO.DoesNotExistException();
+        }
+        if (index != -1) // this means the product is in the cart
+        {
+            if (product?.InStock < cart.Items[index].Quantity + 1)
+            {
+                throw new BO.NotEnoughInStockException();
+            }
+            //cart.TotalPrice -= cart.Items[index]!.Price * cart.Items[index]!.Quantity; // subtract the cost of any of this specific product sitting in the cart
+            //cart.Items[index]!.Quantity = quantity; // change the quantity of that product to the user's input
+            cart.Items[index].Quantity += 1;
+            cart.TotalPrice += cart.Items[index]!.Price; // adjust the price accordingly
+            return cart;
+        }
+        throw new BO.DoesNotExistException();
+    }
+
+    public BO.Cart DecreaseCart(BO.Cart cart, int ID)
+    {
+        int index = cart.Items!.FindIndex(x => x?.ProductID == ID); // find the index in the items list where the product sits
+        DO.Product? product = new DO.Product(-1); // create a new DO product
+        try
+        {
+            product = dal!.dalProduct.GetByID(ID); //retrieve the product with the matching ID
+        }
+        catch
+        {
+            throw new BO.DoesNotExistException();
+        }
+        if (index != -1) // this means the product is in the cart
+        {
+            if(cart.Items[index].Quantity == 1)
+            {
+                cart.Items.RemoveAt(index);
+                //cart.Items[index].Quantity = 0;
+                return cart;
+            }
+            cart.Items[index].Quantity -= 1;
+            cart.TotalPrice -= cart.Items[index]!.Price; // adjust the price accordingly
+            return cart;
+        }
+        throw new BO.DoesNotExistException();
+    }
+
+
 
     /// <summary>
     /// method to adjust the amount of a product is in the cart
