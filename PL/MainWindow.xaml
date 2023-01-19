@@ -46,7 +46,7 @@
             </Button>
         </Grid>
         <Border BorderBrush="Black" BorderThickness="1" Grid.Row="1">
-            <Image Margin="351,116,9,-23" Source="/images/pharmLogo.png" Stretch="Fill"/>
+            <Image Margin="326,98,34,-5" Source="/images/pharmLogo.png" Stretch="None"/>
         </Border>
     </Grid>
 </Window>
