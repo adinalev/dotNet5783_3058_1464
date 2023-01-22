@@ -4,10 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:converter="clr-namespace:ConvertersForPL"
         mc:Ignorable="d"
         Title="ProductListWindow" Height="450" Width="800">
 
-    <Window.Resources>
+
+    <!--<Window.Resources>
         <Style  x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -18,19 +20,21 @@
                             <Expander.Header>
                                 <TextBlock Text="{Binding Name}"/>
                             </Expander.Header>
-                            <ItemsPresenter/>
                         </Expander>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
+    </Window.Resources>-->
+    <Window.Resources>
+        <converter:FalseToTrueConverter x:Key="convertIsEnabled"/>
     </Window.Resources>
 
     <Grid x:Name="MainGrid">
         <TabControl ItemsSource="{Binding Tabs}">
             <!--Products-->
-            <TabItem Header="products">
-                <Grid Name="UpGrid" Height="auto" Grid.Row="0" Grid.Column="0" Width="auto">
+            <TabItem Header="Products">
+                <Grid Name="OuterProductGrid" Height="auto" Grid.Row="0" Grid.Column="0" Width="auto">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="95*"/>
                         <ColumnDefinition Width="302*"/>
@@ -38,159 +42,113 @@
                         <ColumnDefinition Width="397*"/>
                     </Grid.ColumnDefinitions >
 
-                    <!--<ComboBox x:Name ="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Select a category" SelectedItem="" Margin="18,0,379,371" Grid.Column="3"/>-->
-
+                    <ComboBox x:Name ="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Select a category" SelectedItem="" Margin="136,0,106,352" Grid.Column="3"/>
                     <DataGrid Name="productGrid" Grid.Column="0" Width="528" HorizontalAlignment="Left"
-                      ItemsSource="{Binding}" 
-                      CanUserAddRows="False"
-                      IsTextSearchEnabled="True" 
-                      AutoGenerateColumns="False" 
-                      GridLinesVisibility="Vertical" 
-                      Cursor="Arrow"
-                      AreRowDetailsFrozen="True"
-                      HorizontalGridLinesBrush="Transparent"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                      ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                      ScrollViewer.CanContentScroll="True"
-                      CanUserDeleteRows="False" 
-                      CanUserResizeRows="False"
-                      SelectionMode="Single"
-                      SelectionUnit="FullRow"
-                      Foreground="Black"
-                      IsReadOnly="True"
-                      FontSize="16"
-                      Grid.ColumnSpan="4" MouseDoubleClick="ProductItemView_click">
-                        <!--moved binding from here to top-->
-                        <!--<DataGrid.GroupStyle>
-                            <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
-                                <GroupStyle.Panel>
-                                    <ItemsPanelTemplate>
-                                        <DataGridRowsPresenter/>
-                                    </ItemsPanelTemplate>
-                                </GroupStyle.Panel>
-                            </GroupStyle>
-                        </DataGrid.GroupStyle>-->
+                            CanUserAddRows="False"
+                            IsTextSearchEnabled="True" 
+                            AutoGenerateColumns="False" 
+                            GridLinesVisibility="Vertical" 
+                            Cursor="Arrow"
+                            AreRowDetailsFrozen="True"
+                            HorizontalGridLinesBrush="Transparent"
+                            ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                            ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                            ScrollViewer.CanContentScroll="True"
+                            CanUserDeleteRows="False" 
+                            CanUserResizeRows="False"
+                            SelectionMode="Single"
+                            SelectionUnit="FullRow"
+                            Foreground="Black"
+                            IsReadOnly="True"
+                            FontSize="16"
+                            Grid.ColumnSpan="4" 
+                            ItemsSource="{Binding}" MouseDoubleClick="ProductItemView_click">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding ID}"
+                            <DataGridTextColumn Header="ID" Binding="{Binding ID, Mode=TwoWay}"
                                     MinWidth="10" Width="*"/>
-                            <DataGridTextColumn Header="Product" Binding="{Binding ProductName}"
+                            <DataGridTextColumn Header="Product" Binding="{Binding ProductName, Mode=TwoWay}"
                                     MinWidth="10" Width="*"/>
-                            <DataGridTextColumn Header="Category" Binding="{Binding Category}"
+                            <DataGridTextColumn Header="Category" Binding="{Binding Category, Mode=TwoWay}"
                                     MinWidth="10" Width="*"/>
-                            <DataGridTextColumn Header="Price" Binding="{Binding Price}"
+                            <DataGridTextColumn Header="Price" Binding="{Binding Price, Mode=TwoWay}"
                                     MinWidth="10" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
-                    <ComboBox x:Name ="CategorySelector" SelectionChanged="CategorySelector_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Select a category" SelectedItem="" Margin="18,0,379,371" Grid.Column="3"/>
+                    <Button Content="Add" HorizontalAlignment="Right" Margin="0,297,36,56" Padding="5" Click="AddButton_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet" Grid.Column="3" Width="41">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                    </Button>
+                </Grid>
+            </TabItem>
 
-                    <Button Content="Add" HorizontalAlignment="Right" Margin="0,336,30,28" Padding="5" Click="AddButton_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet" Grid.Column="3" Width="41">
+            <!--Orders-->
+            <TabItem Header="Orders">
+                <Grid Name="OuterOrderGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" Width="auto">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="416*"/>
+                        <ColumnDefinition Width="283*"/>
+                        <ColumnDefinition Width="95*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--<ComboBox x:Name ="StatusSelector" SelectionChanged="Status_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Filter by status" SelectedItem="" Margin="0,0,134,334" Grid.Column="1"/>-->
+                    <DataGrid Name="orderGrid" Width="416" HorizontalAlignment="Center"
+                            CanUserAddRows="False"
+                            IsTextSearchEnabled="True" 
+                            AutoGenerateColumns="False" 
+                            GridLinesVisibility="Vertical" 
+                            Cursor="Arrow"
+                            AreRowDetailsFrozen="True"
+                            HorizontalGridLinesBrush="Transparent"
+                            ScrollViewer.VerticalScrollBarVisibility="Visible" 
+                            ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                            ScrollViewer.CanContentScroll="True"
+                            CanUserDeleteRows="False" 
+                            CanUserResizeRows="False"
+                            SelectionMode="Single"
+                            SelectionUnit="FullRow"
+                            Foreground="Black"
+                            IsReadOnly="True"
+                            FontSize="16"
+                            ItemsSource="{Binding}" MouseDoubleClick="OrderListView_click" >
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ID, Mode=TwoWay}"
+                                    MinWidth="10" Width="*"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Name, Mode=TwoWay}"
+                                    MinWidth="10" Width="*"/>
+                            <DataGridTextColumn Header="Status" Binding="{Binding Status, Mode=TwoWay}"
+                                    MinWidth="10" Width="*"/>
+                            <DataGridTextColumn Header="Amount" Binding="{Binding Amount, Mode=TwoWay}"
+                                    MinWidth="10" Width="*"/>
+                            <DataGridTextColumn Header="Price" Binding="{Binding TotalPrice, Mode=TwoWay}"
+                                    MinWidth="10" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Name="GroupByStatus"
+                        Content="Group By Status" 
+                        Click="GroupByStatus_Click"
+                        FontSize="15" FontStyle="Normal" FontWeight="Bold" Background="BlueViolet" Foreground="White"
+                        Margin="189,170,42,188" Grid.Column="1" 
+                        IsEnabled="{Binding ElementName=GroupBack, 
+                                            Path=IsEnabled, 
+                                            Mode=TwoWay, Converter={StaticResource convertIsEnabled}}" Grid.ColumnSpan="2">
+
                         <Button.Effect>
                             <DropShadowEffect/>
                         </Button.Effect>
                     </Button>
 
+                    <Button Name="GroupBack" 
+                        Content="Remove Grouping" 
+                        Click="RemoveGroupings_Click"
+                        FontSize="15" FontStyle="Normal" FontWeight="Bold" Background ="BlueViolet" Foreground="White"
+                        Margin="189,223,42,128" Grid.Column="1"
+                        IsEnabled="False" Grid.ColumnSpan="2">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                    </Button>
                 </Grid>
-            </TabItem>
-            
-
-            <!--<Grid Name = "ProductsGrid" Background="LightGray">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="787*"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="10*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40*"/>
-                        <RowDefinition Height="500*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <ListView x:Name="ProductsListView" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductsListView_SelectionChanged" Margin="0,3,0,0" MouseDoubleClick="DoubleClickEvent" SelectedItem="" Grid.Row="1">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    
-                </Grid>-->
-            
-
-            <!--Orders-->
-            <TabItem Header="Orders">
-                <Grid Name="OrderGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0" Grid.Column="1" VerticalAlignment="Stretch" Width="auto">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <DataGrid Name="orderGrid" Grid.Column="0" Width="415" HorizontalAlignment="Left"
-                      ItemsSource="{Binding}" 
-                      CanUserAddRows="False"
-                      IsTextSearchEnabled="True" 
-                      AutoGenerateColumns="False" 
-                      GridLinesVisibility="Vertical" 
-                      Cursor="Arrow"
-                      AreRowDetailsFrozen="True"
-                      HorizontalGridLinesBrush="Transparent"
-                      ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                      ScrollViewer.HorizontalScrollBarVisibility="Visible"
-                      ScrollViewer.CanContentScroll="True"
-                      CanUserDeleteRows="False" 
-                      CanUserResizeRows="False"
-                      SelectionMode="Single"
-                      SelectionUnit="FullRow"
-                      Foreground="Black"
-                      IsReadOnly="True"
-                      FontSize="16"
-                      MouseDoubleClick="OrderListView_click" >
-                        <!--<DataGrid.GroupStyle>
-                            <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
-                                <GroupStyle.Panel>
-                                    <ItemsPanelTemplate>
-                                        <DataGridRowsPresenter/>
-                                    </ItemsPanelTemplate>
-                                </GroupStyle.Panel>
-                            </GroupStyle>
-                        </DataGrid.GroupStyle>-->
-
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" Binding="{Binding ID}"
-                                    MinWidth="10" Width="*"/>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Name}"
-                                    MinWidth="10" Width="*"/>
-                            <DataGridTextColumn Header="Status" Binding="{Binding Status}"
-                                    MinWidth="10" Width="*"/>
-                            <DataGridTextColumn Header="Amount" Binding="{Binding Amount}"
-                                    MinWidth="10" Width="*"/>
-                            <DataGridTextColumn Header="Price" Binding="{Binding TotalPrice}"
-                                    MinWidth="10" Width="*"/>
-                        </DataGrid.Columns>
-                        <ComboBox x:Name ="StatusSelector" SelectionChanged="Status_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Filter by status" SelectedItem="" Grid.ColumnSpan="3"/>
-
-                    </DataGrid>
-
-                </Grid>
-                <!--<Grid Name = "OrdersGrid" Background="LightGray">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="787*"/>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="10*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40*"/>
-                        <RowDefinition Height="500*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-                    <ListView x:Name="OrdersListView" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,3,0,0" SelectedItem="" Grid.Row="1" MouseDoubleClick="OrdersListView_MouseDoubleClick">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                    <ComboBox x:Name ="StatusSelector" SelectionChanged="Status_SelectionChanged" IsEditable="True" IsReadOnly="True" Text="Filter by status" SelectedItem="" Grid.ColumnSpan="3"/>
-                </Grid>-->
             </TabItem>
         </TabControl>
     </Grid>

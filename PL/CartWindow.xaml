@@ -26,7 +26,7 @@
         </Style>
     </Window.Resources>
     <Grid Margin="0,0,198,0">
-        <DataGrid Name="cartGrid" Grid.Column="0" Width="600" HorizontalAlignment="Left"
+        <DataGrid Name="cartGrid" Width="600" HorizontalAlignment="Center"
                   CanUserAddRows="False"
                   IsTextSearchEnabled="True" 
                   AutoGenerateColumns="False" 
@@ -44,7 +44,7 @@
                   Foreground="Black"
                   IsReadOnly="True"
                   FontSize="16"
-                  ItemsSource="{Binding}" MouseDoubleClick="ProductItemView_click" Margin="0,40,0,0" >
+                  ItemsSource="{Binding}" MouseDoubleClick="ProductItemView_click" Margin="0,40,0,70" >
             <DataGrid.GroupStyle>
                 <GroupStyle ContainerStyle="{StaticResource ResourceKey=GroupHeaderStyle}">
                     <GroupStyle.Panel>
@@ -57,13 +57,13 @@
 
             <DataGrid.Columns>
 
-                <DataGridTextColumn Header="ID" Binding="{Binding ID}"
+                <DataGridTextColumn Header="ID" Binding="{Binding ID, Mode=TwoWay}"
                                     MinWidth="10" Width="*"/>
-                <DataGridTextColumn Header="Product" Binding="{Binding ProductName}"
+                <DataGridTextColumn Header="Product" Binding="{Binding ProductName, Mode=TwoWay}"
                                     MinWidth="10" Width="*"/>
-                <DataGridTextColumn Header="Price" Binding="{Binding Price}"
+                <DataGridTextColumn Header="Price" Binding="{Binding Price, Mode=TwoWay}"
                                     MinWidth="10" Width="*"/>
-                <DataGridTextColumn Header="Amount in Cart" Binding="{Binding Amount}"
+                <DataGridTextColumn Header="Amount in Cart" Binding="{Binding Amount, Mode=TwoWay}"
                                     MinWidth="10" Width="*"/>
                 <DataGridTemplateColumn x:Name="IncreaseAmount" MinWidth="10" Width="30">
                     <DataGridTemplateColumn.CellTemplate>
@@ -92,6 +92,7 @@
 
         </DataGrid>
 
+
         <Button Content="Check Out" HorizontalAlignment="Right" Margin="0,218,-165,160" Padding="5" Click="CheckOut_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet" RenderTransformOrigin="0.443,-0.035">
             <Button.Effect>
                 <DropShadowEffect/>
@@ -102,6 +103,8 @@
                 <DropShadowEffect/>
             </Button.Effect>
         </Button>
+        <TextBox x:Name="TotalPrice" HorizontalAlignment="Left" Margin="408,364,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Height="42" FontSize="16"/>
+        <Label x:Name="TotalPriceLabel" Content="Total Price:" HorizontalAlignment="Left" Margin="322,370,0,0" VerticalAlignment="Top" FontSize="16" Height="30" Width="81"/>
         <!--<StackPanel Margin="0,103,0,40" Grid.RowSpan="3">
             <ListView x:Name="PList" ItemsSource="{Binding}" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" ScrollViewer.IsDeferredScrollingEnabled="True" >
                 <ListView.Resources>

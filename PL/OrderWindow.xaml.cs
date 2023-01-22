@@ -55,10 +55,17 @@ namespace PL
             order.ID = ord.ID;
         }
 
-        private void UpdateShippingButton_Click(object sender, RoutedEventArgs e) => new UpdateDatesWindow(order, BO.Enums.OrderStatus.Shipped).Show();
+        private void UpdateShippingButton_Click(object sender, RoutedEventArgs e) //new UpdateDatesWindow(order, BO.Enums.OrderStatus.Shipped).Show();
+        {
+            bl.Order.UpdateShippingDate(order.ID);
+            Close();
+        }
 
-        private void UpdateDeliveryButton_Click(object sender, RoutedEventArgs e) => new UpdateDatesWindow(order).Show();
-
+        private void UpdateDeliveryButton_Click(object sender, RoutedEventArgs e) // => new UpdateDatesWindow(order).Show();
+        {
+            bl.Order.UpdateDeliveryDate(order.ID);
+            Close();
+        }
         //private void SelectStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
         //{
         //    BO.Enums.OrderStatus status = (BO.Enums.OrderStatus)StatusBox.SelectedItem; // saves the selected category

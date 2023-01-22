@@ -18,12 +18,15 @@ public interface IOrder
     /// <summary>
     /// public method for the manager to update the shipping date of an order
     /// </summary>
-    public BO.Order? UpdateShippingDate(int orderID, DateTime date);
+    //public BO.Order? UpdateShippingDate(int orderID, DateTime date);
+    public BO.Order? UpdateShippingDate(int orderID);
+
 
     /// <summary>
     /// public method for the manager to update the delivery date of an order
     /// </summary>
-    public BO.Order? UpdateDeliveryDate(int orderID, DateTime date);
+    //public BO.Order? UpdateDeliveryDate(int orderID, DateTime date);
+    public BO.Order? UpdateDeliveryDate(int orderID);
 
     /// <summary>
     /// public method to update and return the status of anorder

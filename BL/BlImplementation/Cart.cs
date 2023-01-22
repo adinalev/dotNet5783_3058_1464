@@ -156,7 +156,8 @@ internal class Cart : BlApi.ICart
             //cart.TotalPrice -= cart.Items[index]!.Price * cart.Items[index]!.Quantity; // subtract the cost of any of this specific product sitting in the cart
             //cart.Items[index]!.Quantity = quantity; // change the quantity of that product to the user's input
             cart.Items[index].Quantity += 1;
-            cart.TotalPrice += cart.Items[index]!.Price; // adjust the price accordingly
+            cart.TotalPrice += cart.Items[index]!.ProductPrice; // adjust the price accordingly // CHANGED THIS
+            cart.Items[index].Price = cart.Items[index].Price + cart.Items[index].ProductPrice;
             return cart;
         }
         throw new BO.DoesNotExistException();
@@ -183,12 +184,12 @@ internal class Cart : BlApi.ICart
                 return cart;
             }
             cart.Items[index].Quantity -= 1;
-            cart.TotalPrice -= cart.Items[index]!.Price; // adjust the price accordingly
+            cart.TotalPrice -= cart.Items[index]!.ProductPrice; // adjust the price accordingly
+            cart.Items[index].Price = cart.Items[index].Price - cart.Items[index].ProductPrice;
             return cart;
         }
         throw new BO.DoesNotExistException();
     }
-
 
 
     /// <summary>

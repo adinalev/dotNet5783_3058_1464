@@ -1,8 +1,22 @@
-﻿using System;
+﻿using BO;
+using PL.PO;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Collections.ObjectModel;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 //using BlApi;
 //using BlImplementation;
@@ -43,7 +57,7 @@ namespace PL
             //ProductsListView.ItemsSource = bl?.Product.GetProductsForList();
             //OrdersListView.ItemsSource = bl?.Order.GetAllOrderForList();
             //StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.OrderStatus));
-            //CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.ProductCategory));
+            CategorySelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.ProductCategory));
         }
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
@@ -132,41 +146,41 @@ namespace PL
             //Close();
         }
 
-        private void Status_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            BO.Enums.OrderStatus status = (BO.Enums.OrderStatus)StatusSelector.SelectedItem; // saves the selected category
-            if (status == BO.Enums.OrderStatus.ALL)
-            {
-                try
-                {
-                    orderList = PL.Tools.IEnumerableToObservable(bl.Order.GetAllOrderForList());
-                }
-                catch (BO.DoesNotExistException exc)
-                {
-                    MessageBox.Show(exc.Message, "List View Window", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                //orderGrid.ItemsSource = bl?.Order?.GetAllOrderForList();
-                StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.OrderStatus));
-                return;
-            }
-            if (status is BO.Enums.OrderStatus stat)
-            {
-                try
-                {
-                    orderList = PL.Tools.IEnumerableToObservable(bl.Order.GetAllOrderForList());
-                }
-                catch (BO.DoesNotExistException exc)
-                {
-                    MessageBox.Show(exc.Message, "List View Window", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-                //show the filtered list
-                //OrdersListView.ItemsSource = bl?.Order?.GetAllOrderForList()?.Select(x => x?.Status == stat);
-            }
-            orderGrid.DataContext = orderList;
-            //OrdersListView.ItemsSource = from order in bl?.Order.GetAllOrderForList()
-            //                             where order.Status == status
-            //                             select order;
-        }
+        //private void Status_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    BO.Enums.OrderStatus status = (BO.Enums.OrderStatus)StatusSelector.SelectedItem; // saves the selected category
+        //    if (status == BO.Enums.OrderStatus.ALL)
+        //    {
+        //        try
+        //        {
+        //            orderList = PL.Tools.IEnumerableToObservable(bl.Order.GetAllOrderForList());
+        //        }
+        //        catch (BO.DoesNotExistException exc)
+        //        {
+        //            MessageBox.Show(exc.Message, "List View Window", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        }
+        //        //orderGrid.ItemsSource = bl?.Order?.GetAllOrderForList();
+        //        StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.OrderStatus));
+        //        return;
+        //    }
+        //    if (status is BO.Enums.OrderStatus stat)
+        //    {
+        //        try
+        //        {
+        //            orderList = PL.Tools.IEnumerableToObservable(bl.Order.GetAllOrderForList());
+        //        }
+        //        catch (BO.DoesNotExistException exc)
+        //        {
+        //            MessageBox.Show(exc.Message, "List View Window", MessageBoxButton.OK, MessageBoxImage.Error);
+        //        }
+        //        //show the filtered list
+        //        StatusSelector.ItemsSource = bl?.Order?.GetAllOrderForList()?.Select(x => x?.Status == stat);
+        //    }
+        //    orderGrid.DataContext = orderList;
+        //    //OrdersListView.ItemsSource = from order in bl?.Order.GetAllOrderForList()
+        //    //                             where order.Status == status
+        //    //                             select order;
+        //}
 
 
 
@@ -182,12 +196,67 @@ namespace PL
         }
 
         private void ProductItemView_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-
+        {           
+            if (productGrid.SelectedItem is PO.ProductForList productForList)
+            {
+                BO.Product prod = new BO.Product();
+                prod = bl?.Product.GetProduct(productForList.ID);
+                new ProductWindow(prod).ShowDialog();
+            }
+            try
+            {
+                productList = PL.Tools.IEnumerableToObservable(bl.Product.GetProductsForList());
+            }
+            catch (BO.DoesNotExistException exc)
+            {
+                MessageBox.Show(exc.Message, "List View Window", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            productGrid.DataContext = productList;
+            //ProductsListView.ItemsSource = bl?.Product.GetProductsForList(); // update list view after add
+            //Close();          
         }
         private void OrderListView_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            //if (orderGrid.ItemsSource is PO.OrderForList orderForList)
+            //{
+            //    BO.Order ord = new BO.Order();
+            //    ord = bl?.Order.GetBoOrder(orderForList.ID);
+            //    new OrderWindow(ord).ShowDialog(); // NOT SURE IF CORRECT WINDOW
+            //}
+            if (orderGrid.SelectedItem is PO.OrderForList orderForList)
+            {
+                BO.Order ord = new BO.Order();
+                ord = bl?.Order.GetBoOrder(orderForList.ID);
+                new OrderWindow(ord).ShowDialog();
+            }
+            try
+            {
+                orderList = PL.Tools.IEnumerableToObservable(bl.Order.GetAllOrderForList());
+            }
+            catch (BO.DoesNotExistException exc)
+            {
+                MessageBox.Show(exc.Message, "List View Window", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            orderGrid.DataContext = orderList;
+        }
 
+        private void GroupByStatus_Click(object sender, RoutedEventArgs e)
+        {
+            RemoveGroupings_Click(sender, e);//remove prev grouping
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(orderGrid.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
+            SortDescription sortDscription = new SortDescription("Status", ListSortDirection.Ascending);
+            view.GroupDescriptions.Add(groupDescription);
+            view.SortDescriptions.Add(sortDscription);
+            GroupByStatus.IsEnabled = false;
+        }
+
+        private void RemoveGroupings_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(orderList);
+            view.GroupDescriptions.Clear();
+            view.SortDescriptions.Clear();
+            GroupBack.IsEnabled = false;
         }
 
 

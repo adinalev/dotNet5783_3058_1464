@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:converter="clr-namespace:ConvertersForPL"
         mc:Ignorable="d"
         Title="CatalogWindow" Height="450" Width="800">
     <Window.Resources>
@@ -23,6 +24,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <converter:FalseToTrueConverter x:Key="convertIsEnabled"/>
     </Window.Resources>
     <Grid>
 
@@ -82,6 +84,31 @@
 
 
         </DataGrid>
+
+        <Button Name="GroupByCategory"
+                        Content="Group By Category" 
+                        Click="GroupByCategory_Click"
+                        FontSize="15" FontStyle="Normal" FontWeight="Bold" Background="BlueViolet" Foreground="White"
+                        Margin="502,141,140,239" 
+                        IsEnabled="{Binding ElementName=GroupBack, 
+                                            Path=IsEnabled, 
+                                            Mode=TwoWay, Converter={StaticResource convertIsEnabled}}">
+
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
+
+        <Button Name="GroupBack" 
+                        Content="Remove Grouping" 
+                        Click="RemoveGroupings_Click"
+                        FontSize="15" FontStyle="Normal" FontWeight="Bold" Background ="BlueViolet" Foreground="White"
+                        Margin="502,207,140,166"
+                        IsEnabled="False">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
         <!--<ListView x:Name="ProductsListView" d:ItemsSource="{d:SampleData ItemCount=10}" SelectionChanged="ProductsListView_SelectionChanged" Margin="0,31,0,0" MouseDoubleClick="DoubleClickEvent" SelectedItem="">
             <ListView.View>
                 <GridView>

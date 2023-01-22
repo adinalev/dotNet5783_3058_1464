@@ -52,6 +52,7 @@ namespace PL
             //}
             poCart.OrderItems = cart.Items; // MLOWERCASE VS. UPPERCASE
             poCart.Price = cart.TotalPrice; // MLOWERCASE VS. UPPERCASE
+            TotalPrice.Text = cart.TotalPrice.ToString();
         }
 
         private void ProductItemView_click(object sender, RoutedEventArgs e)

@@ -1,10 +1,15 @@
-﻿using System;
+﻿using BO;
+using PL.PO;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Collections.ObjectModel;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -33,7 +38,7 @@ namespace PL
             {
                 catalog = Tools.IEnumerableToObservable(bl!.Product.GetCatalog());
             }
-            catch(BO.DoesNotExistException exc)
+            catch (BO.DoesNotExistException exc)
             {
                 MessageBox.Show(exc.Message, "Catalog Window", MessageBoxButton.OK, MessageBoxImage.Error);
             }
@@ -51,7 +56,7 @@ namespace PL
                 {
                     catalog = PL.Tools.IEnumerableToObservable(bl?.Product.GetCatalog()!);//get catalog products from BO
                 }
-                catch(BO.DoesNotExistException exc)
+                catch (BO.DoesNotExistException exc)
                 {
                     MessageBox.Show(exc.Message, "Catalog Window", MessageBoxButton.OK, MessageBoxImage.Error);
                     //new ErrorWindow("Catalog Window\n", exc.Message).ShowDialog();
@@ -82,10 +87,21 @@ namespace PL
         // FIX THIS!! ONLY DID THIS TO BE ABLE TO RUN THE PROGRAM!!
         private void ProductItemView_click(object sender, MouseButtonEventArgs e)
         {
-            if (catalogGrid.SelectedItem is BO.ProductItem productItem)
+            if (catalogGrid.SelectedItem is PO.ProductItem productItem)
             {
-                new ProductWindow(product).ShowDialog();
+                BO.Product prod = new BO.Product();
+                prod = bl?.Product.GetProduct(productItem.ID);
+                new ProductWindow(prod).ShowDialog();
             }
+            try
+            {
+                catalog = PL.Tools.IEnumerableToObservable(bl.Product.GetCatalog());
+            }
+            catch (BO.DoesNotExistException exc)
+            {
+                MessageBox.Show(exc.Message, "List View Window", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catalogGrid.DataContext = catalog;
         }
 
         private void ProductsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -120,7 +136,7 @@ namespace PL
                     MessageBox.Show(exc.Message, "Catalog Window", MessageBoxButton.OK, MessageBoxImage.Error);
                     //new ErrorWindow("Cart Window Window", ex.Message).ShowDialog();
                 }
-                catch(BO.OutOfStockException exc)
+                catch (BO.OutOfStockException exc)
                 {
                     MessageBox.Show(exc.Message, "Catalog Window", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
@@ -137,6 +153,26 @@ namespace PL
         {
             new MainWindow().Show();
             Close();
+        }
+
+        private void GroupByCategory_Click(object sender, RoutedEventArgs e)
+        {
+            RemoveGroupings_Click(sender, e);//remove prev grouping
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(catalogGrid.ItemsSource);
+            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
+            SortDescription sortDscription = new SortDescription("Category", ListSortDirection.Ascending);
+            view.GroupDescriptions.Add(groupDescription);
+            view.SortDescriptions.Add(sortDscription);
+            GroupByCategory.IsEnabled = false; // used to say GroupByStatus
+        }
+
+        private void RemoveGroupings_Click(object sender, RoutedEventArgs e)
+        {
+            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(catalog);
+            view.GroupDescriptions.Clear();
+            view.SortDescriptions.Clear();
+            GroupBack.IsEnabled = false;
+
         }
     }
 }
