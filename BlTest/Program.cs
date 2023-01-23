@@ -337,8 +337,8 @@ class Program
                                 //Console.WriteLine("Enter the updated shipping date (e.g. 10/22/1987 5:32:10): \n");
                                 //DateTime inputtedDate = DateTime.Parse(Console.ReadLine());
                                 Console.WriteLine("The updated order is: \n" + bl?.Order.UpdateShippingDate(ID)); // update the shippping date and display the order
-                                //order.ID = ID;
-                                //Console.WriteLine(order);
+                                order.ID = ID;
+                                Console.WriteLine(order);
                             }
                             catch (DoesNotExistException exc) 
                             {
@@ -365,8 +365,8 @@ class Program
                                 //Console.WriteLine("Enter the updated delivery date (e.g. 10/22/1987 5:32:10): \n");
                                 //DateTime inputtedDate = DateTime.Parse(Console.ReadLine());
                                 Console.WriteLine("The updated order is: \n" + bl?.Order.UpdateDeliveryDate(ID)); // update the delivery date and display the order
-                                //order.ID = ID;
-                                //Console.WriteLine(order);
+                                order.ID = ID;
+                                Console.WriteLine(order);
                             }
                             catch (BO.DoesNotExistException exc) 
                             {

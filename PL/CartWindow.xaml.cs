@@ -66,7 +66,7 @@ namespace PL
 
         private void CheckOut_Click(object sender, RoutedEventArgs e)
         {
-            new CheckOutWindow().Show();
+            new CheckOutWindow(poCart).Show();
             Close();
         }
         private void ReturnHome_Click(object sender, RoutedEventArgs e)

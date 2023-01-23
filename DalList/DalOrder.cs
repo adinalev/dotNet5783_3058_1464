@@ -124,10 +124,14 @@ internal class DalOrder : IOrder
             // if no order is found with a matching ID#, there is no order to update
             throw new DoesNotExistException();
         }
-        // ensure that the dates stay the same
-        ord.OrderDate = OldOrd?.OrderDate;
-        ord.ShippingDate = OldOrd?.ShippingDate;
-        ord.DeliveryDate = OldOrd?.DeliveryDate;
+        // ensure that the order date stays the same
+        //ord.OrderDate = OldOrd?.OrderDate;
+        //if (ord.ShippingDate != OldOrd?.ShippingDate)
+        //{
+
+        //}
+        //ord.ShippingDate = OldOrd?.ShippingDate;
+        //ord.DeliveryDate = OldOrd?.DeliveryDate;
         // locate the index of the old order that you would like to update 
         int index = DataSource.orderList.IndexOf(OldOrd);
         // input the updated order into the index of the old order

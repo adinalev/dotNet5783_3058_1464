@@ -21,6 +21,7 @@ namespace DO
             OrderDate = DateTime.MinValue;
             ShippingDate = DateTime.MinValue;
             DeliveryDate = DateTime.MinValue;
+            TotalPrice = 0;
         }
 
         public Order(int _ID)
@@ -32,7 +33,8 @@ namespace DO
             OrderDate = DateTime.MinValue;
             ShippingDate = DateTime.MinValue;
             DeliveryDate = DateTime.MinValue;
-        }
+            TotalPrice = 0;
+       }
 
         /// <summary>
         /// unique ID for order that's auto-incremental
@@ -44,6 +46,7 @@ namespace DO
         public DateTime? OrderDate { get; set; }
         public DateTime? ShippingDate { get; set; }
         public DateTime? DeliveryDate { get; set; }
+        public double TotalPrice { get; set; }
         public override string ToString() => $@"
             Order ID={ID}: 
             Customer Name: {CustomerName}

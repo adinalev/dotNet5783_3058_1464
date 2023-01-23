@@ -21,18 +21,28 @@ namespace PL
     /// </summary>
     public partial class CheckOutWindow : Window
     {
+        BlApi.IBl? bl = BlApi.Factory.Get();
+
+        PO.Cart cart = new();
         public CheckOutWindow()
         {
             InitializeComponent();
         }
 
-
-       
-
-        private void address_previewtextinput(object sender, TextCompositionEventArgs e)
+        public CheckOutWindow(PO.Cart myCart)
         {
-            //e.Handled = new Regex().IsMatch(e.Text);//only gets numbers for instock
+            InitializeComponent();
+            cart.Price = myCart.Price;
+            foreach(BO.OrderItem item in myCart.orderItems)
+            {
+                cart?.orderItems?.Append(item);
+            }
         }
+
+        //private void address_previewtextinput(object sender, TextCompositionEventArgs e)
+        //{
+        //    //e.Handled = new Regex().IsMatch(e.Text);//only gets numbers for instock
+        //}
 
         private void email_previewtextinput(object sender, TextCompositionEventArgs e)
         {
@@ -44,94 +54,64 @@ namespace PL
         }
 
 
-        //private void name_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    if (name != null && name.Text != "")
-        //    {
-        //        product.Name = name.Text;
-        //    }
-        //}
 
-        //private void tprice_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    if (tprice != null && tprice.Text != "")
-        //    {
-        //        if (int.TryParse(tprice.Text, out int val))
-        //        {
-        //            product.Price = val;
-        //        }
-        //    }
-        //}
+        private void name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (name != null && name.Text != "")
+            {
+                cart.CustomerName = name.Text;
+            }
+        }
 
-        //private void tinstock_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    if (tinstock != null && tinstock.Text != "")
-        //    {
-        //        if (int.TryParse(tinstock.Text, out int val))
-        //        {
-        //            product.InStock = val;
-        //        }
-        //    }
-        //}
+        private void email_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (name != null && name.Text != "")
+            {
+                cart.CustomerEmail = name.Text;
+            }
+        }
+        private void address_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (name != null && name.Text != "")
+            {
+                cart.CustomerAddress = name.Text;
+            }
+        }
 
-        //private void tname_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    tname.Clear();
-        //}
+        private void PlaceOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            string cname = name.Text;
+            string cemail = email.Text;
+            string caddress = address.Text;
+            BO.Cart myCart = new BO.Cart();
+            myCart = PL.Tools.CastPoCToBo(cart);
+            try
+            {
+                bl?.Cart.MakeOrder(myCart, cname, cemail, caddress);
+            }
+            catch(BO.AlreadyExistsException exc)
+            {
+                MessageBox.Show(exc.Message, "Checkout Window", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (BO.InvalidInputException exc)
+            {
+                MessageBox.Show(exc.Message, "Checkout Window", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (BO.TooManyProductsException exc)
+            {
+                MessageBox.Show(exc.Message, "Checkout Window", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (BO.DoesNotExistException exc)
+            {
+                MessageBox.Show(exc.Message, "Checkout Window", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch(BO.NotEnoughInStockException exc)
+            {
+                MessageBox.Show(exc.Message, "Checkout Window", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            MessageBox.Show("Your order has been placed! \n Thank you for shopping with us!");
+            Close();
+        }
 
-        //private void tprice_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    tprice.Clear();
-        //}
-
-        //private void tinstock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    tinstock.Clear();
-        //}
-
-        //private void uname_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    if (uname != null && uname.Text != "")
-        //    {
-        //        product.Name = uname.Text;
-        //    }
-        //}
-
-        //private void uprice_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    if (uprice != null && uprice.Text != "")
-        //    {
-        //        if (int.TryParse(uprice.Text, out int val))
-        //        {
-        //            product.Price = val;
-        //        }
-        //    }
-        //}
-
-        //private void uinstock_TextChanged(object sender, TextChangedEventArgs e)
-        //{
-        //    if (uinstock != null && uinstock.Text != "")
-        //    {
-        //        if (int.TryParse(uinstock.Text, out int val))
-        //        {
-        //            product.InStock = val;
-        //        }
-        //    }
-        //}
-
-        //private void uname_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    uname.Clear();
-        //}
-
-        //private void uprice_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    uprice.Clear();
-        //}
-
-        //private void uinstock_PreviewMouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    uinstock.Clear();
-        //}
     }
 }

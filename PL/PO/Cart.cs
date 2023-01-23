@@ -89,6 +89,21 @@ namespace PL.PO
             }
         }
 
+        private string? amountOfItems;
+        public string? AmountOfItems
+        {
+            get
+            { return amountOfItems; }
+            set
+            {
+                amountOfItems = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("CustomerAddress"));
+                }
+            }
+        }
+
 
     }
 }

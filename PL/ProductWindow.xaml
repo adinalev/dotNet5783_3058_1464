@@ -38,13 +38,13 @@
                 PreviewTextInput="tname_previewtextinput"  TextChanged="tname_TextChanged" PreviewMouseDown="tname_PreviewMouseDown" />
         <TextBox Name="tprice" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="Enter Price: " VerticalAlignment="Center" Width="214" Height="40" 
                  PreviewTextInput="tprice_previewtextinput" TextChanged="tprice_TextChanged" PreviewMouseDown="tprice_PreviewMouseDown"/>
-        <TextBox Name="tinstock" Grid.Column="1" FontSize="20" MaxLength="2" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="4" TextWrapping="Wrap" Text="Enter Amount: " VerticalAlignment="Center" Width="214" Height="40"
+        <TextBox Name="tinstock" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="4" TextWrapping="Wrap" Text="Enter Amount: " VerticalAlignment="Center" Width="214" Height="40"
                  PreviewTextInput="tinstock_previewtextinput" TextChanged="tinstock_TextChanged" PreviewMouseDown="tinstock_PreviewMouseDown"/>
         <TextBox Name="uname" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="1" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="214" Height="40" 
                  PreviewTextInput="uname_previewtextinput"  PreviewMouseDown="uname_PreviewMouseDown" TextChanged="uname_TextChanged"  />
         <TextBox Name="uprice" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="2" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="214" Height="40" 
                  PreviewTextInput="uprice_previewtextinput" PreviewMouseDown="uprice_PreviewMouseDown" TextChanged="uprice_TextChanged" />
-        <TextBox Name="uinstock" Grid.Column="1" FontSize="20" MaxLength="2" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="4" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="214" Height="40"
+        <TextBox Name="uinstock" Grid.Column="1" FontSize="20" HorizontalAlignment="Left" Margin="10,0,0,0" Grid.Row="4" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="214" Height="40"
                  PreviewTextInput="uinstock_previewtextinput" PreviewMouseDown="uinstock_PreviewMouseDown" TextChanged="uinstock_TextChanged" />
         <Button Name="addProductButton" Content="Add Product" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" Margin="260,5,0,5" Padding="5" Click="AddProductButton_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">
             <Button.Effect>

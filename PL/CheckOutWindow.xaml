@@ -40,11 +40,17 @@
 
 
         <TextBox Name="name" FontSize="20" HorizontalAlignment="Left" Margin="136,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="214" Height="40" 
-                PreviewTextInput="name_previewtextinput"  />
+                PreviewTextInput="name_previewtextinput"  TextChanged="name_TextChanged"/>
         <TextBox Name="email" FontSize="20" HorizontalAlignment="Left" Margin="136,109,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="214" Height="40" 
-                 PreviewTextInput="email_previewtextinput"/>
-        <TextBox Name="address" FontSize="20" MaxLength="2" HorizontalAlignment="Left" Margin="136,166,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="214" Height="40"
-                 PreviewTextInput="address_previewtextinput" />
+                 PreviewTextInput="email_previewtextinput" TextChanged="email_TextChanged"/>
+        <TextBox Name="address" FontSize="20" HorizontalAlignment="Left" Margin="136,166,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="214" Height="40"
+                 TextChanged="address_TextChanged"/>
+
+        <Button Name="PlaceOrder" Content="Place Your Order!" HorizontalAlignment="Left" Margin="615,315,0,49" Padding="5" Click="PlaceOrderButton_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
 
 
     </Grid>
