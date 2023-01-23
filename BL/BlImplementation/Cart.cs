@@ -330,7 +330,7 @@ internal class Cart : BlApi.ICart
             Address = cart.CustomerAddress!,
             OrderDate = DateTime.Now,
             TotalPrice = cart.TotalPrice,
-            AmountOfItems = cart.AmountOfItems
+            //AmountOfItems = cart.AmountOfItems
         }) ;
 
         try
