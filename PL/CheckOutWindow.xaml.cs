@@ -39,11 +39,6 @@ namespace PL
             }
         }
 
-        //private void address_previewtextinput(object sender, TextCompositionEventArgs e)
-        //{
-        //    //e.Handled = new Regex().IsMatch(e.Text);//only gets numbers for instock
-        //}
-
         private void email_previewtextinput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^a-z]+[^0-9]+[^.]+[^@]").IsMatch(e.Text);//only gets numbers for price

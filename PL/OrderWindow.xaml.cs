@@ -55,6 +55,27 @@ namespace PL
             order.ID = ord.ID;
         }
 
+        public OrderWindow(BO.Order ord, string s)
+        {
+            InitializeComponent();
+            //StatusBox.ItemsSource = Enum.GetValues(typeof(BO.Enums.OrderStatus));
+            uname.Text = ord.CustomerName.ToString();
+            uemail.Text = ord.Email.ToString();
+            uaddress.Text = ord.Address.ToString();
+            uprice.Text = ord.TotalPrice.ToString();
+            status.Text = ord.Status.ToString();
+            ID.Text = ord.ID.ToString();
+            foreach (var name in bl?.Order.GetItemNames(ord.ID))
+            {
+
+                items.AppendText(name + ", ");
+
+            }
+            updateShippingDateButton.Visibility = Visibility.Collapsed;
+            updateDeliveryDateButton.Visibility = Visibility.Collapsed;
+            order.ID = ord.ID;
+        }
+
         private void UpdateShippingButton_Click(object sender, RoutedEventArgs e) //new UpdateDatesWindow(order, BO.Enums.OrderStatus.Shipped).Show();
         {
             bl.Order.UpdateShippingDate(order.ID);
@@ -66,10 +87,10 @@ namespace PL
             bl.Order.UpdateDeliveryDate(order.ID);
             Close();
         }
-        //private void SelectStatus_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        //{
-        //    BO.Enums.OrderStatus status = (BO.Enums.OrderStatus)StatusBox.SelectedItem; // saves the selected category
-        //    order.Status = status;
-        //}
+        private void ReturnHome_Click(object sender, RoutedEventArgs e)
+        {
+            new MainWindow().Show();
+            Close();
+        }
     }
 }

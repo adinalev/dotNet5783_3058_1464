@@ -28,7 +28,6 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <!--<Label Content="Pharmacy" HorizontalAlignment="Left" Margin="118,0,0,0" VerticalAlignment="Center"/>-->
             <Button Click="AdministratorButton_Click" Margin="50,174,85,-174" FontSize="27" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet">Administrator
                 <Button.Effect>
                     <DropShadowEffect/>

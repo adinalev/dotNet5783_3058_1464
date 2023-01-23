@@ -49,11 +49,6 @@ internal class Order : BlApi.IOrder
         return list!; // return the list of new BO orders
     }
 
-    //public int GetID(BO.Order ord)
-    //{
-    //    return ord.ID;
-    //}
-
     /// <summary>
     /// method to return the status of an order
     /// </summary>
@@ -167,79 +162,6 @@ internal class Order : BlApi.IOrder
         throw new BO.DoesNotExistException();
     }
 
-
-    //public BO.Order? UpdateDeliveryDate(int orderID)
-    //{
-    //    DO.Order order = (DO.Order)dal.dalOrder.GetByID(orderID); // retrieve the corresponding DO order
-    //    BO.Order? orderBO = GetBoOrder(orderID); // retrieve the status of an order
-    //    if (GetStatus(order) == BO.Enums.OrderStatus.New) // if the order has not been placed yet
-    //    {
-    //        throw new BO.OrderNotPlacedYetException();
-    //    }
-    //    if (GetStatus(order) == BO.Enums.OrderStatus.Delivered) // if the order has already been delivered
-    //    {
-    //        throw new BO.AlreadyDeliveredException();
-    //    }
-    //    if (order.ShippingDate == null) // if there is no shipping date available for the order yet
-    //    {
-    //        throw new BO.NoShipDateException();
-    //    }
-    //    //DO.Order ord = new() // create a new DO order with the same criteria but with the new delivery date
-    //    //{
-    //    //    ID = orderID,
-    //    //    Address = order?.Address,
-    //    //    Email = order?.Email,
-    //    //    CustomerName = order?.CustomerName,
-    //    //    OrderDate = order?.OrderDate,
-    //    //    ShippingDate = order?.ShippingDate,
-    //    //    DeliveryDate = DateTime.Now // This is the only change in the order
-    //    //};
-    //    order.DeliveryDate = DateTime.Now;
-    //    dal.dalOrder.Update(order); // update the order in DO
-    //    orderBO!.DeliveryDate = order.DeliveryDate;
-    //    orderBO.Status = BO.Enums.OrderStatus.Delivered;
-    //    //orderBO.Status = GetStatus(order);
-    //    return orderBO;
-    //}
-    /// <summary>
-    /// public method to update the delivery date of an order
-    /// </summary>
-    //public BO.Order? UpdateDeliveryDate(int orderID, DateTime date)
-    //{
-    //    DO.Order? order = dal!.dalOrder.GetByID(orderID); // retrieve the corresponding DO order
-    //    BO.Order? orderBO = GetBoOrder(orderID); // retrieve the status of an order
-    //    if (GetStatus(order) == BO.Enums.OrderStatus.New) // if the order has not been placed yet
-    //    {
-    //        throw new BO.OrderNotPlacedYetException();
-    //    }
-    //    if (GetStatus(order) == BO.Enums.OrderStatus.Delivered) // if the order has already been delivered
-    //    {
-    //        throw new BO.AlreadyDeliveredException();
-    //    }
-    //    if (order?.ShippingDate == null) // if there is no shipping date available for the order yet
-    //    {
-    //        throw new BO.NoShipDateException();
-    //    }
-    //    if (date < order?.ShippingDate) // if the delivery date is set for before the shipping date
-    //    {
-    //        throw new BO.DeliveryDateOutOfRangeException();
-    //    }
-    //    DO.Order ord = new() // create a new DO order with the same criteria but with the new delivery date
-    //    {
-    //        ID = orderID,
-    //        Address = order?.Address,
-    //        Email = order?.Email,
-    //        CustomerName = order?.CustomerName,
-    //        OrderDate = order?.OrderDate,
-    //        ShippingDate = order?.ShippingDate,
-    //        DeliveryDate = date // This is the only change in the order
-    //    };
-    //    dal.dalOrder.Update(ord); // update the order in DO
-
-    //    orderBO!.DeliveryDate = date;
-    //    orderBO.Status = GetStatus(order);
-    //    return orderBO;
-    //}
     public BO.Order? UpdateShippingDate(int orderID)
     {
         DO.Order order;
@@ -295,79 +217,6 @@ internal class Order : BlApi.IOrder
         }
         throw new BO.DoesNotExistException();
     }
-
-
-//public BO.Order? UpdateShippingDate(int orderID)
-//    {
-//        DO.Order order = (DO.Order)dal.dalOrder.GetByID(orderID); // retrieve the corresponding DO order
-//        BO.Order? orderBO = GetBoOrder(orderID); // retrieve the corresponding BO order
-//        if (GetStatus(order) == BO.Enums.OrderStatus.New) // if the order has not been placed yet
-//        {
-//            throw new BO.OrderNotPlacedYetException();
-//        }
-//        else if (GetStatus(order) != BO.Enums.OrderStatus.BeingProcessed) // if the order has already shipped
-//        {
-//            throw new BO.AlreadyShippedException();
-//        }
-//        //if (date > orderBO!.DeliveryDate && orderBO.DeliveryDate != null) // if the shipping date is set to later than the delivery date
-//        //{
-//        //    throw new BO.ShipDateOutOfRangeException();
-//        //}
-
-//        //DO.Order ord = new() // create a new DO order with the same critera but the shipping date is set to the new date
-//        //{
-//        //    ID = orderID,
-//        //    Address = order?.Address,
-//        //    Email = order?.Email,
-//        //    CustomerName = order?.CustomerName,
-//        //    OrderDate = order?.OrderDate,
-//        //    ShippingDate = DateTime.Now, // this is the only change
-//        //    DeliveryDate = order?.DeliveryDate,
-//        //};
-//        order.ShippingDate = DateTime.Now;
-//        dal.dalOrder.Update(order); // update the order in DO
-//        orderBO.ShippingDate = order.ShippingDate; // changed from datetimenow
-//        orderBO.Status = BO.Enums.OrderStatus.Shipped;
-//        //orderBO.Status = GetStatus(order);
-//        return orderBO;
-//    }
-
-    /// <summary>
-    /// public method to update a shipping date of an order
-    /// </summary>
-    //public BO.Order? UpdateShippingDate(int orderID, DateTime date)
-    //{
-    //    DO.Order? order = dal!.dalOrder.GetByID(orderID); // retrieve the corresponding DO order
-    //    BO.Order? orderBO = GetBoOrder(orderID); // retrieve the corresponding BO order
-    //    if(GetStatus(order) == BO.Enums.OrderStatus.New) // if the order has not been placed yet
-    //    {
-    //        throw new BO.OrderNotPlacedYetException();
-    //    }
-    //    else if (GetStatus(order) != BO.Enums.OrderStatus.BeingProcessed) // if the order has already shipped
-    //    {
-    //        throw new BO.AlreadyShippedException();
-    //    }
-    //    if (date > orderBO!.DeliveryDate && orderBO.DeliveryDate != null) // if the shipping date is set to later than the delivery date
-    //    {
-    //        throw new BO.ShipDateOutOfRangeException();
-    //    }
-
-    //    DO.Order ord = new() // create a new DO order with the same critera but the shipping date is set to the new date
-    //    {
-    //        ID = orderID,
-    //        Address = order?.Address,
-    //        Email = order?.Email,
-    //        CustomerName = order?.CustomerName,
-    //        OrderDate = order?.OrderDate,
-    //        ShippingDate = date, // this is the only change
-    //        DeliveryDate = order?.DeliveryDate, 
-    //    };
-    //    dal.dalOrder.Update(ord); // update the order in DO
-
-    //    orderBO.ShippingDate = date;
-    //    orderBO.Status = GetStatus(order);
-    //    return orderBO;
-    //}
 
     public BO.OrderTracking TrackOrder(int orderID)
     {

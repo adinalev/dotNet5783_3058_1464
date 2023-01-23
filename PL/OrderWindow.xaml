@@ -53,5 +53,11 @@
                 <DropShadowEffect/>
             </Button.Effect>
         </Button>
+
+        <Button Content="Return to Home" HorizontalAlignment="Right" Margin="0,28,26,-17" Padding="5" Click="ReturnHome_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet" Grid.Column="1" Grid.Row="6">
+            <Button.Effect>
+                <DropShadowEffect/>
+            </Button.Effect>
+        </Button>
     </Grid>
 </Window>
