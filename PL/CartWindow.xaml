@@ -105,55 +105,6 @@
         </Button>
         <TextBox x:Name="TotalPrice" HorizontalAlignment="Left" Margin="408,364,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120" Height="42" FontSize="16"/>
         <Label x:Name="TotalPriceLabel" Content="Total Price:" HorizontalAlignment="Left" Margin="322,370,0,0" VerticalAlignment="Top" FontSize="16" Height="30" Width="81"/>
-        <!--<StackPanel Margin="0,103,0,40" Grid.RowSpan="3">
-            <ListView x:Name="PList" ItemsSource="{Binding}" SelectiveScrollingGrid.SelectiveScrollingOrientation="Vertical" ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="True" ScrollViewer.IsDeferredScrollingEnabled="True" >
-                <ListView.Resources>
-                    <Style TargetType="{x:Type ListViewItem}">
-                        <EventSetter Event="PreviewGotKeyboardFocus" Handler="SelectCurrentItem"/>
-                    </Style>
-                </ListView.Resources>
-
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Background="#E5E9EA" Margin="0 15 0 0" HorizontalAlignment="Center">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="112"/>
-                                <ColumnDefinition Width="120"/>
-                                <ColumnDefinition Width="80"/>
-                                <ColumnDefinition Width="40"/>
-                                <ColumnDefinition Width="30"/>
-                                <ColumnDefinition Width="90"/>
-                                <ColumnDefinition Width="60"/>
-                            </Grid.ColumnDefinitions>
-                            <Ellipse Height="80" Width="80" Margin="25 10 0 10" HorizontalAlignment="Left"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Path=ProductName, Mode=TwoWay}" Padding="5" FontWeight="SemiBold" FontSize="16" VerticalAlignment="Center"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Path=ID, Mode=TwoWay}" Padding="5" FontSize="13" VerticalAlignment="Center" Margin="0 38 0 0"/>
-
-                            <TextBlock Grid.Column="2" Text="{Binding Path=Price, Mode=TwoWay}" Padding="5" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="16"/>
-
-                            <TextBlock Grid.Column="3" Text="{Binding Path=Amount, Mode=TwoWay}" Padding="5" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="16"/>
-
-                            <StackPanel Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left">
-                                <Button x:Name="addBtn" Style="{StaticResource buttonCounter}" Click="AddItem_Click">
-                                    <Image Source="images\add.png"/>
-                                </Button>
-
-                                <Button x:Name="lowBtn" Style="{StaticResource buttonCounter}" Margin="0 5 0 0" Click="ReduceItem_Click">
-                                    <Image Source="images/low.png"/>
-                                </Button>
-                            </StackPanel>
-
-                            <TextBlock Grid.Column="5" Text="{Binding Path=ProductPrice, Mode=TwoWay}" Padding="5" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="16"/>
-
-                            <Button Style="{StaticResource buttonDelete}" Grid.Column="6" Click="RemoveItem_Click">
-                                <Image Source="images/remove.png" Width="18" Style="{StaticResource icon}"/>
-                            </Button>
-                        </Grid>
-                    </DataTemplate>
-
-                </ListView.ItemTemplate>
-            </ListView>
-        </StackPanel>-->
 
     </Grid>
 </Window>

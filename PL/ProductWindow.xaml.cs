@@ -53,6 +53,23 @@ namespace PL
             ID.Text = prod.ID.ToString();
             product.ID = prod.ID;
         }
+
+        public ProductWindow(Product prod, string s)
+        {
+            InitializeComponent();
+            CategoryBox.ItemsSource = Enum.GetValues(typeof(BO.Enums.ProductCategory));
+            addProductButton.Visibility = Visibility.Collapsed;//add invisible
+            updateProductButton.Visibility = Visibility.Collapsed;//show update
+            tinstock.Visibility = Visibility.Collapsed;
+            tprice.Visibility = Visibility.Collapsed;
+            tname.Visibility = Visibility.Collapsed;
+            uinstock.Text = prod.InStock.ToString();
+            uprice.Text = prod.Price.ToString();
+            CategoryBox.SelectedItem = prod.Category;
+            uname.Text = prod.Name;
+            ID.Text = prod.ID.ToString();
+            product.ID = prod.ID;
+        }
         private void tid_previewtextinput(object sender, TextCompositionEventArgs e)
         {
             e.Handled = new Regex("[^0-9]+").IsMatch(e.Text);//only gets numbers for id
@@ -90,7 +107,7 @@ namespace PL
             }
             catch (BO.InvalidInputException exc)
             {
-                new ErrorWindow("Product List View Window\n", exc.Message).ShowDialog();
+                MessageBox.Show(exc.Message, "Product Window", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         

@@ -39,7 +39,6 @@ namespace PL
             catch (System.FormatException)
             {
                 MessageBox.Show("Wrong ID number entered", "Enter Order ID Window", MessageBoxButton.OK, MessageBoxImage.Error);
-                //new ErrorWindow("Enter Order ID Window", "Wrong ID number entered").ShowDialog();
             }
             try
             {
@@ -48,7 +47,6 @@ namespace PL
             catch (BO.DoesNotExistException exc)
             {
                 MessageBox.Show(exc.Message, "Order List Window", MessageBoxButton.OK, MessageBoxImage.Error);
-                //new ErrorWindow("Enter Order ID Window\n", exc.Message).ShowDialog();
                 Close();
             }
             OrderTracking orderTracking = new OrderTracking();

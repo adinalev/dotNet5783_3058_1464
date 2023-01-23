@@ -7,18 +7,6 @@
         mc:Ignorable="d"
         Title="CheckOutWindow" Height="450" Width="800">
     <Grid Background="LightGray">
-        <!--<Grid.RowDefinitions>
-            <RowDefinition Height="55"/>
-            <RowDefinition Height="55"/>
-            <RowDefinition Height="55"/>
-            <RowDefinition Height="55"/>
-            <RowDefinition Height="55"/>
-            <RowDefinition Height="55"/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions >-->
 
 
         <Label Name="l1" Content="Customer Details: " FontSize="27"  FontWeight="Bold"
@@ -29,14 +17,6 @@
                Height="40" Width="78" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,109,0,0"/>
         <Label Name="l4" Content="Address:" FontSize="27" FontWeight="Bold"
                Height="46" Width="132" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,160,0,0"/>
-        <Label Name="l5" Content="Card Number:" FontSize="27" FontWeight="Bold"
-               Height="46" Width="298" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="415,61,0,0"/>
-        <Label Name="l6" Content="Payment Details:" FontSize="27" FontWeight="Bold"
-               Height="46" Width="242" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="415,7,0,0"/>
-        <Label Name="l7" Content="Expiry Date:" FontSize="27" FontWeight="Bold"
-               Height="46" Width="180" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="415,163,0,0"/>
-        <Label Name="l8" Content="CVV:" FontSize="27" FontWeight="Bold"
-               Height="46" Width="132" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="415,209,0,0"/>
 
 
         <TextBox Name="name" FontSize="20" HorizontalAlignment="Left" Margin="136,55,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="214" Height="40" 

@@ -8,24 +8,6 @@
         mc:Ignorable="d"
         Title="ProductListWindow" Height="450" Width="800">
 
-
-    <!--<Window.Resources>
-        <Style  x:Key="GroupHeaderStyle" TargetType="{x:Type GroupItem}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                        <Expander x:Name="expander" IsExpanded="True"
-                                  Background="Transparent"
-                                  Foreground="#2b331f">
-                            <Expander.Header>
-                                <TextBlock Text="{Binding Name}"/>
-                            </Expander.Header>
-                        </Expander>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </Window.Resources>-->
     <Window.Resources>
         <converter:FalseToTrueConverter x:Key="convertIsEnabled"/>
     </Window.Resources>
@@ -76,6 +58,12 @@
                     </DataGrid>
 
                     <Button Content="Add" HorizontalAlignment="Right" Margin="0,297,36,56" Padding="5" Click="AddButton_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet" Grid.Column="3" Width="41">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                    </Button>
+
+                    <Button Content="Return to Home" HorizontalAlignment="Right" Margin="0,203,36,134" Padding="5" Click="ReturnHome_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet" Grid.Column="3">
                         <Button.Effect>
                             <DropShadowEffect/>
                         </Button.Effect>
@@ -144,6 +132,12 @@
                         FontSize="15" FontStyle="Normal" FontWeight="Bold" Background ="BlueViolet" Foreground="White"
                         Margin="189,223,42,128" Grid.Column="1"
                         IsEnabled="False" Grid.ColumnSpan="2">
+                        <Button.Effect>
+                            <DropShadowEffect/>
+                        </Button.Effect>
+                    </Button>
+
+                    <Button Content="Return to Home" HorizontalAlignment="Right" Margin="0,321,53,10" Padding="5" Click="ReturnHome_Click" FontSize="15" FontStyle="Normal" FontWeight="Bold" Foreground="White" Background="BlueViolet" Grid.Column="1" Grid.ColumnSpan="2">
                         <Button.Effect>
                             <DropShadowEffect/>
                         </Button.Effect>

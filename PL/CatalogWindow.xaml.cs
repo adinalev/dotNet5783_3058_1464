@@ -91,7 +91,7 @@ namespace PL
             {
                 BO.Product prod = new BO.Product();
                 prod = bl?.Product.GetProduct(productItem.ID);
-                new ProductWindow(prod).ShowDialog();
+                new ProductWindow(prod, "overload").ShowDialog();
             }
             try
             {
