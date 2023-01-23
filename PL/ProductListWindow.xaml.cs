@@ -156,6 +156,7 @@ namespace PL
         }
         private void OrderListView_click(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+
             if (orderGrid.SelectedItem is PO.OrderForList orderForList)
             {
                 BO.Order ord = new BO.Order();
@@ -175,7 +176,7 @@ namespace PL
 
         private void GroupByStatus_Click(object sender, RoutedEventArgs e)
         {
-            RemoveGroupings_Click(sender, e);//remove prev grouping
+            RemoveGroupings_Click(sender, e);
             CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(orderGrid.ItemsSource);
             PropertyGroupDescription groupDescription = new PropertyGroupDescription("Status");
             SortDescription sortDscription = new SortDescription("Status", ListSortDirection.Ascending);
