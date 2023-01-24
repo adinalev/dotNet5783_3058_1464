@@ -6,7 +6,7 @@
 		<ProductID>100001</ProductID>
 		<OrderID>1001</OrderID>
 		<Price>216</Price>
-		<Amount>10</Amount>
+		<Quantity>10</Quantity>
 	</OrderItem>
 
 	<OrderItem>
@@ -14,7 +14,7 @@
 		<ProductID>100002</ProductID>
 		<OrderID>1002</OrderID>
 		<Price>130</Price>
-		<Amount>5</Amount>
+		<Quantity>5</Quantity>
 	</OrderItem>
 
 	<OrderItem>
@@ -22,7 +22,7 @@
 		<ProductID>100003</ProductID>
 		<OrderID>1003</OrderID>
 		<Price>45</Price>
-		<Amount>3</Amount>
+		<Quantity>3</Quantity>
 	</OrderItem>
 
 	<OrderItem>
@@ -30,7 +30,7 @@
 		<ProductID>100004</ProductID>
 		<OrderID>1004</OrderID>
 		<Price>500</Price>
-		<Amount>15</Amount>
+		<Quantity>15</Quantity>
 	</OrderItem>
 
 	<OrderItem>
@@ -38,7 +38,7 @@
 		<ProductID>100005</ProductID>
 		<OrderID>1005</OrderID>
 		<Price>76</Price>
-		<Amount>6</Amount>
+		<Quantity>6</Quantity>
 	</OrderItem>
 
 	<OrderItem>
@@ -54,7 +54,7 @@
 		<ProductID>100007</ProductID>
 		<OrderID>1007</OrderID>
 		<Price>45</Price>
-		<Amount>1</Amount>
+		<Quantity>1</Quantity>
 	</OrderItem>
 
 	<OrderItem>
@@ -62,7 +62,7 @@
 		<ProductID>100008</ProductID>
 		<OrderID>1008</OrderID>
 		<Price>32</Price>
-		<Amount>2</Amount>
+		<Quantity>2</Quantity>
 	</OrderItem>
 
 	<OrderItem>
@@ -70,7 +70,7 @@
 		<ProductID>100009</ProductID>
 		<OrderID>1009</OrderID>
 		<Price>43</Price>
-		<Amount>3</Amount>
+		<Quantity>3</Quantity>
 	</OrderItem>
 
 	<OrderItem>
@@ -78,7 +78,7 @@
 		<ProductID>100010</ProductID>
 		<OrderID>1010</OrderID>
 		<Price>68</Price>
-		<Amount>4</Amount>
+		<Quantity>4</Quantity>
 	</OrderItem>
 	
 </ArrayOfOrderItems>
