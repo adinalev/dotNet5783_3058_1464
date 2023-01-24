@@ -139,7 +139,7 @@ public void Delete(int _ID)
     /// <summary>
     /// public method to update an Order Item using the product ID and order ID
     /// </summary>
-    public void UpdateByIDs(DO.OrderItem item) // WHAT DO I DO ABOUT THIS UPDATE FUCNTION?! USED TO BE CALLED DIFF NAMES BC CANNOT OVERLOAD
+    public void UpdateByIDs(DO.OrderItem item) 
     {
         //int ID = 0;
         var v = from newItem in DataSource.orderItemList

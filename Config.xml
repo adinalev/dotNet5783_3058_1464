@@ -1,1 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfIncrementalIDs>
+	<IncrementalID>
+		<numberSaved>100010</numberSaved>
+		<typeOfNumber>Product incremental ID</typeOfNumber>
+	</IncrementalID>
+	<IncrementalID>
+		<numberSaved>1020</numberSaved>
+		<typeOfNumber>Order incremental ID</typeOfNumber>
+	</IncrementalID>
+	<IncrementalID>
+		<numberSaved>10</numberSaved>
+		<typeOfNumber>Order item incremental ID</typeOfNumber>
+	</IncrementalID>
+</ArrayOfIncrementalIDs>

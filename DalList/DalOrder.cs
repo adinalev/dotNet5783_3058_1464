@@ -57,7 +57,7 @@ internal class DalOrder : IOrder
     ///// <summary>
     ///// public method to read an Order
     ///// </summary>
-    public DO.Order? GetByID(int _ID)
+    public Order? GetByID(int _ID)
     {
         DO.Order? ord = DataSource.orderList.Find(x => x?.ID == _ID); // find an order with a matching ID
         if (ord == null)
