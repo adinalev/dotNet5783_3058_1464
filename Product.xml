@@ -1,1 +1,82 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfProducts>
+	<Product>
+		<ID>100001</ID>
+		<Name>Shampoo</Name>
+		<Price>9</Price>
+		<Category>HYGIENE</Category>
+		<InStock>9</InStock>
+	</Product>
+
+	<Product>
+		<ID>100002</ID>
+		<Name>Hairbrush</Name>
+		<Price>17</Price>
+		<Category>COSMETICS</Category>
+		<InStock>12</InStock>
+	</Product>
+
+	<Product>
+		<ID>100003</ID>
+		<Name>Advil</Name>
+		<Price>30</Price>
+		<Category>MEDICINE</Category>
+		<InStock>7</InStock>
+	</Product>
+
+	<Product>
+		<ID>100004</ID>
+		<Name>Motrin</Name>
+		<Price>32</Price>
+		<Category>MEDICINE</Category>
+		<InStock>9</InStock>
+	</Product>
+
+	<Product>
+		<ID>100005</ID>
+		<Name>Huggies Diapers</Name>
+		<Price>11</Price>
+		<Category>BABIES</Category>
+		<InStock>13</InStock>
+	</Product>
+
+	<Product>
+		<ID>100006</ID>
+		<Name>Wet Wipes</Name>
+		<Price>5</Price>
+		<Category>BABIES</Category>
+		<InStock>20</InStock>
+	</Product>
+
+	<Product>
+		<ID>100007</ID>
+		<Name>Eye Drops</Name>
+		<Price>45</Price>
+		<Category>OPTICS</Category>
+		<InStock>8</InStock>
+	</Product>
+
+	<Product>
+		<ID>100008</ID>
+		<Name>Cheerios</Name>
+		<Price>19</Price>
+		<Category>FOOD</Category>
+		<InStock>14</InStock>
+	</Product>
+
+	<Product>
+		<ID>100009</ID>
+		<Name>Mascara</Name>
+		<Price>22</Price>
+		<Category>COSMETICS</Category>
+		<InStock>10</InStock>
+	</Product>
+
+	<Product>
+		<ID>100010</ID>
+		<Name>DayQuil</Name>
+		<Price>39</Price>
+		<Category>MEDICINE</Category>
+		<InStock>9</InStock>
+	</Product>
+</ArrayOfProducts>
