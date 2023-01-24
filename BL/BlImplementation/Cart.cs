@@ -329,7 +329,6 @@ internal class Cart : BlApi.ICart
             Email = cart.CustomerEmail!,
             Address = cart.CustomerAddress!,
             OrderDate = DateTime.Now,
-            TotalPrice = cart.TotalPrice,
         }) ;
 
         try

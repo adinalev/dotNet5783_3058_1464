@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfOrders>
+	<Order>
+		<ID>1001</ID>
+		<CustomerName>Aiden</CustomerName>
+		<Email>aaa@gamil.com</Email>
+		<Address>28 Derech Hevron</Address>
+		<OrderDate>2023-01-14 0:21:16</OrderDate>
+		<ShippingDate>2023-02-27 4:34:16</ShippingDate>
+		<DeliveryDate>2023-03-17 15:36:16</DeliveryDate>
+	</Order>
+	<Order>
+		<ID>1002</ID>
+		<CustomerName>Brenda</CustomerName>
+		<Email>bbb@gamil.com</Email>
+		<Address>545 Dam Hamacabbim Street</Address>
+		<OrderDate>2023-01-14 0:21:16</OrderDate>
+		<ShippingDate>2023-02-27 4:34:16</ShippingDate>
+		<DeliveryDate>2023-03-17 15:36:16</DeliveryDate>
+	</Order>
+</ArrayOfOrders>
