@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfIncrementalIDs>
-	<IncrementalID>
-		<numberSaved>100010</numberSaved>
-		<typeOfNumber>Product incremental ID</typeOfNumber>
-	</IncrementalID>
-	<IncrementalID>
-		<numberSaved>1020</numberSaved>
-		<typeOfNumber>Order incremental ID</typeOfNumber>
-	</IncrementalID>
-	<IncrementalID>
-		<numberSaved>10</numberSaved>
-		<typeOfNumber>Order item incremental ID</typeOfNumber>
-	</IncrementalID>
+	<ProductIncrementalID>
+		<!--<type>Product incremental ID</type>-->
+		<ProdID>100000</ProdID>
+	</ProductIncrementalID>
+	<OrderIncrementalID>
+		<!--<type>Product incremental ID</type>-->
+		<OrdID>100000</OrdID>
+	</OrderIncrementalID>
+	<ItemIncrementalID>
+		<!--<type>Product incremental ID</type>-->
+		<ItemID>100000</ItemID>
+	</ItemIncrementalID>
 </ArrayOfIncrementalIDs>

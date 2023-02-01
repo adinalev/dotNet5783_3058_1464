@@ -84,7 +84,6 @@ namespace PL
             catalogGrid.DataContext = catalog;
         }
 
-        // FIX THIS!! ONLY DID THIS TO BE ABLE TO RUN THE PROGRAM!!
         private void ProductItemView_click(object sender, MouseButtonEventArgs e)
         {
             if (catalogGrid.SelectedItem is PO.ProductItem productItem)
@@ -109,7 +108,6 @@ namespace PL
 
         }
 
-        //FOR SURE GOING TO NEED TO CHANGE THIS!!
         private void DoubleClickEvent(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             //if (ProductsListView.SelectedItem is BO.ProductForList productForList)
